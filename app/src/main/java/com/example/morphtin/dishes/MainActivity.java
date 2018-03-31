@@ -57,6 +57,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        ImageView iv = (ImageView)findViewById(R.id.dd1);
+        ivAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent(MainActivity.this, ItemActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private String getPicToString(File file){//1.将图片转为字节数组 2.将字节数组转为字符串 3.压缩字符串，放入json传输
