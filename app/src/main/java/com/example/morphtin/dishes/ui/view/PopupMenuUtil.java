@@ -2,6 +2,7 @@ package com.example.morphtin.dishes.ui.view;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.morphtin.dishes.R;
+import com.example.morphtin.dishes.activity.CameraActivity;
 
 /**
  * Created by elevation on 18-4-4.
@@ -128,7 +130,11 @@ public class PopupMenuUtil {
                 //加号按钮点击之后的执行
                 _rlClickAction();
             } else {
-                showToast(context, "index=" + index);
+                if (index == 1) {
+                    Intent intent = new Intent(context, CameraActivity.class);
+                    context.startActivity(intent);
+                }
+                //showToast(context, "index=" + index);
             }
         }
     }
