@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "25.0.3"
+    buildToolsVersion "26.0.3"
     defaultConfig {
         applicationId "com.example.morphtin.dishes"
         minSdkVersion 21
@@ -27,5 +27,13 @@ dependencies {
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support:design:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'me.yokeyword:fragmentation:0.10.2'
+    //retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    //butterknife
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    //EventBus
+    compile 'org.greenrobot:eventbus:3.1.1'
     testCompile 'junit:junit:4.12'
 }
