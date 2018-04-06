@@ -12,6 +12,7 @@ import com.example.morphtin.dishes.base.BaseFragment;
 import com.example.morphtin.dishes.ui.view.BottomBar;
 import com.example.morphtin.dishes.ui.view.PopupMenuUtil;
 import com.example.morphtin.dishes.util.StartBrotherEvent;
+import com.werb.pickphotoview.PickPhotoView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -109,7 +110,13 @@ public class MainFragment extends BaseFragment {
 
             @Override
             public void onCenterClick() {
-                PopupMenuUtil.getInstance()._show(getContext(), mCenterImage);
+                PickPhotoView.Builder builder = new PickPhotoView.Builder(_mActivity)
+                        .setPickPhotoSize(6)
+                        .setShowCamera(true)
+                        .setSpanCount(4)
+                        .setLightStatusBar(false);
+
+                PopupMenuUtil.getInstance()._show(getContext(), mCenterImage, builder);
             }
         });
     }

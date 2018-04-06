@@ -2,7 +2,6 @@ package com.example.morphtin.dishes.ui.view;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -11,10 +10,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.example.morphtin.dishes.R;
-import com.example.morphtin.dishes.activity.CameraActivity;
+import com.werb.pickphotoview.PickPhotoView;
 
 /**
  * Created by elevation on 18-4-4.
@@ -22,6 +20,7 @@ import com.example.morphtin.dishes.activity.CameraActivity;
 
 public class PopupMenuUtil {
     private static final String TAG = "PopupMenuUtil";
+    private PickPhotoView.Builder builder;
 
     public static PopupMenuUtil getInstance() {
         return MenuUtilHolder.INSTANCE;
@@ -115,7 +114,6 @@ public class PopupMenuUtil {
      * 点击事件
      */
     private class MViewClick implements View.OnClickListener {
-
         public int index;
         public Context context;
 
@@ -131,29 +129,11 @@ public class PopupMenuUtil {
                 _rlClickAction();
             } else {
                 if (index == 1) {
-                    Intent intent = new Intent(context, CameraActivity.class);
-                    context.startActivity(intent);
+                    builder.start();
                 }
                 //showToast(context, "index=" + index);
             }
         }
-    }
-
-    Toast toast = null;
-
-    /**
-     * 防止toast 多次被创建
-     *
-     * @param context context
-     * @param str     str
-     */
-    private void showToast(Context context, String str) {
-        if (toast == null) {
-            toast = Toast.makeText(context, str, Toast.LENGTH_SHORT);
-        } else {
-            toast.setText(str);
-        }
-        toast.show();
     }
 
     /**
@@ -199,12 +179,13 @@ public class PopupMenuUtil {
 
     /**
      * 弹起 popupWindow
-     *
-     * @param context context
+     *  @param context context
      * @param parent  parent
+     * @param builder
      */
-    public void _show(Context context, View parent) {
+    public void _show(Context context, View parent, PickPhotoView.Builder builder) {
         _createView(context);
+        this.builder = builder;
         if (popupWindow != null && !popupWindow.isShowing()) {
             popupWindow.showAtLocation(parent, Gravity.NO_GRAVITY, 0, 0);
             _openPopupWindowAction();
