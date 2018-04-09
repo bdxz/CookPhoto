@@ -1,16 +1,15 @@
-package com.example.morphtin.dishes.ui;
+package com.example.morphtin.dishes.ui.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.morphtin.dishes.R;
-import com.example.morphtin.dishes.base.BaseFragment;
+import com.example.morphtin.dishes.ui.base.BaseFragment;
 import com.example.morphtin.dishes.ui.view.BottomBar;
-import com.example.morphtin.dishes.ui.view.PopupMenuUtil;
+import com.example.morphtin.dishes.ui.view.CustomPopupWindow;
 import com.example.morphtin.dishes.util.StartBrotherEvent;
 import com.werb.pickphotoview.PickPhotoView;
 
@@ -18,8 +17,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import me.yokeyword.fragmentation.SupportFragment;
 
 /**
@@ -27,7 +24,6 @@ import me.yokeyword.fragmentation.SupportFragment;
  */
 
 public class MainFragment extends BaseFragment {
-    private Unbinder unbinder;
     @BindView(R.id.bottomBar)
     BottomBar mBottomBar;
     @BindView(R.id.center_img)
@@ -45,39 +41,13 @@ public class MainFragment extends BaseFragment {
         return fragment;
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main, container, false);
-        unbinder = ButterKnife.bind(this, view);
-
-        if (savedInstanceState == null) {
-            mFragments[0] = HomeFragment.newInstance();
-            mFragments[1] = DiscoveryFragment.newInstance();
-            mFragments[2] = MessageFragment.newInstance();
-            mFragments[3] = MineFragment.newInstance();
-            loadMultipleRootFragment(R.id.fl_tab_container, 0, mFragments[0], mFragments[1], mFragments[2], mFragments[3]);
-        } else {
-            mFragments[0] = findChildFragment(HomeFragment.class);
-            mFragments[1] = findChildFragment(DiscoveryFragment.class);
-            mFragments[2] = findChildFragment(MessageFragment.class);
-            mFragments[3] = findChildFragment(MineFragment.class);
-        }
-        EventBus.getDefault().register(this);
-        initView(view);
-        return view;
+    protected void initRootView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mRootView = inflater.inflate(R.layout.fragment_main, container, false);
     }
 
-    /**
-     * onDestroyView中进行解绑操作
-     */
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
-
-    private void initView(final View view) {
+    protected void initEvents() {
         mBottomBar.setOnBottombarOnclick(new BottomBar.OnBottonbarClick() {
 
             @Override
@@ -115,10 +85,27 @@ public class MainFragment extends BaseFragment {
                         .setShowCamera(true)
                         .setSpanCount(4)
                         .setLightStatusBar(false);
-
-                PopupMenuUtil.getInstance()._show(getContext(), mCenterImage, builder);
+                CustomPopupWindow customPopupWindow = new CustomPopupWindow(getContext());
+                customPopupWindow.showAtLocation(mCenterImage, Gravity.NO_GRAVITY, 0, 0);
             }
         });
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void initData(boolean isSavedNull) {
+        if (isSavedNull) {
+            mFragments[0] = HomeFragment.newInstance();
+            mFragments[1] = DiscoveryFragment.newInstance();
+            mFragments[2] = MessageFragment.newInstance();
+            mFragments[3] = MineFragment.newInstance();
+            loadMultipleRootFragment(R.id.fl_tab_container, 0, mFragments[0], mFragments[1], mFragments[2], mFragments[3]);
+        } else {
+            mFragments[0] = findChildFragment(HomeFragment.class);
+            mFragments[1] = findChildFragment(DiscoveryFragment.class);
+            mFragments[2] = findChildFragment(MessageFragment.class);
+            mFragments[3] = findChildFragment(MineFragment.class);
+        }
     }
 
     /**
