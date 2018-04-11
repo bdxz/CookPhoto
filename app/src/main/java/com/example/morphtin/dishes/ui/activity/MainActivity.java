@@ -1,9 +1,9 @@
-package com.example.morphtin.dishes.activity;
+package com.example.morphtin.dishes.ui.activity;
 
 import android.os.Bundle;
 
 import com.example.morphtin.dishes.R;
-import com.example.morphtin.dishes.ui.MainFragment;
+import com.example.morphtin.dishes.ui.fragment.MainFragment;
 
 import me.yokeyword.fragmentation.SupportActivity;
 

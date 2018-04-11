@@ -1,4 +1,4 @@
-package com.example.morphtin.dishes.activity;
+package com.example.morphtin.dishes.ui.activity;
 
 import android.app.Activity;
 import android.content.DialogInterface;
