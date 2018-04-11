@@ -31,7 +31,7 @@ public class RetrofitApi {
         return retrofitAPI;
     }
 
-    private interface RetrofitAPI {
+    public interface RetrofitAPI {
 
         //单张图片上传
         @Multipart
@@ -49,7 +49,7 @@ public class RetrofitApi {
         File file1 = new File(path);
         File file2 = new File(path);
 
-        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file1);其中`multipart/form-data`为编码类型
+            RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file1);其中`multipart/form-data`为编码类型
 
         MultipartBody.Part[]  images = new MultipartBody.Part[2];
         files[0] = MultipartBody.Part.createFormData("images", file1.getName(), requestFile);需要注意第一个参数`images'需要与服务器对应,也就是`键`，多个也一样
