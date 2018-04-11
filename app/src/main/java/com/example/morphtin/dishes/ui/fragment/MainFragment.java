@@ -13,10 +13,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.morphtin.dishes.R;
 import com.example.morphtin.dishes.ui.base.BaseFragment;
 import com.example.morphtin.dishes.ui.view.BottomBar;
+import com.example.morphtin.dishes.util.RetrofitApi;
 import com.example.morphtin.dishes.util.StartBrotherEvent;
 import com.werb.pickphotoview.PickPhotoView;
 import com.werb.pickphotoview.util.PickConfig;
@@ -24,11 +26,18 @@ import com.werb.pickphotoview.util.PickConfig;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.io.File;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.BindViews;
 import me.yokeyword.fragmentation.SupportFragment;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by elevation on 18-4-4.
@@ -150,6 +159,28 @@ public class MainFragment extends BaseFragment {
 //                    .addFormDataPart("psd", psd)
 //                    .addFormDataPart("file", file.getName(), RequestBody.create(MediaType.parse("image/*"), file))
 //                    .build();
+
+            MultipartBody.Part[]  images = new MultipartBody.Part[selectPaths.size()];
+            File file;
+            RequestBody requestFile;
+            int index = 0;
+            for(String path:selectPaths){
+                file = new File(path);
+                requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+                images[index++] = MultipartBody.Part.createFormData("images", file.getName(), requestFile);
+            }
+            RetrofitApi.Retrofit().updateImage(images).enqueue(new Callback<Object>() {
+                @Override
+                public void onResponse(Call<Object> call, Response<Object> response) {
+                    Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), response.code() + "", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onFailure(Call<Object> call, Throwable t) {
+                    Toast.makeText(getActivity(), t.toString(), Toast.LENGTH_SHORT).show();
+                }
+            });
 
         }
     }
