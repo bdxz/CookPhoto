@@ -31,6 +31,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.BindViews;
+import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.SupportFragment;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -188,7 +189,7 @@ public class MainFragment extends BaseFragment {
      * Created by elevation on 18-4-9.
      */
 
-    private class CustomPopupWindow extends PopupWindow {
+    public class CustomPopupWindow extends PopupWindow {
         private static final String TAG = "CustomPopupWindow";
 
         private final int top;
@@ -199,8 +200,14 @@ public class MainFragment extends BaseFragment {
         RelativeLayout rlClick;
         @BindView(R.id.pop_iv_img)
         ImageView ivBtn;
-        @BindViews({R.id.test1, R.id.test2, R.id.test3, R.id.test4})
-        LinearLayout llTest1, llTest2, llTest3, llTest4;
+        @BindView(R.id.test1)
+        LinearLayout llTest1;
+        @BindView(R.id.test2)
+        LinearLayout llTest2;
+        @BindView(R.id.test3)
+        LinearLayout llTest3;
+        @BindView(R.id.test4)
+        LinearLayout llTest4;
 
         public CustomPopupWindow(final Context context) {
             super(context);
@@ -213,13 +220,15 @@ public class MainFragment extends BaseFragment {
             setFocusable(false);
 
             // 如果想要popupWindow 遮挡住状态栏可以加上这句代码
-            setClippingEnabled(false);
+            //setClippingEnabled(false);
             setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
             setOutsideTouchable(true);
 
             top = dip2px(context, 310);
             bottom = dip2px(context, 210);
             animatorProperty = new float[]{bottom, 60, -30, -20 - 10, 0};
+
+            ButterKnife.bind(this,view);
 
             rlClick.setOnClickListener(new View.OnClickListener() {
                 @Override
