@@ -21,10 +21,10 @@ public abstract class BaseFragment extends SupportFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         initRootView(inflater, container, savedInstanceState);
-        ButterKnife.bind(null, mRootView);
+        ButterKnife.bind(this, mRootView);
         initEvents();
         initData(savedInstanceState == null);
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return mRootView;
     }
 
     /**

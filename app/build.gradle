@@ -36,17 +36,17 @@ dependencies {
     //fragmentation
     compile 'me.yokeyword:fragmentation:0.10.2'
     //retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    compile 'com.squareup.retrofit2:retrofit:2.4.0'
     //butterknife
-    implementation 'com.jakewharton:butterknife:8.8.1'
+    compile 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     //EventBus
     compile 'org.greenrobot:eventbus:3.1.1'
     //pickphotoview
     compile 'com.werb.pickphotoview:pickphotoview:0.4.6'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     //Gilde
-    implementation 'com.github.bumptech.glide:glide:4.6.1'
+    compile 'com.github.bumptech.glide:glide:4.6.1'
     //RxJava
     compile "io.reactivex.rxjava2:rxjava:2.1.12"
     annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
