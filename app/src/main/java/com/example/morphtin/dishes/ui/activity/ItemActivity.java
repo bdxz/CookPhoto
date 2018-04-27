@@ -24,7 +24,7 @@ import java.util.ArrayList;
 public class ItemActivity extends AppCompatActivity {
     private RecyclerView ItemRecyclerView;
     private ItemAdapter adapter;
-    private ArrayList<String> cookList= new ArrayList<String>();;
+    private ArrayList<String> cookList= new ArrayList<String>();
 
     // adding the toolbar
     @Override
@@ -53,7 +53,7 @@ public class ItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_item);
 
 //        Intent intent = getIntent();
-//        cookList = intent.getParcelableExtra(DetailFragment.EXTRA_MESSAGE);
+//        cookList = intent.getParcelableExtra(EXTRA_MESSAGE);
 
         ItemRecyclerView = (RecyclerView) findViewById(R.id.item_recycler_view);
         ItemRecyclerView.setLayoutManager (new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
