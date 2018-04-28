@@ -137,58 +137,9 @@ public class MainFragment extends BaseFragment {
         EventBus.getDefault().unregister(this);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == 0) {
-            return;
-        }
-        if (data == null) {
-            return;
-        }
-        if (requestCode == PickConfig.INSTANCE.getPICK_PHOTO_DATA()) {
-            List<String> selectPaths = (List<String>) data.getSerializableExtra(PickConfig.INSTANCE.getINTENT_IMG_LIST_SELECT());
-            // do something u want
-//            Retrofit retrofit = new Retrofit.Builder().baseUrl("").build();
-//            UploadPicService service = retrofit.create(UploadPicService.class);
-//            RequestBody requestBody = new MultipartBody.Builder()
-//            service.uploadFiles(selectPaths.get(0),)
-//            //构建body
-//            RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM)
-//                    .addFormDataPart("name", name)
-//                    .addFormDataPart("psd", psd)
-//                    .addFormDataPart("file", file.getName(), RequestBody.create(MediaType.parse("image/*"), file))
-//                    .build();
-
-            MultipartBody.Part[]  images = new MultipartBody.Part[selectPaths.size()];
-            File file;
-            RequestBody requestFile;
-            int index = 0;
-            for(String path:selectPaths){
-                file = new File(path);
-                requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-                images[index++] = MultipartBody.Part.createFormData("images", file.getName(), requestFile);
-            }
-            RetrofitApi.Retrofit().updateImage(images).enqueue(new Callback<Object>() {
-                @Override
-                public void onResponse(Call<Object> call, Response<Object> response) {
-                    Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
-                    Toast.makeText(getActivity(), response.code() + "", Toast.LENGTH_SHORT).show();
-                }
-
-                @Override
-                public void onFailure(Call<Object> call, Throwable t) {
-                    Toast.makeText(getActivity(), t.toString(), Toast.LENGTH_SHORT).show();
-                }
-            });
-
-        }
-    }
-
     /**
      * Created by elevation on 18-4-9.
      */
-
     public class CustomPopupWindow extends PopupWindow {
         private static final String TAG = "CustomPopupWindow";
 
@@ -245,6 +196,10 @@ public class MainFragment extends BaseFragment {
                             .setShowCamera(true)
                             .setSpanCount(4)
                             .setLightStatusBar(false)
+                            .setStatusBarColor(R.color.blue_primary_dark)
+                            .setToolbarColor(R.color.blue_primary)
+                            .setToolbarTextColor(R.color.white)
+                            .setSelectIconColor(R.color.blue_primary)
                             .start();
                 }
             });

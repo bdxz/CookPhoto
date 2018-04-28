@@ -7,6 +7,10 @@ import android.os.Bundle;
 import com.example.morphtin.dishes.R;
 import com.example.morphtin.dishes.ui.fragment.MainFragment;
 import com.example.morphtin.dishes.util.PermissionsChecker;
+import com.werb.pickphotoview.util.PickConfig;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import me.yokeyword.fragmentation.SupportActivity;
 
@@ -46,6 +50,18 @@ public class MainActivity extends SupportActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 0) {
+            return;
+        }
+        if (data == null) {
+            return;
+        }
+        if (requestCode == PickConfig.INSTANCE.getPICK_PHOTO_DATA()) {
+            ArrayList<String> selectPaths = (ArrayList<String>) data.getSerializableExtra(PickConfig.INSTANCE.getINTENT_IMG_LIST_SELECT());
+            Intent intent = new Intent(MainActivity.this,ChoosePhotoActivity.class);
+            intent.putStringArrayListExtra("photoPaths",selectPaths);
+            startActivity(intent);
+        }
         // 拒绝时, 关闭页面, 缺少主要权限, 无法运行
         if (requestCode == REQUEST_CODE && resultCode == PermissionsActivity.PERMISSIONS_DENIED) {
             finish();

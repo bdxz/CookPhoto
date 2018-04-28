@@ -23,6 +23,7 @@
         <activity
             android:name=".ui.activity.PermissionsActivity"
             android:theme="@style/AppTheme.NoActionBar.Permissions" />
+        <activity android:name=".ui.activity.ChoosePhotoActivity"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
