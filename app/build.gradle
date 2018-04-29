@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 27
     buildToolsVersion "26.0.3"
     defaultConfig {
         applicationId "com.example.morphtin.dishes"
@@ -22,6 +22,16 @@ android {
     androidExtensions {
         experimental = true
     }
+    configurations.all {
+        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+            def requested = details.requested
+            if (requested.group == 'com.android.support') {
+                if (!requested.name.startsWith("multidex")) {
+                    details.useVersion '27.1.0'
+                }
+            }
+        }
+    }
 }
 
 dependencies {
@@ -29,26 +39,30 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:26.+'
-    compile 'com.android.support:design:26.+'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.android.support:multidex:1.0.2'
     //fragmentation
-    compile 'me.yokeyword:fragmentation:0.10.2'
     //retrofit
-    compile 'com.squareup.retrofit2:retrofit:2.4.0'
     //butterknife
-    compile 'com.jakewharton:butterknife:8.8.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     //EventBus
-    compile 'org.greenrobot:eventbus:3.1.1'
     //pickphotoview
-    compile 'com.werb.pickphotoview:pickphotoview:0.4.6'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     //Gilde
-    compile 'com.github.bumptech.glide:glide:4.6.1'
     //RxJava
-    compile "io.reactivex.rxjava2:rxjava:2.1.12"
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
+    compile 'com.android.support:appcompat-v7:27.1.0'
+    compile 'com.android.support:design:27'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.android.support:multidex:1.0.2'
+    compile 'me.yokeyword:fragmentation:0.10.2'
+    compile 'com.squareup.retrofit2:retrofit:2.4.0'
+    compile 'com.jakewharton:butterknife:8.8.1'
+    compile 'org.greenrobot:eventbus:3.1.1'
+    compile 'com.werb.pickphotoview:pickphotoview:0.4.6'
+    compile 'com.github.bumptech.glide:glide:4.6.1'
+    compile 'io.reactivex.rxjava2:rxjava:2.1.12'
+    compile 'com.github.SwiftyWang.android-drag-square:dragsquareimage:1.2.3'
+    compile 'de.hdodenhof:circleimageview:2.2.0'
+    compile 'com.github.pinguo-zhouwei:MZBannerView:v2.0.1'
+    compile 'com.squareup.picasso:picasso:2.71828'
     testCompile 'junit:junit:4.12'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
 }
