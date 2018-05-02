@@ -1,21 +1,21 @@
 package com.example.morphtin.dishes.api.common.service;
 
+import com.example.morphtin.dishes.bean.MaterialBean;
+
 import java.util.List;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
-import okhttp3.ResponseBody;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
-import retrofit2.http.Url;
 
 /**
  * Created by elevation on 18-4-9.
  */
 
-public interface UploadPicService {
+public interface IUploadPicService {
     @Multipart
-    @POST()
-    Observable<ResponseBody> uploadFiles(@Url() String url, @Part() List<MultipartBody.Part> parts);
+    @POST("api/get_materials")
+    Observable<List<MaterialBean>> getMaterials(@Part() List<MultipartBody.Part> parts);
 }

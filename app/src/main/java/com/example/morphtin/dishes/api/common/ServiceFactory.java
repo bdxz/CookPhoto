@@ -1,10 +1,5 @@
 package com.example.morphtin.dishes.api.common;
 
-import com.example.morphtin.dishes.api.common.service.UploadPicService;
-
-import java.io.File;
-
-import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;

@@ -4,5 +4,6 @@ package com.example.morphtin.dishes.common;
  * Created by elevation on 18-4-29.
  */
 
-class Constant {
+public class Constant {
+    public static final boolean DEBUG = true;
 }

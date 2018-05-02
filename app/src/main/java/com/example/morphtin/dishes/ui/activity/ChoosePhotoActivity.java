@@ -13,6 +13,7 @@ import com.example.morphtin.dishes.api.presenter.IMaterialPresenter;
 import com.example.morphtin.dishes.api.presenter.impl.MaterialPresenterImpl;
 import com.example.morphtin.dishes.bean.MaterialBean;
 import com.example.morphtin.dishes.ui.adapter.PhotoAdapter;
+import com.example.morphtin.dishes.ui.base.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +26,9 @@ import me.yokeyword.fragmentation.SupportActivity;
  * Created by elevation on 18-4-25.
  */
 
-public class ChoosePhotoActivity extends SupportActivity{
+public class ChoosePhotoActivity extends BaseActivity {
     private PhotoAdapter adapter;
+    private ArrayList<String> photoPaths;
 
     @BindView(R.id.photo_list)
     RecyclerView photoList;
@@ -35,23 +37,29 @@ public class ChoosePhotoActivity extends SupportActivity{
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_photo);
-
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
+    }
 
-        final ArrayList<String> photoPaths = getIntent().getStringArrayListExtra("photoPaths");
-        adapter = new PhotoAdapter(this,photoPaths);
+    @Override
+    protected void initData() {
+        photoPaths = getIntent().getStringArrayListExtra("photoPaths");
+        adapter = new PhotoAdapter(this, photoPaths);
         GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
         photoList.setLayoutManager(layoutManager);
         photoList.setAdapter(adapter);
 
         adapter.updateData(photoPaths);
+    }
 
+    @Override
+    protected void initEvents() {
         mProcessButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ChoosePhotoActivity.this,MaterialListActivity.class);
+                Intent intent = new Intent(ChoosePhotoActivity.this, MaterialListActivity.class);
+                intent.putStringArrayListExtra("photoPaths", photoPaths);
                 startActivity(intent);
             }
         });

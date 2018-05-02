@@ -10,11 +10,11 @@ import com.example.morphtin.dishes.util.PermissionsChecker;
 import com.werb.pickphotoview.util.PickConfig;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import me.yokeyword.fragmentation.SupportActivity;
 
 public class MainActivity extends SupportActivity {
+    private static final String TAG = "MainActivity";
     private static final int REQUEST_CODE = 0; // 请求码
 
     // 所需的全部权限
@@ -34,12 +34,14 @@ public class MainActivity extends SupportActivity {
             loadRootFragment(R.id.fragment_container, MainFragment.newInstance());
         }
 
+
         mPermissionsChecker = new PermissionsChecker(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
 
         // 缺少权限时, 进入权限配置页面
         if (mPermissionsChecker.lacksPermissions(PERMISSIONS)) {

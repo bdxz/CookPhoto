@@ -35,8 +35,6 @@ dependencies {
     compile 'com.android.support:multidex:1.0.2'
     //fragmentation
     compile 'me.yokeyword:fragmentation:0.10.2'
-    //retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     //butterknife
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'

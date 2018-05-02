@@ -11,6 +11,7 @@ public class MaterialBean implements Parcelable{
     private String title;
     private String catelog;
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -18,12 +19,16 @@ public class MaterialBean implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.title);
+        dest.writeString(this.catelog);
     }
 
     public MaterialBean() {
     }
 
     protected MaterialBean(Parcel in) {
+        this.title = in.readString();
+        this.catelog = in.readString();
     }
 
     public static final Creator<MaterialBean> CREATOR = new Creator<MaterialBean>() {

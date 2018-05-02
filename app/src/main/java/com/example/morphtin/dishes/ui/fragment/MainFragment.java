@@ -2,7 +2,6 @@ package com.example.morphtin.dishes.ui.fragment;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -13,32 +12,19 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.example.morphtin.dishes.R;
 import com.example.morphtin.dishes.ui.base.BaseFragment;
 import com.example.morphtin.dishes.ui.view.BottomBar;
-import com.example.morphtin.dishes.util.RetrofitApi;
 import com.example.morphtin.dishes.util.StartBrotherEvent;
 import com.werb.pickphotoview.PickPhotoView;
-import com.werb.pickphotoview.util.PickConfig;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.io.File;
-import java.util.List;
-
 import butterknife.BindView;
-import butterknife.BindViews;
 import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.SupportFragment;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by elevation on 18-4-4.
