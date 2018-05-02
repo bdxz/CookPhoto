@@ -133,34 +133,34 @@ public class MainFragment extends BaseFragment {
         EventBus.getDefault().unregister(this);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == 0) {
-            return;
-        }
-        if (data == null) {
-            return;
-        }
-        if (requestCode == PickConfig.INSTANCE.getPICK_PHOTO_DATA()) {
-            List<String> selectPaths = (List<String>) data.getSerializableExtra(PickConfig.INSTANCE.getINTENT_IMG_LIST_SELECT());
-            // do something u want
-//            Retrofit retrofit = new Retrofit.Builder().baseUrl("").build();
-//            UploadPicService service = retrofit.create(UploadPicService.class);
-//            RequestBody requestBody = new MultipartBody.Builder()
-//            service.uploadFiles(selectPaths.get(0),)
-//            //构建body
-//            RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM)
-//                    .addFormDataPart("name", name)
-//                    .addFormDataPart("psd", psd)
-//                    .addFormDataPart("file", file.getName(), RequestBody.create(MediaType.parse("image/*"), file))
-//                    .build();
-
-
-
-
-        }
-    }
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (resultCode == 0) {
+//            return;
+//        }
+//        if (data == null) {
+//            return;
+//        }
+//        if (requestCode == PickConfig.INSTANCE.getPICK_PHOTO_DATA()) {
+//            List<String> selectPaths = (List<String>) data.getSerializableExtra(PickConfig.INSTANCE.getINTENT_IMG_LIST_SELECT());
+//            // do something u want
+////            Retrofit retrofit = new Retrofit.Builder().baseUrl("").build();
+////            UploadPicService service = retrofit.create(UploadPicService.class);
+////            RequestBody requestBody = new MultipartBody.Builder()
+////            service.uploadFiles(selectPaths.get(0),)
+////            //构建body
+////            RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM)
+////                    .addFormDataPart("name", name)
+////                    .addFormDataPart("psd", psd)
+////                    .addFormDataPart("file", file.getName(), RequestBody.create(MediaType.parse("image/*"), file))
+////                    .build();
+//
+//
+//
+//
+//        }
+//    }
 
     /**
      * Created by elevation on 18-4-9.
@@ -223,6 +223,10 @@ public class MainFragment extends BaseFragment {
                             .setShowCamera(true)
                             .setSpanCount(4)
                             .setLightStatusBar(false)
+                            .setStatusBarColor(R.color.blue_primary_dark)
+                            .setToolbarColor(R.color.blue_primary)
+                            .setToolbarTextColor(R.color.white)
+                            .setSelectIconColor(R.color.blue_primary)
                             .start();
                     close();
                 }
