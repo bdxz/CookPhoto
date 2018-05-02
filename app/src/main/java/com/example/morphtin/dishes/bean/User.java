@@ -129,6 +129,11 @@ public class User implements Parcelable {
 
     }
 
+    public void updateUser(String name,User user){
+        ContentValues values = getContentValues(user);
+        mDatabase.update(UserDbSchema.UserTable.TABLENAME, values,"name = ?", new String[] { name });
+    }
+
 //    public List<User> getUsers(){
 //        Users.clear();
 //        UserCursorWrapper cursor = queryUsers(null, null);

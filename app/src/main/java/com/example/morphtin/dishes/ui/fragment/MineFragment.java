@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.morphtin.dishes.R;
@@ -22,7 +23,8 @@ public class MineFragment extends BaseFragment {
 
     private CircleImageView mCircleImageView;
     private User user;
-    TextView textViewName;
+    private TextView textViewName;
+    private LinearLayout profileLayout;
 
 
     public static MineFragment newInstance() {
@@ -44,13 +46,21 @@ public class MineFragment extends BaseFragment {
                 mCircleImageView.setImageResource(R.drawable.vegetable);
             }
         });
-        user = User.getUser(getActivity()).getUserInf("昵称");
         textViewName = view.findViewById(R.id.profile_name);
-        setProfile();
+        profileLayout = view.findViewById(R.id.profile_layout);
+        profileLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                User.getUser(getActivity()).updateUser("昵称",new User("update","昵称","update","null"));
+                setProfile("昵称");
+            }
+        });
+        setProfile("昵称");
         return view;
     }
 
-    public void setProfile(){
+    public void setProfile(String name){
+        user = User.getUser(getActivity()).getUserInf(name);
         textViewName.setText(user.getName());
     }
 

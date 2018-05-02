@@ -26,6 +26,7 @@ public class UploadMenuActivity extends AppCompatActivity {
     // adding the toolbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.toolbar_menu, menu);
         return true;
