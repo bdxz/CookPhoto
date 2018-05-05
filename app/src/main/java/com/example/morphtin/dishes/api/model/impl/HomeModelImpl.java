@@ -34,6 +34,6 @@ public class HomeModelImpl implements IHomeModel {
             public void accept(Disposable disposable) throws Exception {
 
             }
-        }).subscribeOn(AndroidSchedulers.mainThread()).subscribe(listener);
+        }).observeOn(AndroidSchedulers.mainThread()).subscribe(listener);
     }
 }

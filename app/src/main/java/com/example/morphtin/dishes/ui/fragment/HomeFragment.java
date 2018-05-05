@@ -1,22 +1,19 @@
 package com.example.morphtin.dishes.ui.fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.morphtin.dishes.R;
 import com.example.morphtin.dishes.api.presenter.IHomePresenter;
 import com.example.morphtin.dishes.api.presenter.impl.HomePresenterImpl;
 import com.example.morphtin.dishes.api.view.IHomeView;
 import com.example.morphtin.dishes.bean.BannerItem;
-import com.example.morphtin.dishes.ui.activity.WebActivity;
 import com.example.morphtin.dishes.ui.base.BaseFragment;
 import com.squareup.picasso.Picasso;
 import com.zhouwei.mzbanner.MZBannerView;
@@ -26,17 +23,20 @@ import com.zhouwei.mzbanner.holder.MZViewHolder;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 /**
  * Created by elevation on 18-4-4.
  */
 
-public class HomeFragment extends BaseFragment implements IHomeView{
+public class HomeFragment extends BaseFragment implements IHomeView {
     private static final String TAG = "HomeFragment";
-    public static final String EXTRA_MESSAGE = "WEBLINKMESSAGE";
-    private IHomePresenter presenter;
 
-    private MZBannerView mMZBanner;
-    private List<BannerItem> list = new ArrayList<BannerItem>();
+    @BindView(R.id.banner)
+    MZBannerView mMZBanner;
+    @BindView(R.id.button)
+    Button button;
+    private IHomePresenter presenter;
 
     public static HomeFragment newInstance() {
         Bundle bundle = new Bundle();
@@ -47,30 +47,42 @@ public class HomeFragment extends BaseFragment implements IHomeView{
     }
 
 
-
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+    protected void initRootView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mRootView = inflater.inflate(R.layout.fragment_home, container, false);
+    }
 
-        mMZBanner = (MZBannerView) view.findViewById(R.id.banner);
+    @Override
+    protected void initEvents() {
         mMZBanner.setBannerPageClickListener(new MZBannerView.BannerPageClickListener() {
-        @Override
-        public void onPageClick(View view, int position) {
-            Intent intent = new Intent(getActivity(), WebActivity.class);
-            intent.putExtra(EXTRA_MESSAGE,list.get(position).getLink());
-            startActivity(intent);
-
-            //Toast.makeText(getContext(),"click page:"+position, Toast.LENGTH_LONG).show();
+            @Override
+            public void onPageClick(View view, int position) {
             }
         });
 
-        presenter = new HomePresenterImpl(this);
-        presenter.loadHome();
-        return view;
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                List<BannerItem> list = new ArrayList<>();
+                list.add(new BannerItem("https://i8.meishichina.com/attachment/recipe/2015/04/23/20150423445baeb70fbbbf3e.jpg@!p800",""));
+                setBanner(list);
+            }
+        });
     }
 
-    private void setBanner(List<BannerItem> list){
+    @Override
+    protected void initData(boolean isSavedNull) {
+        presenter = new HomePresenterImpl(this);
+        presenter.loadHome();
+
+        List<BannerItem> list = new ArrayList<>();
+        list.add(new BannerItem("https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike80%2C5%2C5%2C80%2C26/sign=016cb4fcd243ad4bb2234e92e36b31ca/359b033b5bb5c9eacd914abad639b6003af3b30d.jpg","www.baidu.com"));
+        setBanner(list);
+    }
+
+
+    private void setBanner(List<BannerItem> list) {
         // 设置数据
         mMZBanner.setPages(list, new MZHolderCreator<BannerViewHolder>() {
             @Override
@@ -78,13 +90,7 @@ public class HomeFragment extends BaseFragment implements IHomeView{
                 return new BannerViewHolder();
             }
         });
-//        new Thread() {
-//            @Override
-//            public void run() {
-                mMZBanner.start();
-//             }
-//        }.start();
-
+        mMZBanner.start();
     }
 
     @Override
@@ -117,12 +123,12 @@ public class HomeFragment extends BaseFragment implements IHomeView{
 
     @Override
     public void updateView(List<BannerItem> data) {
-        Log.d(TAG, "updateView: ");
-        for (BannerItem banner: data) {
-            Log.d(TAG, "updateView: "+banner.getImageUrl());
+        for (BannerItem banner : data) {
+            Log.d(TAG, "updateView: " + banner.getImageUrl());
         }
         setBanner(data);
     }
+
 
     @Override
     public void showMessage(String msg) {
@@ -132,10 +138,11 @@ public class HomeFragment extends BaseFragment implements IHomeView{
 
     public static class BannerViewHolder implements MZViewHolder<BannerItem> {
         private ImageView mImageView;
+
         @Override
         public View createView(Context context) {
             // 返回页面布局
-            View view = LayoutInflater.from(context).inflate(R.layout.banner_item,null);
+            View view = LayoutInflater.from(context).inflate(R.layout.banner_item, null);
             mImageView = (ImageView) view.findViewById(R.id.banner_image);
             return view;
         }
@@ -143,25 +150,7 @@ public class HomeFragment extends BaseFragment implements IHomeView{
         @Override
         public void onBind(Context context, int position, BannerItem data) {
             // 数据绑定
-            //mImageView.setImageResource(data);
             Picasso.get().load(data.getImageUrl()).into(mImageView);
         }
-
-
-    }
-
-    @Override
-    protected void initRootView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-    }
-
-    @Override
-    protected void initEvents() {
-
-    }
-
-    @Override
-    protected void initData(boolean isSavedNull) {
-
     }
 }

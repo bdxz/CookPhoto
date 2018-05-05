@@ -31,7 +31,7 @@ public class WebActivity extends AppCompatActivity {
         mProgressBar.setMax(100); // WebChromeClient reports in range 0-100
         titleTextView = (TextView) findViewById(R.id.titleTextView);
         Intent intent = getIntent();
-        url = intent.getStringExtra(HomeFragment.EXTRA_MESSAGE);
+        url = intent.getStringExtra("");
 
         setup();
     }
