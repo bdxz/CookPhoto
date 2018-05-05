@@ -18,13 +18,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.morphtin.dishes.R;
+import com.example.morphtin.dishes.api.presenter.ICookItemPresenter;
+import com.example.morphtin.dishes.api.presenter.impl.CookItemPresenterImpl;
+import com.example.morphtin.dishes.api.view.ICookItemView;
 
 import java.util.ArrayList;
 
-public class ItemActivity extends AppCompatActivity {
+public class ItemActivity extends AppCompatActivity implements ICookItemView{
     private RecyclerView ItemRecyclerView;
     private ItemAdapter adapter;
     private ArrayList<String> cookList= new ArrayList<String>();
+
+    private ICookItemPresenter presenter;
 
     // adding the toolbar
     @Override
@@ -40,8 +45,7 @@ public class ItemActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.check_ok:
-
-                return true;
+                upload();
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -67,6 +71,7 @@ public class ItemActivity extends AppCompatActivity {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(ItemRecyclerView); //set swipe to recylcerview
 
+        presenter = new CookItemPresenterImpl(this);
     }
 
 
@@ -76,6 +81,9 @@ public class ItemActivity extends AppCompatActivity {
         cookList.add("白菜");
     }
 
+    public void upload(){
+        presenter.uploadCookItem(cookList);
+    }
 
     private class ItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 

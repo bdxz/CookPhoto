@@ -9,40 +9,14 @@
         android:orientation="vertical"
         tools:context="com.example.morphtin.dishes.ui.activity.UploadMenuActivity">
 
-        <cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout
-            android:id="@+id/snpl_moment_add_photos"
-            android:layout_width="match_parent"
-            style="@style/WrapWrap"
-            android:layout_margin="10dp"
-            app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
-            app:bga_snpl_deleteDrawableOverlapQuarter="false"
-            app:bga_snpl_editable="true"
-            app:bga_snpl_itemCornerRadius="0dp"
-            app:bga_snpl_itemSpanCount="3"
-            app:bga_snpl_itemWhiteSpacing="4dp"
-            app:bga_snpl_itemWidth="0dp"
-            app:bga_snpl_maxItemCount="9"
-            app:bga_snpl_otherWhiteSpacing="100dp"
-            app:bga_snpl_placeholderDrawable="@mipmap/bga_pp_ic_holder_light"
-            app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
-            app:bga_snpl_plusEnable="true"
-            app:bga_snpl_sortable="true" />
-        <!--<com.swifty.dragsquareimage.DraggableSquareView-->
-            <!--android:id="@+id/drag_square"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="#ffffff"/>-->
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/menu_image"
+        android:layout_width="match_parent"
+        android:layout_height="118dp"
+        android:src="@drawable/add"
+        app:civ_border_color="#FFFFFF"
+        app:civ_border_width="2dp" />
 
-        <!--<Button-->
-            <!--android:id="@+id/showUrls"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:onClick="showUrls"/>-->
-
-        <!--<TextView-->
-            <!--android:id="@+id/contentText"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"/>-->
         <include layout="@layout/upload_menu_details"/>
 
         <android.support.v7.widget.RecyclerView
@@ -61,7 +35,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="0dp"
-            android:text="上传菜谱"
+            android:text="添加步骤"
+                android:onClick="addAMenuStep"
             android:textColor="@android:color/white"
             android:textSize="18sp"
             custom:pb_colorComplete="@color/green_complete"

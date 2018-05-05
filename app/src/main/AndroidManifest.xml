@@ -54,10 +54,22 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.activity.WebActivity"
+<<<<<<< HEAD
             android:parentActivityName=".ui.activity.MainActivity" />
         <activity android:name=".ui.activity.ItemActivity" />
         <activity android:name=".ui.activity.ChooseMaterialActivity" android:theme="@style/AppTheme.NoActionBar">
         </activity>
+=======
+            android:parentActivityName=".ui.activity.MainActivity"
+            />
+        <activity
+            android:name=".ui.activity.ItemActivity"
+            />
+        <activity
+            android:name=".ui.activity.AddMenuStep"
+            android:parentActivityName=".ui.activity.UploadMenuActivity"
+            />
+>>>>>>> cb0ed1e8a98f796271fb4af9be2834d5eed7df61
     </application>
 
 </manifest>
