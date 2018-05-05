@@ -107,6 +107,17 @@ public class User implements Parcelable {
         return description;
     }
 
+    public void setName(String name){
+        this.name=name;
+    }
+    public void setImage(String profileImage){
+        this.profileImage=profileImage;
+    }
+    public void setAge(String age){this.age= age; }
+    public void setDescription(String description){
+        this.description=description;
+    }
+
 
     public User getUserInf(String name){
         UserCursorWrapper cursor = queryUsers(
