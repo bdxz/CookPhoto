@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.morphtin.dishes.R;
+import com.example.morphtin.dishes.api.presenter.IHomePresenter;
+import com.example.morphtin.dishes.api.presenter.impl.HomePresenterImpl;
+import com.example.morphtin.dishes.api.view.IHomeView;
 import com.example.morphtin.dishes.bean.BannerItem;
 import com.example.morphtin.dishes.ui.activity.WebActivity;
 import com.example.morphtin.dishes.ui.base.BaseFragment;
@@ -26,8 +30,10 @@ import java.util.List;
  * Created by elevation on 18-4-4.
  */
 
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment implements IHomeView{
+    private static final String TAG = "HomeFragment";
     public static final String EXTRA_MESSAGE = "WEBLINKMESSAGE";
+    private IHomePresenter presenter;
 
     private MZBannerView mMZBanner;
     private List<BannerItem> list = new ArrayList<BannerItem>();
@@ -59,17 +65,9 @@ public class HomeFragment extends BaseFragment {
             }
         });
 
-        getList();
-        setBanner(list);
+        presenter = new HomePresenterImpl(this);
+        presenter.loadHome();
         return view;
-    }
-
-    private List<BannerItem> getList(){
-        list.add(new BannerItem("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1524745128749&di=2987e5162bd809acd55bfd63770e5840&imgtype=0&src=http%3A%2F%2Fimg3.duitang.com%2Fuploads%2Fblog%2F201409%2F12%2F20140912223817_f2YZs.thumb.700_0.jpeg","https://www.baidu.com/"));
-        list.add(new BannerItem("https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=897200727,4104403946&fm=27&gp=0.jpg","https://www.baidu.com"));
-        list.add(new BannerItem("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1524745170708&di=93e97272736e5bbde488b350606371b0&imgtype=0&src=http%3A%2F%2Fimg3.duitang.com%2Fuploads%2Fblog%2F201409%2F12%2F20140912223610_tvekx.thumb.700_0.jpeg","https://www.baidu.com/"));
-
-        return list;
     }
 
     private void setBanner(List<BannerItem> list){
@@ -107,6 +105,29 @@ public class HomeFragment extends BaseFragment {
         mMZBanner.start();//开始轮播
     }
 
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void hideProgress() {
+
+    }
+
+    @Override
+    public void updateView(List<BannerItem> data) {
+        Log.d(TAG, "updateView: ");
+        for (BannerItem banner: data) {
+            Log.d(TAG, "updateView: "+banner.getImageUrl());
+        }
+        setBanner(data);
+    }
+
+    @Override
+    public void showMessage(String msg) {
+
+    }
 
 
     public static class BannerViewHolder implements MZViewHolder<BannerItem> {

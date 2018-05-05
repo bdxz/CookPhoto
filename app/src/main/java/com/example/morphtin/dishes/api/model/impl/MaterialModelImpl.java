@@ -1,9 +1,7 @@
 package com.example.morphtin.dishes.api.model.impl;
 
-import android.util.Log;
-
 import com.example.morphtin.dishes.api.common.ServiceFactory;
-import com.example.morphtin.dishes.api.common.service.IUploadPicService;
+import com.example.morphtin.dishes.api.common.service.IMaterialListService;
 import com.example.morphtin.dishes.api.model.IMaterialModel;
 import com.example.morphtin.dishes.bean.MaterialBean;
 import com.example.morphtin.dishes.common.Constant;
@@ -21,9 +19,6 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by elevation on 18-4-25.
@@ -34,11 +29,11 @@ public class MaterialModelImpl implements IMaterialModel {
 
     @Override
     public void loadMaterialList(ArrayList<String> photoPaths, final Observer<List<MaterialBean>> listener) {
-        IUploadPicService service;
+        IMaterialListService service;
         if(Constant.DEBUG){
-            service = ServiceFactory.createService(URL.HOST_URL_DEBUG,IUploadPicService.class);
+            service = ServiceFactory.createService(URL.HOST_URL_DEBUG,IMaterialListService.class);
         }else{
-            service = ServiceFactory.createService(URL.HOST_URL_CUSTOM,IUploadPicService.class);
+            service = ServiceFactory.createService(URL.HOST_URL_CUSTOM,IMaterialListService.class);
         }
 
         List<MultipartBody.Part> partList = new ArrayList<>();
