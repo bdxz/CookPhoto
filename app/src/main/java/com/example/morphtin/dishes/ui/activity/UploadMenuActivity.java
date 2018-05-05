@@ -48,6 +48,7 @@ public class UploadMenuActivity extends BGAPPToolbarActivity implements BGASorta
 
     private static final int RC_CHOOSE_PHOTO = 1;
     private static final int RC_PHOTO_PREVIEW = 2;
+    private static final int ADD_NEW_MENU_STEP = 7;
 
     private BGASortableNinePhotoLayout mPhotosSnpl;
     private List<String> images = new ArrayList<>();
@@ -75,6 +76,12 @@ public class UploadMenuActivity extends BGAPPToolbarActivity implements BGASorta
         return true;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        adapter.notifyDataSetChanged();
+    }
         @Override
         protected void initView(Bundle savedInstanceState) {
             setContentView(R.layout.activity_upload_menu);
@@ -95,8 +102,7 @@ public class UploadMenuActivity extends BGAPPToolbarActivity implements BGASorta
         }
 
     public void initMenuList(){
-        menuList.add(new MenuStep(null,null,"start from the botton"));
-        menuList.add(new MenuStep(null,null,"start from the above"));
+        //menuList.add(new MenuStep(null,null,"start from the botton"));
     }
 
 
@@ -279,17 +285,21 @@ public class UploadMenuActivity extends BGAPPToolbarActivity implements BGASorta
         public void bind(String name,String image){
             ItemName = name;
             mTv.setText(name);
-            imageView.setImageResource(R.drawable.vegetable);
-
+            if(ItemName.equals("++++")){
+                mTv.setText("添加步骤");
+                imageView.setImageResource(R.drawable.addmenu);
+            }else {
+                imageView.setImageResource(R.drawable.vegetable);
+            }
         }
 
 
         @Override
         public void onClick(View view) {
             if(ItemName.equals("++++")) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(UploadMenuActivity.this); //alert for confirm
-                builder.setMessage("++++++"); //set message
-                builder.show();
+//                AlertDialog.Builder builder = new AlertDialog.Builder(UploadMenuActivity.this); //alert for confirm
+//                builder.setMessage("++++++"); //set message
+//                builder.show();
             }
         }
 

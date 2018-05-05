@@ -31,19 +31,19 @@
             />
 
     </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="@dimen/main_interval_v3"
-        android:background="#f0f0f0" />
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:layout_marginTop="@dimen/main_interval_v3"-->
+        <!--android:background="#f0f0f0" />-->
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="点击编辑菜单信息"
-        android:textColor="@color/text_c1"
-        android:textSize="12sp" />
+    <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:gravity="center_horizontal"-->
+        <!--android:text="点击编辑菜单信息"-->
+        <!--android:textColor="@color/text_c1"-->
+        <!--android:textSize="12sp" />-->
 
     <!--<EditText-->
         <!--android:id="@+id/menu_details"-->
