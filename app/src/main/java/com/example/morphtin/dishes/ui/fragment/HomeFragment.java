@@ -34,8 +34,6 @@ public class HomeFragment extends BaseFragment implements IHomeView {
 
     @BindView(R.id.banner)
     MZBannerView mMZBanner;
-    @BindView(R.id.button)
-    Button button;
     private IHomePresenter presenter;
 
     public static HomeFragment newInstance() {
@@ -59,26 +57,12 @@ public class HomeFragment extends BaseFragment implements IHomeView {
             public void onPageClick(View view, int position) {
             }
         });
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                List<BannerItem> list = new ArrayList<>();
-                list.add(new BannerItem("https://i8.meishichina.com/attachment/recipe/2015/04/23/20150423445baeb70fbbbf3e.jpg@!p800",""));
-                setBanner(list);
-            }
-        });
     }
 
     @Override
     protected void initData(boolean isSavedNull) {
         presenter = new HomePresenterImpl(this);
         presenter.loadHome();
-
-        List<BannerItem> list = new ArrayList<>();
-        list.add(new BannerItem("https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike80%2C5%2C5%2C80%2C26/sign=016cb4fcd243ad4bb2234e92e36b31ca/359b033b5bb5c9eacd914abad639b6003af3b30d.jpg","www.baidu.com"));
-        setBanner(list);
     }
 
 
@@ -123,9 +107,6 @@ public class HomeFragment extends BaseFragment implements IHomeView {
 
     @Override
     public void updateView(List<BannerItem> data) {
-        for (BannerItem banner : data) {
-            Log.d(TAG, "updateView: " + banner.getImageUrl());
-        }
         setBanner(data);
     }
 
