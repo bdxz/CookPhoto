@@ -5,5 +5,5 @@ package com.example.morphtin.dishes.common;
  */
 
 public class Constant {
-    public static final boolean DEBUG = false;
+    public static final boolean DEBUG = true;
 }

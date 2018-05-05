@@ -9,6 +9,5 @@ import java.util.ArrayList;
  */
 
 public interface IMaterialPresenter {
-
     void loadMaterials(ArrayList<String> photoPaths);
 }
