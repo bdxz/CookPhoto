@@ -1,21 +1,15 @@
 package com.example.morphtin.dishes.ui.activity;
 
-import android.Manifest;
-import android.content.ContentResolver;
+
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,35 +19,30 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.morphtin.dishes.R;
+import com.example.morphtin.dishes.api.presenter.IMenuPresenter;
+import com.example.morphtin.dishes.api.presenter.impl.MenuPresenterImpl;
+import com.example.morphtin.dishes.api.view.IMenuView;
+import com.example.morphtin.dishes.bean.MenuBean;
 import com.example.morphtin.dishes.bean.MenuStep;
-import com.swifty.dragsquareimage.DraggablePresenter;
-import com.swifty.dragsquareimage.DraggablePresenterImpl;
-import com.swifty.dragsquareimage.DraggableSquareView;
 
-import java.io.File;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.bingoogolapple.photopicker.activity.BGAPPToolbarActivity;
+
 import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
-import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerPreviewActivity;
-import cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout;
+import de.hdodenhof.circleimageview.CircleImageView;
 
-public class UploadMenuActivity extends BGAPPToolbarActivity implements BGASortableNinePhotoLayout.Delegate{//extends AppCompatActivity{
-
-    private static final int PRC_PHOTO_PICKER = 1;
+public class UploadMenuActivity extends AppCompatActivity implements IMenuView{
 
     private static final int RC_CHOOSE_PHOTO = 1;
-    private static final int RC_PHOTO_PREVIEW = 2;
     private static final int ADD_NEW_MENU_STEP = 7;
 
-    private BGASortableNinePhotoLayout mPhotosSnpl;
-    private List<String> images = new ArrayList<>();
+    private CircleImageView mCircleImageView;
+    private String imagePath;
 
-   // private DraggablePresenter draggablePresent;
     private EditText menuTitle;
 
 
@@ -61,16 +50,10 @@ public class UploadMenuActivity extends BGAPPToolbarActivity implements BGASorta
     private ItemAdapter adapter;
     private ArrayList<MenuStep> menuList= new ArrayList<>();
 
-        @Override
-        protected void setListener() {
-            // 设置拖拽排序控件的代理
-            mPhotosSnpl.setDelegate(this);
-        }
-
+    private IMenuPresenter presenter;
     // adding the toolbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.toolbar_menu, menu);
         return true;
@@ -79,51 +62,42 @@ public class UploadMenuActivity extends BGAPPToolbarActivity implements BGASorta
     @Override
     public void onResume() {
         super.onResume();
-
         adapter.notifyDataSetChanged();
     }
-        @Override
-        protected void initView(Bundle savedInstanceState) {
-            setContentView(R.layout.activity_upload_menu);
-            menuTitle = (EditText) findViewById(R.id.menu_title);
-            mPhotosSnpl = findViewById(R.id.snpl_moment_add_photos);
-            mPhotosSnpl.setMaxItemCount(9);
-            mPhotosSnpl.setEditable(true);
-            mPhotosSnpl.setPlusEnable(true);
-            mPhotosSnpl.setSortable(true);
 
-            ItemRecyclerView = (RecyclerView) findViewById(R.id.menu_item_recycler_view);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_upload_menu);
+        getSupportActionBar().setTitle("上传菜谱");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-            initMenuList();
-            adapter = new ItemAdapter(menuList);
-            ItemRecyclerView.setAdapter(adapter);
+        mCircleImageView = (CircleImageView)findViewById(R.id.menu_image);
+        mCircleImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent photoPickerIntent = new BGAPhotoPickerActivity.IntentBuilder(getApplicationContext())
+                        .cameraFileDir(null) // 拍照后照片的存放目录，改成你自己拍照后要存放照片的目录。如果不传递该参数的话则不开启图库里的拍照功能
+                        .maxChooseCount(1) // 图片选择张数的最大值
+                        .selectedPhotos(null) // 当前已选中的图片路径集合
+                        .pauseOnScroll(false) // 滚动列表时是否暂停加载图片
+                        .build();
+                startActivityForResult(photoPickerIntent, RC_CHOOSE_PHOTO);
+            }
+        });
+        menuTitle = (EditText) findViewById(R.id.menu_title);
+        ItemRecyclerView = (RecyclerView) findViewById(R.id.menu_item_recycler_view);
 
-            ItemRecyclerView.setLayoutManager (new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        }
+        adapter = new ItemAdapter(menuList);
+        ItemRecyclerView.setAdapter(adapter);
 
-    public void initMenuList(){
-        //menuList.add(new MenuStep(null,null,"start from the botton"));
+        ItemRecyclerView.setLayoutManager (new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(ItemRecyclerView); //set swipe to recylcerview
+
+        presenter = new MenuPresenterImpl(this);
+
     }
-
-
-        @Override
-        protected void processLogic(Bundle savedInstanceState) {
-            setTitle("上传菜谱");
-        }
-
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_upload_menu);
-//        getSupportActionBar().setTitle("上传菜谱");
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//
-//        //DraggableSquareView dragSquare = (DraggableSquareView) findViewById(R.id.drag_square);
-//        //draggablePresent = new DraggablePresenterImpl(this, dragSquare);
-//
-//        //draggablePresent.setCustomActionDialog(new MyActionDialog(this));
-//        //draggablePresent.setImages(new String[]{"http://lorempixel.com/400/400?flag=0", "http://lorempixel.com/400/400?flag=1", "http://lorempixel.com/400/400?flag=2", "http://lorempixel.com/400/400?flag=3", "http://lorempixel.com/400/400?flag=4", "http://lorempixel.com/400/400?flag=5"});
-//    }
 
 
 
@@ -141,129 +115,48 @@ public class UploadMenuActivity extends BGAPPToolbarActivity implements BGASorta
     }
 
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent result) {
-//        draggablePresent.onActivityResult(requestCode, resultCode, result);
-//    }
-
-    /**
-     * 根据Uri获取图片文件的绝对路径
-     */
-    public String getAbsolutePath(final Uri uri) {
-        if (null == uri) {
-            return null;
-        }
-
-        final String scheme = uri.getScheme();
-        String data = null;
-        if (scheme == null) {
-            data = uri.getPath();
-        } else if (ContentResolver.SCHEME_FILE.equals(scheme)) {
-            data = uri.getPath();
-        } else if (ContentResolver.SCHEME_CONTENT.equals(scheme)) {
-            Cursor cursor = getContentResolver().query(uri,
-                    new String[]{MediaStore.Images.ImageColumns.DATA}, null, null, null);
-            if (null != cursor) {
-                if (cursor.moveToFirst()) {
-                    int index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-                    if (index > -1) {
-                        data = cursor.getString(index);
-                    }
-                }
-                cursor.close();
-            }
-        }
-        return data;
-    }
 
     public void uploadMenu() {
-//        SparseArray<String> array = draggablePresent.getImageUrls();
-//        if (array == null) return;
-
-
         String Title = menuTitle.getText().toString();
 
-        menuTitle.setText(images.toString());
+        MenuBean menuBean = new MenuBean();
+        menuBean.setTitle(Title);
+        menuBean.setImageTitle(imagePath);
+        menuBean.setSteps(menuList);
+
+        presenter.uploadMenu(menuBean);
     }
 
-
-    @Override
-    public void onClickAddNinePhotoItem(BGASortableNinePhotoLayout sortableNinePhotoLayout, View view, int position, ArrayList<String> models) {
-        choicePhotoWrapper();
+    public void addAMenuStep(View v){
+        Intent intent = new Intent(getApplicationContext(),AddMenuStep.class);
+        startActivityForResult(intent, ADD_NEW_MENU_STEP);
     }
 
-    @Override
-    public void onClickDeleteNinePhotoItem(BGASortableNinePhotoLayout sortableNinePhotoLayout, View view, int position, String model, ArrayList<String> models) {
-        mPhotosSnpl.removeItem(position);
-        images.remove(position);
-    }
-
-    @Override
-    public void onClickNinePhotoItem(BGASortableNinePhotoLayout sortableNinePhotoLayout, View view, int position, String model, ArrayList<String> models) {
-        Intent photoPickerPreviewIntent = new BGAPhotoPickerPreviewActivity.IntentBuilder(this)
-                .previewPhotos(models) // 当前预览的图片路径集合
-                .selectedPhotos(models) // 当前已选中的图片路径集合
-                .maxChooseCount(mPhotosSnpl.getMaxItemCount()) // 图片选择张数的最大值
-                .currentPosition(position) // 当前预览图片的索引
-                .isFromTakePhoto(false) // 是否是拍完照后跳转过来
-                .build();
-        startActivityForResult(photoPickerPreviewIntent, RC_PHOTO_PREVIEW);
-    }
-
-    @Override
-    public void onNinePhotoItemExchanged(BGASortableNinePhotoLayout sortableNinePhotoLayout, int fromPosition, int toPosition, ArrayList<String> models) {
-        Toast.makeText(this, "排序发生变化", Toast.LENGTH_SHORT).show();
-        switchImages(fromPosition,toPosition);
-    }
-
-    public void switchImages(int from, int to){
-        String stringFrom = images.get(from);
-        if(from>to){
-        for(int i = from;i>to;i--){
-            images.set(i,images.get(i-1));
-        }
-            images.set(to,stringFrom);
-        }else{
-            for(int i = from;i<to;i++){
-                images.set(i,images.get(i+1));
-            }
-            images.set(to,stringFrom);
-        }
-    }
-
-
-    private void choicePhotoWrapper() {
-
-            // 拍照后照片的存放目录，改成你自己拍照后要存放照片的目录。如果不传递该参数的话就没有拍照功能
-            File takePhotoDir = new File(Environment.getExternalStorageDirectory(), "BGAPhotoPickerTakePhoto");
-
-            Intent photoPickerIntent = new BGAPhotoPickerActivity.IntentBuilder(this)
-                    .cameraFileDir(true ? takePhotoDir : null) // 拍照后照片的存放目录，改成你自己拍照后要存放照片的目录。如果不传递该参数的话则不开启图库里的拍照功能
-                    .maxChooseCount(mPhotosSnpl.getMaxItemCount() - mPhotosSnpl.getItemCount()) // 图片选择张数的最大值
-                    .selectedPhotos(null) // 当前已选中的图片路径集合
-                    .pauseOnScroll(false) // 滚动列表时是否暂停加载图片
-                    .build();
-            startActivityForResult(photoPickerIntent, RC_CHOOSE_PHOTO);
-
-    }
+//    private void choicePhotoWrapper() {
+//
+//            // 拍照后照片的存放目录，改成你自己拍照后要存放照片的目录。如果不传递该参数的话就没有拍照功能
+//            File takePhotoDir = new File(Environment.getExternalStorageDirectory(), "BGAPhotoPickerTakePhoto");
+//
+//            Intent photoPickerIntent = new BGAPhotoPickerActivity.IntentBuilder(this)
+//                    .cameraFileDir(true ? takePhotoDir : null) // 拍照后照片的存放目录，改成你自己拍照后要存放照片的目录。如果不传递该参数的话则不开启图库里的拍照功能
+//                    .maxChooseCount(mPhotosSnpl.getMaxItemCount() - mPhotosSnpl.getItemCount()) // 图片选择张数的最大值
+//                    .selectedPhotos(null) // 当前已选中的图片路径集合
+//                    .pauseOnScroll(false) // 滚动列表时是否暂停加载图片
+//                    .build();
+//            startActivityForResult(photoPickerIntent, RC_CHOOSE_PHOTO);
+//
+//    }
 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == RC_CHOOSE_PHOTO) {
-            if (false){//mSingleChoiceCb.isChecked()) {
-                mPhotosSnpl.setData(BGAPhotoPickerActivity.getSelectedPhotos(data));
-            } else {
-                mPhotosSnpl.addMoreData(BGAPhotoPickerActivity.getSelectedPhotos(data));
-                if(images.size() == 0){
-                    images = BGAPhotoPickerActivity.getSelectedPhotos(data);
-                }else {
-                    images.addAll(BGAPhotoPickerActivity.getSelectedPhotos(data));
-                }
-            }
-        } else if (requestCode == RC_PHOTO_PREVIEW) {
-            mPhotosSnpl.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
+                imagePath = BGAPhotoPickerActivity.getSelectedPhotos(data).get(0);
+                mCircleImageView.setImageURI(Uri.parse(BGAPhotoPickerActivity.getSelectedPhotos(data).get(0)));
+        }else if(resultCode == RESULT_OK && requestCode == ADD_NEW_MENU_STEP){
+            MenuStep menuStep = data.getParcelableExtra("MENUSTEP");
+            menuList.add(menuStep);
         }
     }
 
@@ -285,12 +178,8 @@ public class UploadMenuActivity extends BGAPPToolbarActivity implements BGASorta
         public void bind(String name,String image){
             ItemName = name;
             mTv.setText(name);
-            if(ItemName.equals("++++")){
-                mTv.setText("添加步骤");
-                imageView.setImageResource(R.drawable.addmenu);
-            }else {
-                imageView.setImageResource(R.drawable.vegetable);
-            }
+            imageView.setImageURI(Uri.parse(image));
+
         }
 
 
@@ -300,6 +189,8 @@ public class UploadMenuActivity extends BGAPPToolbarActivity implements BGASorta
 //                AlertDialog.Builder builder = new AlertDialog.Builder(UploadMenuActivity.this); //alert for confirm
 //                builder.setMessage("++++++"); //set message
 //                builder.show();
+                Intent intent = new Intent(getApplicationContext(),AddMenuStep.class);
+                startActivityForResult(intent, ADD_NEW_MENU_STEP);
             }
         }
 
@@ -311,7 +202,6 @@ public class UploadMenuActivity extends BGAPPToolbarActivity implements BGASorta
 
         public ItemAdapter(ArrayList<MenuStep> steps) {
             mData = steps;
-            mData.add(new MenuStep(null,null,"++++"));
         }
 
         @Override
@@ -322,7 +212,7 @@ public class UploadMenuActivity extends BGAPPToolbarActivity implements BGASorta
 
         @Override
         public void onBindViewHolder(UploadMenuActivity.ItemHolder holder, int position) {
-            String name = mData.get(position).getTitle();
+            String name = mData.get(position).getDescription();
             String image = mData.get(position).getImageUrl();
             holder.bind(name,image);
         }

@@ -1,6 +1,7 @@
 package com.example.morphtin.dishes.api.presenter.impl;
 
 import com.example.morphtin.dishes.api.model.IMenuModel;
+import com.example.morphtin.dishes.api.model.impl.MenuModelImpl;
 import com.example.morphtin.dishes.api.presenter.IMenuPresenter;
 import com.example.morphtin.dishes.api.view.IMenuView;
 import com.example.morphtin.dishes.bean.MenuBean;
@@ -17,6 +18,11 @@ public class MenuPresenterImpl implements IMenuPresenter {
     private static final String TAG = "MenuPresenterImpl";
     private IMenuModel model;
     private IMenuView view;
+
+    public MenuPresenterImpl(IMenuView view) {
+        this.view = view;
+        model = new MenuModelImpl();
+    }
 
     @Override
     public void uploadMenu(MenuBean menu) {

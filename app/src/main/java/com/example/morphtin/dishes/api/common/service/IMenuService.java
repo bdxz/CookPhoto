@@ -12,6 +12,6 @@ import retrofit2.http.POST;
  */
 
 public interface IMenuService {
-    @POST("")
+    @POST("api/menu/add")
     Observable<BaseResponse> addMenu(@Body MenuBean menu);
 }
