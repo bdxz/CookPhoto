@@ -2,6 +2,7 @@ package com.example.morphtin.dishes.ui.activity;
 
 import android.Manifest;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -9,16 +10,25 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.SparseArray;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.morphtin.dishes.R;
+import com.example.morphtin.dishes.bean.MenuStep;
 import com.swifty.dragsquareimage.DraggablePresenter;
 import com.swifty.dragsquareimage.DraggablePresenterImpl;
 import com.swifty.dragsquareimage.DraggableSquareView;
@@ -44,7 +54,11 @@ public class UploadMenuActivity extends BGAPPToolbarActivity implements BGASorta
 
    // private DraggablePresenter draggablePresent;
     private EditText menuTitle;
-    private EditText menuDetails;
+
+
+    private RecyclerView ItemRecyclerView;
+    private ItemAdapter adapter;
+    private ArrayList<MenuStep> menuList= new ArrayList<>();
 
         @Override
         protected void setListener() {
@@ -65,13 +79,26 @@ public class UploadMenuActivity extends BGAPPToolbarActivity implements BGASorta
         protected void initView(Bundle savedInstanceState) {
             setContentView(R.layout.activity_upload_menu);
             menuTitle = (EditText) findViewById(R.id.menu_title);
-            menuDetails = (EditText)findViewById(R.id.menu_details);
             mPhotosSnpl = findViewById(R.id.snpl_moment_add_photos);
             mPhotosSnpl.setMaxItemCount(9);
             mPhotosSnpl.setEditable(true);
             mPhotosSnpl.setPlusEnable(true);
             mPhotosSnpl.setSortable(true);
+
+            ItemRecyclerView = (RecyclerView) findViewById(R.id.menu_item_recycler_view);
+
+            initMenuList();
+            adapter = new ItemAdapter(menuList);
+            ItemRecyclerView.setAdapter(adapter);
+
+            ItemRecyclerView.setLayoutManager (new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         }
+
+    public void initMenuList(){
+        menuList.add(new MenuStep(null,null,"start from the botton"));
+        menuList.add(new MenuStep(null,null,"start from the above"));
+    }
+
 
         @Override
         protected void processLogic(Bundle savedInstanceState) {
@@ -149,9 +176,8 @@ public class UploadMenuActivity extends BGAPPToolbarActivity implements BGASorta
 
 
         String Title = menuTitle.getText().toString();
-        String details = menuDetails.getText().toString();
 
-        menuDetails.setText(images.toString());
+        menuTitle.setText(images.toString());
     }
 
 
@@ -234,4 +260,101 @@ public class UploadMenuActivity extends BGAPPToolbarActivity implements BGASorta
             mPhotosSnpl.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
         }
     }
+
+    private class ItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+
+        private String ItemName;
+        private String ItemImage;
+        private TextView mTv;
+        private ImageView imageView;
+
+        public ItemHolder(View itemView) {
+            super(itemView);
+            itemView.setOnClickListener(this);
+
+            mTv = itemView.findViewById(R.id.menu_item_title);
+            imageView = itemView.findViewById(R.id.menu_item_photo);
+        }
+
+        public void bind(String name,String image){
+            ItemName = name;
+            mTv.setText(name);
+            imageView.setImageResource(R.drawable.vegetable);
+
+        }
+
+
+        @Override
+        public void onClick(View view) {
+            if(ItemName.equals("++++")) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(UploadMenuActivity.this); //alert for confirm
+                builder.setMessage("++++++"); //set message
+                builder.show();
+            }
+        }
+
+    }
+
+    private class ItemAdapter extends RecyclerView.Adapter<UploadMenuActivity.ItemHolder> {
+
+        private ArrayList<MenuStep> mData;
+
+        public ItemAdapter(ArrayList<MenuStep> steps) {
+            mData = steps;
+            mData.add(new MenuStep(null,null,"++++"));
+        }
+
+        @Override
+        public UploadMenuActivity.ItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.menulist_item, parent, false);
+            return new UploadMenuActivity.ItemHolder(v);
+        }
+
+        @Override
+        public void onBindViewHolder(UploadMenuActivity.ItemHolder holder, int position) {
+            String name = mData.get(position).getTitle();
+            String image = mData.get(position).getImageUrl();
+            holder.bind(name,image);
+        }
+
+
+        @Override
+        public int getItemCount() {
+            return mData == null ? 0 : mData.size();
+        }
+
+
+    }
+
+
+
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+        @Override
+        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+            return false;
+        }
+        @Override
+        public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
+            final int position = viewHolder.getAdapterPosition(); //get position which is swipe
+            if (direction == ItemTouchHelper.LEFT) { //if swipe left
+                AlertDialog.Builder builder = new AlertDialog.Builder(UploadMenuActivity.this);//MainActivity.this); //alert for confirm
+                builder.setMessage("确认删除?"); //set message
+                builder.setPositiveButton("是的", new DialogInterface.OnClickListener() { //when click on DELETE
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        adapter.notifyItemRemoved(position); //item removed from recylcerview
+                        adapter.mData.remove(position);
+                        return;
+                    }
+                }).setNegativeButton("取消", new DialogInterface.OnClickListener() { //not removing items if cancel is done
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        adapter.notifyItemRemoved(position + 1); //notifies the RecyclerView Adapter that data in adapter has been removed at a particular position.
+                        adapter.notifyItemRangeChanged(position, adapter.getItemCount()); //notifies the RecyclerView Adapter that positions of element in adapter has been changed from position(removed element index to end of list), please update it.
+                        return;
+                    }
+                }).show(); //show alert dialog
+            }
+        }
+    };
 }

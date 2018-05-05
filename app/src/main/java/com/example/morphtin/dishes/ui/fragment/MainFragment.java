@@ -16,6 +16,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
 import com.example.morphtin.dishes.R;
+import com.example.morphtin.dishes.ui.activity.ItemActivity;
 import com.example.morphtin.dishes.ui.activity.UploadMenuActivity;
 import com.example.morphtin.dishes.ui.base.BaseFragment;
 import com.example.morphtin.dishes.ui.view.BottomBar;
@@ -228,6 +229,14 @@ public class MainFragment extends BaseFragment {
                             .setToolbarTextColor(R.color.white)
                             .setSelectIconColor(R.color.blue_primary)
                             .start();
+                    close();
+                }
+            });
+            llTest2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent=new Intent(getActivity(), ItemActivity.class);
+                    startActivity(intent);
                     close();
                 }
             });

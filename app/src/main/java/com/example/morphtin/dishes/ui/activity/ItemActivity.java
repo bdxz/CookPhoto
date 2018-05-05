@@ -59,8 +59,7 @@ public class ItemActivity extends AppCompatActivity {
         ItemRecyclerView.setLayoutManager (new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
 
-        cookList.add("土豆");
-        cookList.add("白菜");
+        InitCookList();
 
         adapter = new ItemAdapter(cookList);
         ItemRecyclerView.setAdapter(adapter);
@@ -69,6 +68,14 @@ public class ItemActivity extends AppCompatActivity {
         itemTouchHelper.attachToRecyclerView(ItemRecyclerView); //set swipe to recylcerview
 
     }
+
+
+
+    public void InitCookList(){
+        cookList.add("土豆");
+        cookList.add("白菜");
+    }
+
 
     private class ItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
@@ -81,27 +88,25 @@ public class ItemActivity extends AppCompatActivity {
             // super(inflater.inflate(R.layout.item_item,,false));
             itemView.setOnClickListener(this);
 
-            mTv = itemView.findViewById(R.id.item_tv);
-            imageView = itemView.findViewById(R.id.imageViewQR);
+            mTv = itemView.findViewById(R.id.cook_item_title);
+            imageView = itemView.findViewById(R.id.cook_item_photo);
         }
 
         public void bind(String name){
             ItemName = name;
             mTv.setText(name);
+            imageView.setImageResource(R.drawable.vegetable);
 
-            if(ItemName.equals("+")){
-                imageView.setImageResource(R.drawable.vegetable);
-            }
         }
 
 
         @Override
         public void onClick(View view) {
-            if(ItemName.equals("+")){
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(ItemActivity.this);//MainActivity.this); //alert for confirm
                 builder.setMessage("++++++"); //set message
                 builder.show();
-            }
+
         }
 
     }
@@ -112,7 +117,6 @@ public class ItemActivity extends AppCompatActivity {
 
         public ItemAdapter(ArrayList<String> names) {
             mData = names;
-            mData.add("+");
         }
 
         @Override
@@ -153,7 +157,6 @@ public class ItemActivity extends AppCompatActivity {
                 builder.setPositiveButton("是的", new DialogInterface.OnClickListener() { //when click on DELETE
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
                         adapter.notifyItemRemoved(position); //item removed from recylcerview
                         adapter.mData.remove(position);
                         return;
