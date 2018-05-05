@@ -14,7 +14,7 @@ import retrofit2.http.Part;
  * Created by elevation on 18-4-9.
  */
 
-public interface IUploadPicService {
+public interface IMaterialListService {
     @Multipart
     @POST("api/get_materials")
     Observable<List<MaterialBean>> getMaterials(@Part() List<MultipartBody.Part> parts);
