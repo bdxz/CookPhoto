@@ -58,7 +58,6 @@ dependencies {
     implementation 'cn.bingoogolapple:bga-photopicker:1.2.8@aar'
     implementation 'cn.bingoogolapple:bga-baseadapter:1.2.8@aar'
 
-    implementation 'com.github.SwiftyWang.android-drag-square:dragsquareimage:1.2.3'
     compile 'de.hdodenhof:circleimageview:2.2.0'
     compile 'com.github.pinguo-zhouwei:MZBannerView:v2.0.1'
     implementation 'com.squareup.picasso:picasso:2.71828'
