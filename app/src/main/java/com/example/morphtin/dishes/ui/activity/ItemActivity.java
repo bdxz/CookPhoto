@@ -2,6 +2,7 @@ package com.example.morphtin.dishes.ui.activity;
 
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -23,8 +24,11 @@ import com.example.morphtin.dishes.api.presenter.impl.CookItemPresenterImpl;
 import com.example.morphtin.dishes.api.view.ICookItemView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ItemActivity extends AppCompatActivity implements ICookItemView{
+    private static final int ADD_COOK_ITEM = 1;
+
     private RecyclerView ItemRecyclerView;
     private ItemAdapter adapter;
     private ArrayList<String> cookList= new ArrayList<String>();
@@ -55,6 +59,8 @@ public class ItemActivity extends AppCompatActivity implements ICookItemView{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item);
+        getSupportActionBar().setTitle("已选食材");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 //        Intent intent = getIntent();
 //        cookList = intent.getParcelableExtra(EXTRA_MESSAGE);
@@ -117,6 +123,21 @@ public class ItemActivity extends AppCompatActivity implements ICookItemView{
 
         }
 
+    }
+
+    public void addCookItem(View view) {
+        Intent intent = new Intent(getApplicationContext(),ChooseMaterialActivity.class);
+        startActivityForResult(intent, ADD_COOK_ITEM);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK && requestCode == ADD_COOK_ITEM){
+            ArrayList<String> list = data.getStringArrayListExtra("ADDCOOKLIST");
+            cookList.addAll(list);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     private class ItemAdapter extends RecyclerView.Adapter<ItemHolder> {

@@ -90,7 +90,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dip"
-                android:text="文字找菜"
+                android:text="食刻分享"
                 android:textColor="#333333"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -113,7 +113,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dip"
-                android:text="文字找菜"
+                android:text="上传菜谱"
                 android:textColor="#333333"
                 android:textSize="12sp" />
         </LinearLayout>
