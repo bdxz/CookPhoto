@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -16,7 +17,10 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
 import com.example.morphtin.dishes.R;
+import com.example.morphtin.dishes.bean.MenuBean;
+import com.example.morphtin.dishes.bean.MenuStep;
 import com.example.morphtin.dishes.ui.activity.ItemActivity;
+import com.example.morphtin.dishes.ui.activity.MenuDetailActivity;
 import com.example.morphtin.dishes.ui.activity.UploadMenuActivity;
 import com.example.morphtin.dishes.ui.base.BaseFragment;
 import com.example.morphtin.dishes.ui.view.BottomBar;
@@ -27,6 +31,7 @@ import com.werb.pickphotoview.util.PickConfig;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -244,6 +249,22 @@ public class MainFragment extends BaseFragment {
                 @Override
                 public void onClick(View v) {
                     Intent intent=new Intent(getActivity(), UploadMenuActivity.class);
+                    startActivity(intent);
+                    close();
+                }
+            });
+            llTest3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent=new Intent(getActivity(), MenuDetailActivity.class);
+                    MenuBean menuBean = new MenuBean();
+                    menuBean.setTitle("一个西红柿的故事");
+                    menuBean.setImageTitle("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525616694411&di=6f09946cb9d619dc5c78363a30a3de2c&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimage%2Fc0%253Dpixel_huitu%252C0%252C0%252C294%252C40%2Fsign%3D97baa57209087bf469e15fa99bab3240%2Fd6ca7bcb0a46f21f3426c46afd246b600c33aefd.jpg");
+                    ArrayList<MenuStep> list  = new ArrayList<MenuStep>();
+                    list.add(new MenuStep("https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1525601158&di=d086112313078aa8a99ba24b7d2cd22b&src=http://pic.58pic.com/58pic/15/36/87/33M58PICxey_1024.jpg","red"));
+                    list.add(new MenuStep("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525616791124&di=0d8096ce297abd8b2c89d329992f2b19&imgtype=0&src=http%3A%2F%2Fimg.mp.sohu.com%2Fupload%2F20170801%2F73d8c478d2874e2d80923c75eb755627_th.png","red"));
+                    menuBean.setSteps(list);
+                    intent.putExtra("MENUBEAN",menuBean);
                     startActivity(intent);
                     close();
                 }
