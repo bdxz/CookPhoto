@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="400dp"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="400dp"
-    android:background="#a222"
+    android:background="#EAEAEA"
     android:orientation="vertical">
 
     <TextView
@@ -11,8 +10,8 @@
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:text="编辑个人信息："
-        android:textColor="#fff"
-        android:textSize="20sp"/>
+        android:textColor="#5C5C5C"
+        android:textSize="20sp" />
 
 
     <TextView
@@ -25,16 +24,15 @@
 
     <EditText
         android:id="@+id/name_input"
-        android:layout_width="300dp"
+        android:layout_width="250dp"
         android:layout_height="35dp"
         android:layout_marginLeft="20dp"
         android:background="#fff"
 
+        android:gravity="top"
         android:padding="8dp"
         android:textColor="@color/colorAccent"
-        android:gravity="top"
         android:textSize="18sp" />
-
 
 
     <TextView
@@ -47,7 +45,7 @@
 
     <EditText
         android:id="@+id/age_input"
-        android:layout_width="300dp"
+        android:layout_width="250dp"
         android:layout_height="35dp"
         android:layout_marginLeft="20dp"
         android:background="#fff"
@@ -64,9 +62,10 @@
         android:text=" 个人描述 "
         android:textColor="#000000" />
 
+
     <EditText
         android:id="@+id/description_input"
-        android:layout_width="300dp"
+        android:layout_width="250dp"
         android:layout_height="35dp"
         android:layout_marginLeft="20dp"
         android:background="#fff"
@@ -78,33 +77,31 @@
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="86dp"
+        android:layout_height="60dp"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/btn_ok"
             android:layout_width="0dp"
-
             android:layout_height="wrap_content"
-
-            android:layout_weight="1"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
+            android:layout_weight="1"
+            android:gravity="center"
             android:padding="16dp"
-            android:text=" ok "
-            android:textColor="#2af" />
+            android:text=" 确定 "
+            android:textColor="#5C5C5C" />
 
         <TextView
             android:id="@+id/btn_cancel"
             android:layout_width="0dp"
-
             android:layout_height="wrap_content"
-
-            android:layout_weight="1"
             android:layout_alignParentBottom="true"
             android:layout_toLeftOf="@id/btn_ok"
+            android:layout_weight="1"
+            android:gravity="center"
             android:padding="16dp"
-            android:text="cancel"
-            android:textColor="#2af" />
+            android:text=" 取消 "
+            android:textColor="#5C5C5C" />
     </LinearLayout>
 </LinearLayout>

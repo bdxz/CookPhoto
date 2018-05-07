@@ -145,7 +145,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
             android:layout_marginBottom="7dp"
-            android:text="Center"
+            android:text="下厨"
             android:textSize="10dp" />
     </FrameLayout>
 
