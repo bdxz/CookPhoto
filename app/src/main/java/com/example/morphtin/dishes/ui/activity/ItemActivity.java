@@ -85,8 +85,7 @@ public class ItemActivity extends AppCompatActivity implements ICookItemView{
 
 
     public void InitCookList(){
-        cookList.add("土豆");
-        cookList.add("白菜");
+
     }
 
     public void upload(){
