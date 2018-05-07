@@ -48,6 +48,8 @@ public class ItemActivity extends AppCompatActivity implements ICookItemView{
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
+            case android.R.id.home:// 点击返回图标事件
+                this.finish();
             case R.id.check_ok:
                 upload();
             default:

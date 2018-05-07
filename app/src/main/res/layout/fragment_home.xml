@@ -38,7 +38,7 @@
             <ImageView
                 android:layout_width="50dip"
                 android:layout_height="50dip"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/pictomenu" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -61,7 +61,7 @@
             <ImageView
                 android:layout_width="50dip"
                 android:layout_height="50dip"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/texttomenu" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -84,7 +84,7 @@
             <ImageView
                 android:layout_width="50dip"
                 android:layout_height="50dip"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/share" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -107,7 +107,7 @@
             <ImageView
                 android:layout_width="50dip"
                 android:layout_height="50dip"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/uploadmenu" />
 
             <TextView
                 android:layout_width="wrap_content"

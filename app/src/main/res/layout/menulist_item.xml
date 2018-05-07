@@ -19,7 +19,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="135dp">
+            android:layout_height="180dp">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -30,7 +30,7 @@
                 <ImageView
                     android:id="@+id/menu_item_photo"
                     android:layout_width="match_parent"
-                    android:layout_height="135dp"
+                    android:layout_height="145dp"
                     android:scaleType="centerCrop"
                     android:layout_alignParentStart="true" />
 

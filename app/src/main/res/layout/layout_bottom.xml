@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="52dp"
         android:layout_gravity="bottom"
-        android:background="#666"
+        android:background="#EAEAEA"
         android:gravity="center_horizontal"
         android:orientation="horizontal">
 
@@ -24,7 +24,7 @@
                 android:layout_height="28dp"
                 android:layout_gravity="top|center"
                 android:layout_marginTop="5dp"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/home" />
 
             <TextView
                 android:id="@+id/tab_home_text"
@@ -49,7 +49,7 @@
                 android:layout_height="28dp"
                 android:layout_gravity="top|center"
                 android:layout_marginTop="5dp"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/find" />
 
             <TextView
                 android:id="@+id/tab_bang_text"
@@ -78,7 +78,7 @@
                 android:layout_height="27dp"
                 android:layout_gravity="top|center"
                 android:layout_marginTop="5dp"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/message" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -100,7 +100,7 @@
                 android:layout_height="27dp"
                 android:layout_gravity="top|center"
                 android:layout_marginTop="5dp"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/mine" />
 
             <TextView
                 android:layout_width="wrap_content"
