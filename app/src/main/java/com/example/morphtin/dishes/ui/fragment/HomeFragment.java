@@ -1,6 +1,7 @@
 package com.example.morphtin.dishes.ui.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import com.example.morphtin.dishes.api.presenter.IHomePresenter;
 import com.example.morphtin.dishes.api.presenter.impl.HomePresenterImpl;
 import com.example.morphtin.dishes.api.view.IHomeView;
 import com.example.morphtin.dishes.bean.BannerItem;
+import com.example.morphtin.dishes.ui.activity.MenuDetailActivity;
 import com.example.morphtin.dishes.ui.base.BaseFragment;
 import com.squareup.picasso.Picasso;
 import com.zhouwei.mzbanner.MZBannerView;
@@ -35,6 +37,7 @@ public class HomeFragment extends BaseFragment implements IHomeView {
     @BindView(R.id.banner)
     MZBannerView mMZBanner;
     private IHomePresenter presenter;
+    private List<BannerItem> data;
 
     public static HomeFragment newInstance() {
         Bundle bundle = new Bundle();
@@ -55,6 +58,9 @@ public class HomeFragment extends BaseFragment implements IHomeView {
         mMZBanner.setBannerPageClickListener(new MZBannerView.BannerPageClickListener() {
             @Override
             public void onPageClick(View view, int position) {
+                Intent intent = new Intent(getActivity(), MenuDetailActivity.class);
+                intent.putExtra("MENU_ID", data.get(position).getMenu_id().toString());
+                startActivity(intent);
             }
         });
     }
@@ -107,6 +113,10 @@ public class HomeFragment extends BaseFragment implements IHomeView {
 
     @Override
     public void updateView(List<BannerItem> data) {
+        this.data = data;
+        for(BannerItem banner:data){
+            Log.d(TAG, "updateView: "+banner.getImageUrl());
+        }
         setBanner(data);
     }
 

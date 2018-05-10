@@ -11,4 +11,6 @@ import io.reactivex.Observer;
 
 public interface IMenuModel {
     void uploadMenu(MenuBean menu, Observer<BaseResponse> listener);
+
+    void loadMenuDetail(String menu_id, Observer<MenuBean> observer);
 }

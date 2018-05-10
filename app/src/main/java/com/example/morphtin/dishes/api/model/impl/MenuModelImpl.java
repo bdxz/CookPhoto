@@ -20,21 +20,33 @@ import io.reactivex.schedulers.Schedulers;
 
 public class MenuModelImpl implements IMenuModel {
     private static final String TAG = "MenuModelImpl";
+    private IMenuService service;
 
-    @Override
-    public void uploadMenu(MenuBean menu, Observer<BaseResponse> listener) {
-        IMenuService service;
+    public MenuModelImpl() {
         if(Constant.DEBUG){
             service = ServiceFactory.createService(URL.HOST_URL_DEBUG,IMenuService.class);
         }else{
             service = ServiceFactory.createService(URL.HOST_URL_CUSTOM,IMenuService.class);
         }
+    }
 
+    @Override
+    public void uploadMenu(MenuBean menu, Observer<BaseResponse> listener) {
         service.addMenu(menu).subscribeOn(Schedulers.io()).doOnSubscribe(new Consumer<Disposable>() {
             @Override
             public void accept(Disposable disposable) throws Exception {
 
             }
         }).observeOn(AndroidSchedulers.mainThread()).subscribe(listener);
+    }
+
+    @Override
+    public void loadMenuDetail(String menu_id, Observer<MenuBean> observer) {
+        service.loadMenuDetail(menu_id).subscribeOn(Schedulers.io()).doOnSubscribe(new Consumer<Disposable>() {
+            @Override
+            public void accept(Disposable disposable) throws Exception {
+
+            }
+        }).observeOn(AndroidSchedulers.mainThread()).subscribe(observer);
     }
 }

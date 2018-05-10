@@ -8,4 +8,6 @@ import com.example.morphtin.dishes.bean.MenuBean;
 
 public interface IMenuPresenter {
     void uploadMenu(MenuBean menu);
+
+    void loadMenuDetail(String menu_id);
 }

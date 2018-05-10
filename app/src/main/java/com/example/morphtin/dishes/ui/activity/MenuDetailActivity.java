@@ -1,14 +1,13 @@
 package com.example.morphtin.dishes.ui.activity;
 
-import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,35 +15,48 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.morphtin.dishes.R;
+import com.example.morphtin.dishes.api.presenter.IMenuPresenter;
+import com.example.morphtin.dishes.api.presenter.impl.MenuPresenterImpl;
+import com.example.morphtin.dishes.api.view.IMenuView;
 import com.example.morphtin.dishes.bean.MenuBean;
 import com.example.morphtin.dishes.bean.MenuStep;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class MenuDetailActivity extends AppCompatActivity {
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-    private MenuBean menuBean;
-    private CollapsingToolbarLayout mCollapsingToolbarLayout;
-    private ImageView mImageView;
-    private RecyclerView ItemRecyclerView;
+public class MenuDetailActivity extends AppCompatActivity implements IMenuView{
+    private static final String TAG = "MenuDetailActivity";
+    
+    @BindView(R.id.collapsing_toolbar_layout)
+    CollapsingToolbarLayout mCollapsingToolbarLayout;
+    @BindView(R.id.menu_detail_image)
+    ImageView mImageView;
+    @BindView(R.id.menuDetailRecyclerView)
+    RecyclerView ItemRecyclerView;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+
     private ItemAdapter adapter;
+    private IMenuPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_detail);
 
-        menuBean = getIntent().getParcelableExtra("MENUBEAN");
+        ButterKnife.bind(this);
 
-        initView();
+        String menu_id = getIntent().getStringExtra("MENU_ID");
+        presenter = new MenuPresenterImpl(this);
+        presenter.loadMenuDetail(menu_id);
     }
 
 
 
-    public void initView(){
-        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+    public void initView(MenuBean menu){
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -53,26 +65,42 @@ public class MenuDetailActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        mImageView = findViewById(R.id.menu_detail_image);
         Picasso.get()
-                .load(menuBean.getImage())
+                .load(menu.getImage())
                 .into(mImageView);
         //使用CollapsingToolbarLayout必须把title设置到CollapsingToolbarLayout上，设置到Toolbar上则不会显示
-        mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
-        mCollapsingToolbarLayout.setTitle(menuBean.getTitle());
+        mCollapsingToolbarLayout.setTitle(menu.getTitle());
         //通过CollapsingToolbarLayout修改字体颜色
         mCollapsingToolbarLayout.setExpandedTitleColor(Color.WHITE);//设置还没收缩时状态下字体颜色
         mCollapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);//设置收缩后Toolbar上字体的颜色
 
-        ItemRecyclerView = (RecyclerView) findViewById(R.id.menuDetailRecyclerView);
-
-        adapter = new ItemAdapter(menuBean.getSteps());
+        adapter = new ItemAdapter(menu.getSteps());
         ItemRecyclerView.setAdapter(adapter);
 
         ItemRecyclerView.setLayoutManager (new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
     }
 
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void hideProgress() {
+
+    }
+
+    @Override
+    public void updateView(MenuBean data) {
+        Log.d(TAG, "updateView: ");
+        initView(data);
+    }
+
+    @Override
+    public void showMessage(String msg) {
+
+    }
 
 
     private class ItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

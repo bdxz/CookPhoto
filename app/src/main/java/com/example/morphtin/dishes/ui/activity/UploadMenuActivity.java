@@ -160,6 +160,26 @@ public class UploadMenuActivity extends AppCompatActivity implements IMenuView{
         }
     }
 
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void hideProgress() {
+
+    }
+
+    @Override
+    public void updateView(MenuBean data) {
+
+    }
+
+    @Override
+    public void showMessage(String msg) {
+
+    }
+
     private class ItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private String ItemName;

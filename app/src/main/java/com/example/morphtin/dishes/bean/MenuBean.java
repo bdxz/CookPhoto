@@ -12,7 +12,7 @@ import java.util.List;
 
 public class MenuBean implements Parcelable {
     private String title;
-    private String imageTitle;
+    private String imageUrl;
     private ArrayList<MenuStep> steps;
 
     public MenuBean(){
@@ -25,7 +25,7 @@ public class MenuBean implements Parcelable {
     }
 
     public String getImage(){
-        return imageTitle;
+        return imageUrl;
     }
 
     public ArrayList<MenuStep> getSteps(){
@@ -36,8 +36,8 @@ public class MenuBean implements Parcelable {
     public void setTitle(String title){
         this.title = title;
     }
-    public void setImageTitle(String imageTitle){
-        this.imageTitle = imageTitle;
+    public void setImageTitle(String imageUrl){
+        this.imageUrl = imageUrl;
     }
     public void setSteps(ArrayList<MenuStep> steps){
         this.steps = steps;
@@ -56,7 +56,7 @@ public class MenuBean implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(title);
-        dest.writeString(imageTitle);
+        dest.writeString(imageUrl);
 //        MenuStep[] stepsArray = new MenuStep[steps.size()];
 //        steps.toArray(stepsArray);
 //        dest.writeParcelableArray(stepsArray,1);
@@ -66,7 +66,7 @@ public class MenuBean implements Parcelable {
 
     private MenuBean(Parcel in){
         this.title = in.readString();
-        this.imageTitle = in.readString();
+        this.imageUrl = in.readString();
 //        MenuStep[] stepsArray = (MenuStep[])in.readParcelableArray(com.example.morphtin.dishes.bean.MenuStep.class.getClassLoader());
 //        for(int i = 0;i<stepsArray.length;i++) {
 //            this.steps.add(stepsArray[i]);

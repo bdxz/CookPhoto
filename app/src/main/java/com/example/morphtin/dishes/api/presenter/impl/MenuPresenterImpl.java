@@ -1,5 +1,7 @@
 package com.example.morphtin.dishes.api.presenter.impl;
 
+import android.util.Log;
+
 import com.example.morphtin.dishes.api.model.IMenuModel;
 import com.example.morphtin.dishes.api.model.impl.MenuModelImpl;
 import com.example.morphtin.dishes.api.presenter.IMenuPresenter;
@@ -35,6 +37,32 @@ public class MenuPresenterImpl implements IMenuPresenter {
             @Override
             public void onNext(BaseResponse baseResponse) {
 
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    @Override
+    public void loadMenuDetail(String menu_id) {
+        model.loadMenuDetail(menu_id, new Observer<MenuBean>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(MenuBean menuBean) {
+                Log.d(TAG, "onNext: "+menuBean);
+                view.updateView(menuBean);
             }
 
             @Override
