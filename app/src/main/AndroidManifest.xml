@@ -55,10 +55,12 @@
             android:name=".ui.activity.WebActivity"
             android:parentActivityName=".ui.activity.MainActivity" />
         <activity android:name=".ui.activity.ItemActivity" />
-        <activity android:name=".ui.activity.ChooseMaterialActivity"></activity>
+        <activity android:name=".ui.activity.ChooseMaterialActivity" />
         <activity android:name=".ui.activity.AddMenuStep" />
-        <activity android:name=".ui.activity.MenuDetailActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".ui.activity.MenuDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.activity.MenuListActivity" android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -38,6 +38,8 @@ dependencies {
     //butterknife
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    //Menu List
+    compile 'com.github.rasoulmiri:Skeleton:v1.0.9'
     //EventBus
     compile 'org.greenrobot:eventbus:3.1.1'
     //pickphotoview
