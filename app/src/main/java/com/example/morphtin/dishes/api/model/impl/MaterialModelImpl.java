@@ -27,15 +27,18 @@ import okhttp3.RequestBody;
 public class MaterialModelImpl implements IMaterialModel {
     private static final String TAG = "MaterialModelImpl";
 
-    @Override
-    public void loadMaterialList(ArrayList<String> photoPaths, final Observer<List<MaterialBean>> listener) {
-        IMaterialListService service;
+    private IMaterialListService service;
+
+    public MaterialModelImpl() {
         if(Constant.DEBUG){
             service = ServiceFactory.createService(URL.HOST_URL_DEBUG,IMaterialListService.class);
         }else{
             service = ServiceFactory.createService(URL.HOST_URL_CUSTOM,IMaterialListService.class);
         }
+    }
 
+    @Override
+    public void loadMaterialList(ArrayList<String> photoPaths, final Observer<List<MaterialBean>> listener) {
         List<MultipartBody.Part> partList = new ArrayList<>();
         for (String photoPath: photoPaths) {
             File file = new File(photoPath);
@@ -51,5 +54,10 @@ public class MaterialModelImpl implements IMaterialModel {
 
             }
         }).observeOn(AndroidSchedulers.mainThread()).subscribe(listener);
+    }
+
+    @Override
+    public void loadMaterialList(Observer<List<MaterialBean>> listener) {
+        service.getMaterials();
     }
 }

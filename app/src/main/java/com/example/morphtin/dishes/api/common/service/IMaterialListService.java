@@ -6,6 +6,7 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
+import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -16,6 +17,9 @@ import retrofit2.http.Part;
 
 public interface IMaterialListService {
     @Multipart
-    @POST("api/get_materials")
+    @POST("api/material/get")
     Observable<List<MaterialBean>> getMaterials(@Part() List<MultipartBody.Part> parts);
+
+    @GET("api/material/get")
+    Observable<List<MaterialBean>> getMaterials();
 }

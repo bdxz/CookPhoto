@@ -11,6 +11,11 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.morphtin.dishes.R;
+import com.example.morphtin.dishes.api.presenter.IMaterialPresenter;
+import com.example.morphtin.dishes.api.presenter.IMenuPresenter;
+import com.example.morphtin.dishes.api.presenter.impl.MaterialPresenterImpl;
+import com.example.morphtin.dishes.api.view.IMaterialView;
+import com.example.morphtin.dishes.bean.MaterialBean;
 import com.example.morphtin.dishes.ui.adapter.TagAdapter;
 import com.hhl.library.FlowTagLayout;
 import com.hhl.library.OnTagSelectListener;
@@ -20,13 +25,15 @@ import java.util.List;
 
 import static android.R.id.list;
 
-public class ChooseMaterialActivity extends AppCompatActivity {
+public class ChooseMaterialActivity extends AppCompatActivity implements IMaterialView{
     private FlowTagLayout mVegetableFlowTagLayout;
     private FlowTagLayout mMeatFlowTagLayout;
     private TagAdapter<String> mVegetableTagAdapter;
     private TagAdapter<String> mMeatTagAdapter;
     private ArrayList<String> cookList=new ArrayList<>();
     private ArrayList<String> cookList2=new ArrayList<>();
+
+    private IMaterialPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +112,8 @@ public class ChooseMaterialActivity extends AppCompatActivity {
         initVegetableData();
         initMeatData();
 
+        presenter = new MaterialPresenterImpl(this);
+        presenter.loadMaterials();
 
     }
 
@@ -153,4 +162,23 @@ public class ChooseMaterialActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void hideProgress() {
+
+    }
+
+    @Override
+    public void updateView(List<MaterialBean> data) {
+
+    }
+
+    @Override
+    public void showMessage(String msg) {
+
+    }
 }

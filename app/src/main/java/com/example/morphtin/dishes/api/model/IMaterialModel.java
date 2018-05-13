@@ -13,4 +13,5 @@ import io.reactivex.Observer;
 
 public interface IMaterialModel {
     void loadMaterialList(ArrayList<String> photoPaths, Observer<List<MaterialBean>> listener);
+    void loadMaterialList(Observer<List<MaterialBean>> listener);
 }

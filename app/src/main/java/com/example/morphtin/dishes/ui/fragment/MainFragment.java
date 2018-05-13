@@ -6,16 +6,19 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
+import com.example.morphtin.dishes.BaseApplication;
 import com.example.morphtin.dishes.R;
 import com.example.morphtin.dishes.bean.MenuBean;
 import com.example.morphtin.dishes.bean.MenuStep;
@@ -31,11 +34,15 @@ import com.werb.pickphotoview.util.PickConfig;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.socket.client.IO;
+import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
 import me.yokeyword.fragmentation.SupportFragment;
 
 /**
@@ -43,13 +50,25 @@ import me.yokeyword.fragmentation.SupportFragment;
  */
 
 public class MainFragment extends BaseFragment {
+    private static final String TAG = "MainFragment";
+
     @BindView(R.id.bottomBar)
     BottomBar mBottomBar;
     @BindView(R.id.center_img)
     ImageView mCenterImage;
+
+    private Socket mSocket;
+
     SupportFragment[] mFragments = new SupportFragment[5];
 
     private int mSelectPosition, mCurrentPosition = 0;
+
+    private Emitter.Listener onConnect = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            Log.d(TAG, "call: Connect success");
+        }
+    };
 
     public static MainFragment newInstance() {
 
@@ -106,6 +125,7 @@ public class MainFragment extends BaseFragment {
                 new CustomPopupWindow(getContext()).showAtLocation(mCenterImage, Gravity.NO_GRAVITY, 0, 0);
             }
         });
+
         EventBus.getDefault().register(this);
     }
 
@@ -123,6 +143,10 @@ public class MainFragment extends BaseFragment {
             mFragments[2] = findChildFragment(MessageFragment.class);
             mFragments[3] = findChildFragment(MineFragment.class);
         }
+        BaseApplication app = (BaseApplication) getActivity().getApplication();
+        mSocket = app.getSocket();
+        mSocket.on(Socket.EVENT_CONNECT,onConnect);
+        mSocket.connect();
     }
 
     /**
@@ -136,6 +160,11 @@ public class MainFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+
+        mSocket.disconnect();
+
+        mSocket.off(Socket.EVENT_CONNECT, onConnect);
+
         EventBus.getDefault().unregister(this);
     }
 

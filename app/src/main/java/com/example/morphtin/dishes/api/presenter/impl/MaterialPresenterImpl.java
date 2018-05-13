@@ -39,14 +39,40 @@ public class MaterialPresenterImpl implements IMaterialPresenter{
 
             @Override
             public void onNext(List<MaterialBean> materialBeans) {
-                Log.d(TAG, "onNext: "+materialBeans.toString());
                 mMaterialView.hideProgress();
                 mMaterialView.updateView(materialBeans);
             }
 
             @Override
             public void onError(Throwable e) {
-                Log.d(TAG, "onError: "+e.getMessage());
+                mMaterialView.hideProgress();
+                mMaterialView.showMessage(e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    @Override
+    public void loadMaterials() {
+        mMaterialView.showProgress();
+        mMaterialModel.loadMaterialList(new Observer<List<MaterialBean>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(List<MaterialBean> materialBeans) {
+                mMaterialView.hideProgress();
+                mMaterialView.updateView(materialBeans);
+            }
+
+            @Override
+            public void onError(Throwable e) {
                 mMaterialView.hideProgress();
                 mMaterialView.showMessage(e.getMessage());
             }
