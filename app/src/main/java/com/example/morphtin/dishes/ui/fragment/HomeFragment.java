@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.morphtin.dishes.R;
@@ -16,16 +15,18 @@ import com.example.morphtin.dishes.api.presenter.impl.HomePresenterImpl;
 import com.example.morphtin.dishes.api.view.IHomeView;
 import com.example.morphtin.dishes.bean.BannerItem;
 import com.example.morphtin.dishes.ui.activity.MenuDetailActivity;
+import com.example.morphtin.dishes.ui.activity.MenuListActivity;
 import com.example.morphtin.dishes.ui.base.BaseFragment;
 import com.squareup.picasso.Picasso;
 import com.zhouwei.mzbanner.MZBannerView;
 import com.zhouwei.mzbanner.holder.MZHolderCreator;
 import com.zhouwei.mzbanner.holder.MZViewHolder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+
+import static com.example.morphtin.dishes.R.id.home1;
 
 /**
  * Created by elevation on 18-4-4.
@@ -51,6 +52,15 @@ public class HomeFragment extends BaseFragment implements IHomeView {
     @Override
     protected void initRootView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_home, container, false);
+        View home = mRootView.findViewById(home1);
+
+        home.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),
+                        MenuListActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
