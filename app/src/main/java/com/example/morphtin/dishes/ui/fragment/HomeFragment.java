@@ -10,10 +10,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.morphtin.dishes.R;
-import com.example.morphtin.dishes.api.presenter.IHomePresenter;
-import com.example.morphtin.dishes.api.presenter.impl.HomePresenterImpl;
-import com.example.morphtin.dishes.api.view.IHomeView;
+import com.example.morphtin.dishes.api.contract.HomeContract;
+import com.example.morphtin.dishes.api.presenter.HomePresenter;
 import com.example.morphtin.dishes.bean.BannerItem;
+import com.example.morphtin.dishes.ui.activity.CreateDishActivity;
+import com.example.morphtin.dishes.ui.activity.DishDetailActivity;
 import com.example.morphtin.dishes.ui.activity.MenuDetailActivity;
 import com.example.morphtin.dishes.ui.activity.MenuListActivity;
 import com.example.morphtin.dishes.ui.base.BaseFragment;
@@ -27,18 +28,21 @@ import java.util.List;
 import butterknife.BindView;
 
 import static com.example.morphtin.dishes.R.id.home1;
+import static com.example.morphtin.dishes.R.id.home2;
+import static com.example.morphtin.dishes.R.id.home3;
 
 /**
  * Created by elevation on 18-4-4.
  */
 
-public class HomeFragment extends BaseFragment implements IHomeView {
+public class HomeFragment extends BaseFragment implements HomeContract.View{
     private static final String TAG = "HomeFragment";
 
     @BindView(R.id.banner)
     MZBannerView mMZBanner;
-    private IHomePresenter presenter;
+
     private List<BannerItem> data;
+    private HomeContract.Presenter presenter;
 
     public static HomeFragment newInstance() {
         Bundle bundle = new Bundle();
@@ -61,6 +65,28 @@ public class HomeFragment extends BaseFragment implements IHomeView {
                 startActivity(intent);
             }
         });
+
+        View detail = mRootView.findViewById(home2);
+
+        detail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),
+                        DishDetailActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        View btn3 = mRootView.findViewById(home3);
+
+        btn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),
+                        CreateDishActivity .class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -77,20 +103,8 @@ public class HomeFragment extends BaseFragment implements IHomeView {
 
     @Override
     protected void initData(boolean isSavedNull) {
-        presenter = new HomePresenterImpl(this);
-        presenter.loadHome();
-    }
-
-
-    private void setBanner(List<BannerItem> list) {
-        // 设置数据
-        mMZBanner.setPages(list, new MZHolderCreator<BannerViewHolder>() {
-            @Override
-            public BannerViewHolder createViewHolder() {
-                return new BannerViewHolder();
-            }
-        });
-        mMZBanner.start();
+        presenter = new HomePresenter(this);
+        presenter.load();
     }
 
     @Override
@@ -112,28 +126,15 @@ public class HomeFragment extends BaseFragment implements IHomeView {
     }
 
     @Override
-    public void showProgress() {
-
-    }
-
-    @Override
-    public void hideProgress() {
-
-    }
-
-    @Override
-    public void updateView(List<BannerItem> data) {
-        this.data = data;
-        for(BannerItem banner:data){
-            Log.d(TAG, "updateView: "+banner.getImageUrl());
-        }
-        setBanner(data);
-    }
-
-
-    @Override
-    public void showMessage(String msg) {
-
+    public void setBanner(List<BannerItem> data) {
+        // 设置数据
+        mMZBanner.setPages(data, new MZHolderCreator<BannerViewHolder>() {
+            @Override
+            public BannerViewHolder createViewHolder() {
+                return new BannerViewHolder();
+            }
+        });
+        mMZBanner.start();
     }
 
 

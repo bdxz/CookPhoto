@@ -1,6 +1,5 @@
 package com.example.morphtin.dishes.ui.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -9,8 +8,10 @@ import android.view.View;
 
 import com.dd.processbutton.iml.ActionProcessButton;
 import com.example.morphtin.dishes.R;
-import com.example.morphtin.dishes.api.presenter.IMaterialPresenter;
-import com.example.morphtin.dishes.api.presenter.impl.MaterialPresenterImpl;
+import com.example.morphtin.dishes.api.contract.ChooseContract;
+import com.example.morphtin.dishes.api.contract.MaterialContract;
+import com.example.morphtin.dishes.api.presenter.ChoosePresenter;
+import com.example.morphtin.dishes.api.presenter.MaterialPresenter;
 import com.example.morphtin.dishes.bean.MaterialBean;
 import com.example.morphtin.dishes.ui.adapter.PhotoAdapter;
 import com.example.morphtin.dishes.ui.base.BaseActivity;
@@ -20,15 +21,15 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.yokeyword.fragmentation.SupportActivity;
 
 /**
  * Created by elevation on 18-4-25.
  */
 
-public class ChoosePhotoActivity extends BaseActivity {
+public class ChoosePhotoActivity extends BaseActivity{
     private PhotoAdapter adapter;
     private ArrayList<String> photoPaths;
+    private ChooseContract.Presenter presenter;
 
     @BindView(R.id.photo_list)
     RecyclerView photoList;
@@ -51,6 +52,8 @@ public class ChoosePhotoActivity extends BaseActivity {
         photoList.setAdapter(adapter);
 
         adapter.updateData(photoPaths);
+
+        presenter = new ChoosePresenter(null);
     }
 
     @Override
@@ -58,9 +61,7 @@ public class ChoosePhotoActivity extends BaseActivity {
         mProcessButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ChoosePhotoActivity.this, MaterialListActivity.class);
-                intent.putStringArrayListExtra("photoPaths", photoPaths);
-                startActivity(intent);
+                presenter.selectByPhoto(photoPaths);
             }
         });
     }

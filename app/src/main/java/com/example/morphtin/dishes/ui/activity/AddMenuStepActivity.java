@@ -14,10 +14,11 @@ import android.widget.ImageView;
 
 import com.example.morphtin.dishes.R;
 import com.example.morphtin.dishes.bean.MenuStep;
+import com.example.morphtin.dishes.ui.base.BaseActivity;
 
 import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
 
-public class AddMenuStep extends AppCompatActivity {
+public class AddMenuStepActivity extends BaseActivity {
     private static final int RC_CHOOSE_PHOTO = 1;
 
     private MenuStep menuStep = new MenuStep("","");
@@ -44,6 +45,11 @@ public class AddMenuStep extends AppCompatActivity {
                 startActivityForResult(photoPickerIntent, RC_CHOOSE_PHOTO);
             }
         });
+    }
+
+    @Override
+    protected void initEvents() {
+
     }
 
     @Override
@@ -82,7 +88,6 @@ public class AddMenuStep extends AppCompatActivity {
                     @Override
 
                     public void onClick(DialogInterface dialog, int which) {
-                        // TODO Auto-generated method stub
                         Intent data = new Intent();
                         data.putExtra("MENUSTEP", menuStep); //company is the new company, SOME_KEY is the key for the data
                         setResult(RESULT_OK, data);

@@ -28,7 +28,6 @@
             android:name=".ui.activity.PermissionsActivity"
             android:theme="@style/AppTheme.NoActionBar.Permissions" />
         <activity android:name=".ui.activity.ChoosePhotoActivity" />
-        <activity android:name=".ui.activity.MaterialListActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -55,9 +54,11 @@
         <activity
             android:name=".ui.activity.WebActivity"
             android:parentActivityName=".ui.activity.MainActivity" />
-        <activity android:name=".ui.activity.ItemActivity" />
+        <activity android:name=".ui.activity.MaterialListActivity" />
         <activity android:name=".ui.activity.ChooseMaterialActivity" />
-        <activity android:name=".ui.activity.AddMenuStep" />
+        <activity android:name=".ui.activity.AddMenuStepActivity" />
+        <activity android:name=".ui.activity.CreateDishActivity"/>
+        <activity android:name=".ui.activity.DishDetailActivity"/>
         <activity
             android:name=".ui.activity.MenuDetailActivity"
             android:theme="@style/AppTheme.NoActionBar" />

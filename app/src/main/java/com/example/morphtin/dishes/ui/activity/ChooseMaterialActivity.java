@@ -2,38 +2,33 @@ package com.example.morphtin.dishes.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.example.morphtin.dishes.R;
-import com.example.morphtin.dishes.api.presenter.IMaterialPresenter;
-import com.example.morphtin.dishes.api.presenter.IMenuPresenter;
-import com.example.morphtin.dishes.api.presenter.impl.MaterialPresenterImpl;
-import com.example.morphtin.dishes.api.view.IMaterialView;
+import com.example.morphtin.dishes.api.contract.ChooseContract;
+import com.example.morphtin.dishes.api.contract.MaterialContract;
+import com.example.morphtin.dishes.api.presenter.ChoosePresenter;
+import com.example.morphtin.dishes.api.presenter.MaterialPresenter;
 import com.example.morphtin.dishes.bean.MaterialBean;
 import com.example.morphtin.dishes.ui.adapter.TagAdapter;
+import com.example.morphtin.dishes.ui.base.BaseActivity;
 import com.hhl.library.FlowTagLayout;
 import com.hhl.library.OnTagSelectListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.R.id.list;
+public class ChooseMaterialActivity extends BaseActivity implements ChooseContract.View{
+    private ChooseContract.Presenter presenter;
 
-public class ChooseMaterialActivity extends AppCompatActivity implements IMaterialView{
     private FlowTagLayout mVegetableFlowTagLayout;
     private FlowTagLayout mMeatFlowTagLayout;
     private TagAdapter<String> mVegetableTagAdapter;
     private TagAdapter<String> mMeatTagAdapter;
     private ArrayList<String> cookList=new ArrayList<>();
     private ArrayList<String> cookList2=new ArrayList<>();
-
-    private IMaterialPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,17 +37,6 @@ public class ChooseMaterialActivity extends AppCompatActivity implements IMateri
         getSupportActionBar().setTitle("文字找菜");
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
 
         mVegetableFlowTagLayout = (FlowTagLayout) findViewById(R.id.vegetable_flow_layout);
         mMeatFlowTagLayout = (FlowTagLayout) findViewById(R.id.meat_flow_layout);
@@ -111,9 +95,16 @@ public class ChooseMaterialActivity extends AppCompatActivity implements IMateri
 
         initVegetableData();
         initMeatData();
+    }
 
-        presenter = new MaterialPresenterImpl(this);
-        presenter.loadMaterials();
+    @Override
+    protected void initData(){
+        presenter = new ChoosePresenter(this);
+        presenter.loadAllMaterials();
+    }
+
+    @Override
+    protected void initEvents() {
 
     }
 
@@ -162,23 +153,14 @@ public class ChooseMaterialActivity extends AppCompatActivity implements IMateri
     }
 
 
-    @Override
-    public void showProgress() {
-
+    private void select(){
+        //TODO 点击确认提交的方法，参数为MaterialBean的列表
+        List<MaterialBean> data = new ArrayList<>();
+        presenter.select(data);
     }
 
     @Override
-    public void hideProgress() {
-
-    }
-
-    @Override
-    public void updateView(List<MaterialBean> data) {
-
-    }
-
-    @Override
-    public void showMessage(String msg) {
-
+    public void showMaterials(List<MaterialBean> data) {
+        //TODO 显示所有原材料以及选中状态
     }
 }

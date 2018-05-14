@@ -15,21 +15,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.morphtin.dishes.R;
-import com.example.morphtin.dishes.api.presenter.IMenuPresenter;
-import com.example.morphtin.dishes.api.presenter.impl.MenuPresenterImpl;
-import com.example.morphtin.dishes.api.view.IMenuView;
+import com.example.morphtin.dishes.api.contract.MenuContract;
+import com.example.morphtin.dishes.api.presenter.MenuPresenter;
 import com.example.morphtin.dishes.bean.MenuBean;
 import com.example.morphtin.dishes.bean.MenuStep;
+import com.example.morphtin.dishes.ui.base.BaseActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MenuDetailActivity extends AppCompatActivity implements IMenuView{
+public class MenuDetailActivity extends BaseActivity implements MenuContract.View{
     private static final String TAG = "MenuDetailActivity";
-    
+
+    public static final String EXTRA_MENU_ID = "EXTRA_MENU_ID";
+
     @BindView(R.id.collapsing_toolbar_layout)
     CollapsingToolbarLayout mCollapsingToolbarLayout;
     @BindView(R.id.menu_detail_image)
@@ -40,7 +43,7 @@ public class MenuDetailActivity extends AppCompatActivity implements IMenuView{
     Toolbar mToolbar;
 
     private ItemAdapter adapter;
-    private IMenuPresenter presenter;
+    private MenuContract.Presenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +52,19 @@ public class MenuDetailActivity extends AppCompatActivity implements IMenuView{
 
         ButterKnife.bind(this);
 
-        String menu_id = getIntent().getStringExtra("MENU_ID");
-        presenter = new MenuPresenterImpl(this);
-        presenter.loadMenuDetail(menu_id);
     }
 
+    @Override
+    protected void initData() {
+        String menu_id = getIntent().getStringExtra(EXTRA_MENU_ID);
+        presenter = new MenuPresenter(this);
+        presenter.loadDetail(menu_id);
+    }
+
+    @Override
+    protected void initEvents() {
+
+    }
 
 
     public void initView(MenuBean menu){
@@ -82,26 +93,9 @@ public class MenuDetailActivity extends AppCompatActivity implements IMenuView{
     }
 
     @Override
-    public void showProgress() {
-
+    public void showDetail(MenuBean data) {
+        //TODO
     }
-
-    @Override
-    public void hideProgress() {
-
-    }
-
-    @Override
-    public void updateView(MenuBean data) {
-        Log.d(TAG, "updateView: ");
-        initView(data);
-    }
-
-    @Override
-    public void showMessage(String msg) {
-
-    }
-
 
     private class ItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 

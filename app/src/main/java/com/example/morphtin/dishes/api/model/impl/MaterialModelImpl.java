@@ -1,7 +1,7 @@
 package com.example.morphtin.dishes.api.model.impl;
 
 import com.example.morphtin.dishes.api.common.ServiceFactory;
-import com.example.morphtin.dishes.api.common.service.IMaterialListService;
+import com.example.morphtin.dishes.api.common.service.IMaterialService;
 import com.example.morphtin.dishes.api.model.IMaterialModel;
 import com.example.morphtin.dishes.bean.MaterialBean;
 import com.example.morphtin.dishes.common.Constant;
@@ -27,13 +27,13 @@ import okhttp3.RequestBody;
 public class MaterialModelImpl implements IMaterialModel {
     private static final String TAG = "MaterialModelImpl";
 
-    private IMaterialListService service;
+    private IMaterialService service;
 
     public MaterialModelImpl() {
         if(Constant.DEBUG){
-            service = ServiceFactory.createService(URL.HOST_URL_DEBUG,IMaterialListService.class);
+            service = ServiceFactory.createService(URL.HOST_URL_DEBUG,IMaterialService.class);
         }else{
-            service = ServiceFactory.createService(URL.HOST_URL_CUSTOM,IMaterialListService.class);
+            service = ServiceFactory.createService(URL.HOST_URL_CUSTOM,IMaterialService.class);
         }
     }
 

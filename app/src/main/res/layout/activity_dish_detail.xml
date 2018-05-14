@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/activity_dish_detail"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+android:scrollbars="vertical"
+tools:context="com.example.morphtin.dishes.ui.activity.DishDetailActivity">
+<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/rl_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/left"
+            android:layout_marginLeft="10dp" />
+        <TextView
+            android:id="@+id/tv_cpdetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:editable="false"
+            android:layout_centerHorizontal="true"
+            android:text="菜谱详情"
+            android:textSize="22dp" />
+        <ImageView
+            android:id="@+id/iv_share"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/share"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_2"
+        android:layout_below="@+id/rl_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp">
+        <SurfaceView
+            android:id="@+id/surfaceView"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:backgroundTint="#E6E6FA"
+            android:textAlignment="center"
+            android:tooltipText="菜谱封面（或1分钟视频）"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_below="@+id/rl_2"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textSize="22dp"
+        android:editable="false"
+        android:text="菜谱名称"
+        android:textColor="#696969"/>
+
+    <TextView
+        android:id="@+id/tv_zan"
+        android:layout_below="@+id/tv_title"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textSize="20dp"
+        android:editable="false"
+        android:text="已有0人点赞 0人收藏"
+        android:textColor="#C0C0C0"/>
+
+    <ImageView
+        android:id="@+id/iv_mainPic"
+        android:layout_below="@+id/tv_zan"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center"
+        android:src="@drawable/cook"/>
+
+    <TextView
+        android:id="@+id/tv_author"
+        android:layout_below="@+id/iv_mainPic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="作者"
+        android:editable="false"
+        android:layout_gravity="center"
+        android:textSize="18dp"
+        android:textColor="#808080"/>
+
+    <ImageView
+        android:id="@+id/iv_1"
+        android:layout_below="@+id/tv_author"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:src="@drawable/left_quote"/>
+
+    <TextView
+        android:id="@+id/tv_describtion"
+        android:layout_below="@+id/iv_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:text="还没有描述哦~"
+        />
+
+    <ImageView
+        android:id="@+id/iv_2"
+        android:layout_below="@+id/tv_describtion"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_gravity="right"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/right_quote"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_3"
+        android:layout_below="@+id/iv_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tv_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="15dp"
+            android:editable="false"
+            android:text="材料"
+            android:textSize="21dp"
+            android:textColor="#696969"/>
+
+        <TextView
+            android:id="@+id/tv_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:editable="false"
+            android:text="收藏"
+            android:textSize="21dp"
+            android:textColor="#F4A460"/>
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+        android:layout_marginTop="10dp">
+
+        <LinearLayout
+            android:id="@+id/list_Lin"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <!-- 动态生成部分开始 -->
+            <RelativeLayout
+                android:id="@+id/rl_material"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tv_materialName"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="15dp"
+                    android:editable="false"
+                    android:hint="材料名1"
+                    android:gravity="left"
+                    android:textSize="20dp"
+                    android:textColorHint="#C0C0C0"/>
+
+                <TextView
+                    android:id="@+id/tv_materialNum"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_alignParentRight="true"
+                    android:editable="false"
+                    android:gravity="left"
+                    android:hint="数量1"
+                    android:textSize="20dp"
+                    android:textColorHint="#C0C0C0"/>
+
+                <LinearLayout
+                    android:id="@+id/ll_2"
+                    android:layout_below="@+id/tv_materialNum"
+                    android:layout_width="330dp"
+                    android:orientation="horizontal"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_centerHorizontal="true"
+                    android:background="#D3D3D3"
+                    ></LinearLayout>
+            </RelativeLayout>
+            <!-- 动态生成部分结束 -->
+
+        </LinearLayout>
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/tv_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:textColor="#696969"
+        android:textSize="22dp"
+        android:text="- 烹饪步骤 -"/>
+
+    <TextView
+        android:id="@+id/tv_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:textColor="#808080"
+        android:textSize="20dp"
+        android:text="点击步骤进入烹饪模式"/>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+        android:layout_marginTop="10dp">
+
+        <LinearLayout
+            android:id="@+id/list_step"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="15dp">
+
+            <!-- 动态生成部分开始 -->
+            <RelativeLayout
+                android:id="@+id/rl_step"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tv_stepnum"
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginLeft="15dp"
+                    android:editable="false"
+                    android:text="1"
+                    android:gravity="right"
+                    android:textSize="25dp" />
+                <RelativeLayout
+                    android:layout_width="280dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="25dp"
+                    android:layout_alignParentRight="true"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:id="@+id/iv_stepPic"
+                        android:layout_width="280dp"
+                        android:layout_height="210dp"
+                        android:background="@drawable/xia" />
+
+                    <TextView
+                        android:id="@+id/iv_stepDescribtion"
+                        android:layout_below="@+id/iv_stepPic"
+                        android:layout_width="280dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_height="wrap_content"
+                        android:hint="还没有描述哦~"
+                        android:gravity="left"
+                        android:textColorHint="#DCDCDC"
+                        android:textColor="#696969"
+                        android:textSize="19dp"/>
+                </RelativeLayout>
+
+            </RelativeLayout>
+            <!-- 动态生成部分结束 -->
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
+</ScrollView>
+

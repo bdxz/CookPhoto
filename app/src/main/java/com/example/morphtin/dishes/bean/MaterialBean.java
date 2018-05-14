@@ -23,9 +23,6 @@ public class MaterialBean implements Parcelable{
         dest.writeString(this.catelog);
     }
 
-    public MaterialBean() {
-    }
-
     protected MaterialBean(Parcel in) {
         this.title = in.readString();
         this.catelog = in.readString();

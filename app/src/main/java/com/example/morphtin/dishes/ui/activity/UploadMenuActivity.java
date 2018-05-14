@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -21,11 +20,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.morphtin.dishes.R;
-import com.example.morphtin.dishes.api.presenter.IMenuPresenter;
-import com.example.morphtin.dishes.api.presenter.impl.MenuPresenterImpl;
-import com.example.morphtin.dishes.api.view.IMenuView;
+import com.example.morphtin.dishes.api.contract.MenuContract;
+import com.example.morphtin.dishes.api.presenter.MenuPresenter;
 import com.example.morphtin.dishes.bean.MenuBean;
 import com.example.morphtin.dishes.bean.MenuStep;
+import com.example.morphtin.dishes.ui.base.BaseActivity;
 
 
 import java.util.ArrayList;
@@ -35,7 +34,7 @@ import java.util.List;
 import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class UploadMenuActivity extends AppCompatActivity implements IMenuView{
+public class UploadMenuActivity extends BaseActivity implements MenuContract.View{
 
     private static final int RC_CHOOSE_PHOTO = 1;
     private static final int ADD_NEW_MENU_STEP = 7;
@@ -50,7 +49,8 @@ public class UploadMenuActivity extends AppCompatActivity implements IMenuView{
     private ItemAdapter adapter;
     private ArrayList<MenuStep> menuList= new ArrayList<>();
 
-    private IMenuPresenter presenter;
+    private MenuContract.Presenter presenter;
+
     // adding the toolbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -95,11 +95,14 @@ public class UploadMenuActivity extends AppCompatActivity implements IMenuView{
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(ItemRecyclerView); //set swipe to recylcerview
 
-        presenter = new MenuPresenterImpl(this);
+        presenter = new MenuPresenter(this);
 
     }
 
+    @Override
+    protected void initEvents() {
 
+    }
 
 
     @Override
@@ -124,29 +127,13 @@ public class UploadMenuActivity extends AppCompatActivity implements IMenuView{
         menuBean.setImageTitle(imagePath);
         menuBean.setSteps(menuList);
 
-        presenter.uploadMenu(menuBean);
+        presenter.addMenu(menuBean);
     }
 
     public void addAMenuStep(View v){
-        Intent intent = new Intent(getApplicationContext(),AddMenuStep.class);
+        Intent intent = new Intent(getApplicationContext(),AddMenuStepActivity.class);
         startActivityForResult(intent, ADD_NEW_MENU_STEP);
     }
-
-//    private void choicePhotoWrapper() {
-//
-//            // 拍照后照片的存放目录，改成你自己拍照后要存放照片的目录。如果不传递该参数的话就没有拍照功能
-//            File takePhotoDir = new File(Environment.getExternalStorageDirectory(), "BGAPhotoPickerTakePhoto");
-//
-//            Intent photoPickerIntent = new BGAPhotoPickerActivity.IntentBuilder(this)
-//                    .cameraFileDir(true ? takePhotoDir : null) // 拍照后照片的存放目录，改成你自己拍照后要存放照片的目录。如果不传递该参数的话则不开启图库里的拍照功能
-//                    .maxChooseCount(mPhotosSnpl.getMaxItemCount() - mPhotosSnpl.getItemCount()) // 图片选择张数的最大值
-//                    .selectedPhotos(null) // 当前已选中的图片路径集合
-//                    .pauseOnScroll(false) // 滚动列表时是否暂停加载图片
-//                    .build();
-//            startActivityForResult(photoPickerIntent, RC_CHOOSE_PHOTO);
-//
-//    }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -161,23 +148,8 @@ public class UploadMenuActivity extends AppCompatActivity implements IMenuView{
     }
 
     @Override
-    public void showProgress() {
-
-    }
-
-    @Override
-    public void hideProgress() {
-
-    }
-
-    @Override
-    public void updateView(MenuBean data) {
-
-    }
-
-    @Override
-    public void showMessage(String msg) {
-
+    public void showDetail(MenuBean data) {
+        //不用实现
     }
 
     private class ItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -209,7 +181,7 @@ public class UploadMenuActivity extends AppCompatActivity implements IMenuView{
 //                AlertDialog.Builder builder = new AlertDialog.Builder(UploadMenuActivity.this); //alert for confirm
 //                builder.setMessage("++++++"); //set message
 //                builder.show();
-                Intent intent = new Intent(getApplicationContext(),AddMenuStep.class);
+                Intent intent = new Intent(getApplicationContext(),AddMenuStepActivity.class);
                 startActivityForResult(intent, ADD_NEW_MENU_STEP);
             }
         }

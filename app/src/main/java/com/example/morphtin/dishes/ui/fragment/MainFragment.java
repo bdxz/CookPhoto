@@ -9,10 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -22,25 +20,21 @@ import com.example.morphtin.dishes.BaseApplication;
 import com.example.morphtin.dishes.R;
 import com.example.morphtin.dishes.bean.MenuBean;
 import com.example.morphtin.dishes.bean.MenuStep;
-import com.example.morphtin.dishes.ui.activity.ItemActivity;
+import com.example.morphtin.dishes.ui.activity.MaterialListActivity;
 import com.example.morphtin.dishes.ui.activity.MenuDetailActivity;
 import com.example.morphtin.dishes.ui.activity.UploadMenuActivity;
 import com.example.morphtin.dishes.ui.base.BaseFragment;
 import com.example.morphtin.dishes.ui.view.BottomBar;
 import com.example.morphtin.dishes.util.StartBrotherEvent;
 import com.werb.pickphotoview.PickPhotoView;
-import com.werb.pickphotoview.util.PickConfig;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 import me.yokeyword.fragmentation.SupportFragment;
@@ -269,7 +263,7 @@ public class MainFragment extends BaseFragment {
             llTest2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent=new Intent(getActivity(), ItemActivity.class);
+                    Intent intent=new Intent(getActivity(), MaterialListActivity.class);
                     startActivity(intent);
                     close();
                 }
