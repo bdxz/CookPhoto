@@ -163,4 +163,10 @@ public class ChooseMaterialActivity extends BaseActivity implements ChooseContra
     public void showMaterials(List<MaterialBean> data) {
         //TODO 显示所有原材料以及选中状态
     }
+
+    @Override
+    public void showSelected(List<MaterialBean> data) {
+        Intent intent = new Intent(this,MaterialListActivity.class);
+        startActivity(intent);
+    }
 }

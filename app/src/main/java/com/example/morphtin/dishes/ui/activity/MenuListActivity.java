@@ -76,7 +76,7 @@ public class MenuListActivity extends BaseActivity implements MenusContract.View
     @Override
     protected void initData() {
         presenter = new MenusPresenter(this);
-        presenter.loadMatchMenu();
+        presenter.loadMatchMenus();
     }
 
     @Override
@@ -92,8 +92,8 @@ public class MenuListActivity extends BaseActivity implements MenusContract.View
         startActivity(intent);
     }
 
-    private void ClickItem(MenuBean menu){
+    private void ClickItem(String menu_id){
         //TODO 点击某一个菜谱应调用的代码
-        presenter.openDetail(menu);
+        presenter.openDetail(menu_id);
     }
 }

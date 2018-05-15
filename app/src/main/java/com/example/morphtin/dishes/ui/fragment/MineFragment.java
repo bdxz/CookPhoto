@@ -11,9 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.morphtin.dishes.R;
-import com.example.morphtin.dishes.api.view.IMineView;
 import com.example.morphtin.dishes.bean.User;
-import com.example.morphtin.dishes.bean.UserInfoBean;
 import com.example.morphtin.dishes.ui.base.BaseFragment;
 import com.example.morphtin.dishes.ui.view.EditMineDialog;
 
@@ -24,7 +22,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by elevation on 18-4-4.
  */
 
-public class MineFragment extends BaseFragment implements IMineView {
+public class MineFragment extends BaseFragment {
 
     private CircleImageView mCircleImageView;
     private User user;
@@ -106,27 +104,6 @@ public class MineFragment extends BaseFragment implements IMineView {
 
     @Override
     protected void initData(boolean isSavedNull) {
-
-    }
-
-
-    @Override
-    public void showProgress() {
-
-    }
-
-    @Override
-    public void hideProgress() {
-
-    }
-
-    @Override
-    public void updateView(UserInfoBean data) {
-
-    }
-
-    @Override
-    public void showMessage(String msg) {
 
     }
 }

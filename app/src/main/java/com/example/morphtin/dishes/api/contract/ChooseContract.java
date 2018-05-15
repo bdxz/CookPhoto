@@ -12,6 +12,8 @@ import java.util.List;
 public interface ChooseContract {
     interface View{
         void showMaterials(List<MaterialBean> data);
+
+        void showSelected(List<MaterialBean> data);
     }
     interface Presenter{
         void loadAllMaterials();

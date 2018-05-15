@@ -15,11 +15,9 @@ public interface MenusContract {
         void showDetailUI(String menu_id);
     }
     interface Presenter{
-        void loadMenus();
+        void loadMatchMenus();
 
-        void loadMatchMenu();
-
-        void openDetail(MenuBean menu);
+        void openDetail(String menu_id);
     }
 }
 

@@ -7,57 +7,85 @@ import com.example.morphtin.dishes.bean.MaterialBean;
 import com.example.morphtin.dishes.common.Constant;
 import com.example.morphtin.dishes.common.URL;
 
+import org.reactivestreams.Publisher;
+import org.reactivestreams.Subscription;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
+import io.reactivex.Flowable;
+import io.reactivex.SingleSource;
 import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 /**
- * Created by elevation on 18-4-25.
+ * Created by elevation on 18-5-14.
  */
 
 public class MaterialModelImpl implements IMaterialModel {
-    private static final String TAG = "MaterialModelImpl";
+    private static final MaterialModelImpl ourInstance = new MaterialModelImpl();
 
-    private IMaterialService service;
+    private static List<MaterialBean> selectedMaterials = new ArrayList<>();
+    private IMaterialService mMaterialService;
 
-    public MaterialModelImpl() {
-        if(Constant.DEBUG){
-            service = ServiceFactory.createService(URL.HOST_URL_DEBUG,IMaterialService.class);
-        }else{
-            service = ServiceFactory.createService(URL.HOST_URL_CUSTOM,IMaterialService.class);
+    public static MaterialModelImpl getInstance() {
+        return ourInstance;
+    }
+
+    private MaterialModelImpl() {
+        if (Constant.DEBUG) {
+            mMaterialService = ServiceFactory.createService(URL.HOST_URL_DEBUG, IMaterialService.class);
+        } else {
+            mMaterialService = ServiceFactory.createService(URL.HOST_URL_CUSTOM, IMaterialService.class);
         }
+
     }
 
     @Override
-    public void loadMaterialList(ArrayList<String> photoPaths, final Observer<List<MaterialBean>> listener) {
-        List<MultipartBody.Part> partList = new ArrayList<>();
-        for (String photoPath: photoPaths) {
-            File file = new File(photoPath);
-            RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
+    public Flowable<List<MaterialBean>> getMaterials() {
+        return mMaterialService.getMaterials();
+    }
 
-
-            partList.add(MultipartBody.Part.createFormData("photo",file.getName(),requestBody));
-        }
-
-        service.getMaterials(partList).subscribeOn(Schedulers.io()).doOnSubscribe(new Consumer<Disposable>() {
+    @Override
+    public Flowable<List<MaterialBean>> getMaterials(ArrayList<String> photoPaths) {
+        return Flowable.just(photoPaths).subscribeOn(Schedulers.io()).flatMap(new Function<ArrayList<String>, Publisher<String>>() {
             @Override
-            public void accept(Disposable disposable) throws Exception {
-
+            public Publisher<String> apply(ArrayList<String> strings) throws Exception {
+                return null;
             }
-        }).observeOn(AndroidSchedulers.mainThread()).subscribe(listener);
+        }).map(new Function<String, MultipartBody.Part>() {
+            @Override
+            public MultipartBody.Part apply(String photoPath) throws Exception {
+                File file = new File(photoPath);
+                RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
+
+                return MultipartBody.Part.createFormData("photo", file.getName(), requestBody);
+            }
+        }).toList().toFlowable().flatMap(new Function<List<MultipartBody.Part>, Publisher<List<MaterialBean>>>() {
+            @Override
+            public Publisher<List<MaterialBean>> apply(List<MultipartBody.Part> parts) throws Exception {
+                return mMaterialService.getMaterials(parts);
+            }
+        });
     }
 
     @Override
-    public void loadMaterialList(Observer<List<MaterialBean>> listener) {
-        service.getMaterials();
+    public Flowable<List<MaterialBean>> getSelected() {
+        return Flowable.just(selectedMaterials);
+    }
+
+    @Override
+    public void setSelected(List<MaterialBean> data) {
+        selectedMaterials = data;
+    }
+
+    @Override
+    public void setUnselect(MaterialBean data) {
+        selectedMaterials.remove(data);
     }
 }

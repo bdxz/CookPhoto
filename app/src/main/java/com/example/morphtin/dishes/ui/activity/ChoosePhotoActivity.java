@@ -1,5 +1,6 @@
 package com.example.morphtin.dishes.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -26,7 +27,7 @@ import butterknife.ButterKnife;
  * Created by elevation on 18-4-25.
  */
 
-public class ChoosePhotoActivity extends BaseActivity{
+public class ChoosePhotoActivity extends BaseActivity implements ChooseContract.View{
     private PhotoAdapter adapter;
     private ArrayList<String> photoPaths;
     private ChooseContract.Presenter presenter;
@@ -53,7 +54,7 @@ public class ChoosePhotoActivity extends BaseActivity{
 
         adapter.updateData(photoPaths);
 
-        presenter = new ChoosePresenter(null);
+        presenter = new ChoosePresenter(this);
     }
 
     @Override
@@ -64,5 +65,16 @@ public class ChoosePhotoActivity extends BaseActivity{
                 presenter.selectByPhoto(photoPaths);
             }
         });
+    }
+
+    @Override
+    public void showMaterials(List<MaterialBean> data) {
+
+    }
+
+    @Override
+    public void showSelected(List<MaterialBean> data) {
+        Intent intent = new Intent(this,MaterialListActivity.class);
+        startActivity(intent);
     }
 }

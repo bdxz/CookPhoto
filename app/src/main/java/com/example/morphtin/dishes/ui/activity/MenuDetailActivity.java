@@ -2,12 +2,10 @@ package com.example.morphtin.dishes.ui.activity;
 
 import android.graphics.Color;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +21,6 @@ import com.example.morphtin.dishes.ui.base.BaseActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -153,7 +150,5 @@ public class MenuDetailActivity extends BaseActivity implements MenuContract.Vie
         public int getItemCount() {
             return mData == null ? 0 : mData.size();
         }
-
-
     }
 }

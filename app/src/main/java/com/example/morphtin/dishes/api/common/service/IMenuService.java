@@ -3,6 +3,7 @@ package com.example.morphtin.dishes.api.common.service;
 import com.example.morphtin.dishes.bean.MenuBean;
 import com.example.morphtin.dishes.bean.http.BaseResponse;
 
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import retrofit2.http.Body;
@@ -16,8 +17,8 @@ import retrofit2.http.Query;
 
 public interface IMenuService {
     @POST("api/menu/add")
-    Observable<BaseResponse> addMenu(@Body MenuBean menu);
+    Flowable<BaseResponse> add(@Body MenuBean menu);
 
     @GET("api/menu/get")
-    Observable<MenuBean> loadMenuDetail(@Query("menu_id") String menu_id);
+    Flowable<MenuBean> get(@Query("menu_id") String menu_id);
 }

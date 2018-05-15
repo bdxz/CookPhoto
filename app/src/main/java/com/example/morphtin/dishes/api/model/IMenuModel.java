@@ -3,6 +3,9 @@ package com.example.morphtin.dishes.api.model;
 import com.example.morphtin.dishes.bean.MenuBean;
 import com.example.morphtin.dishes.bean.http.BaseResponse;
 
+import java.util.List;
+
+import io.reactivex.Flowable;
 import io.reactivex.Observer;
 
 /**
@@ -10,7 +13,9 @@ import io.reactivex.Observer;
  */
 
 public interface IMenuModel {
-    void uploadMenu(MenuBean menu, Observer<BaseResponse> listener);
+    Flowable<List<MenuBean>> getBannerMenus();
 
-    void loadMenuDetail(String menu_id, Observer<MenuBean> observer);
+    Flowable<MenuBean> getMenu(String menu_id);
+
+    void saveMenu(MenuBean menu);
 }

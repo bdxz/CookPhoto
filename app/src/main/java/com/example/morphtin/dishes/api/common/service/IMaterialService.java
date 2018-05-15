@@ -4,6 +4,7 @@ import com.example.morphtin.dishes.bean.MaterialBean;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import retrofit2.http.GET;
@@ -17,9 +18,9 @@ import retrofit2.http.Part;
 
 public interface IMaterialService {
     @Multipart
-    @POST("api/material/get")
-    Observable<List<MaterialBean>> getMaterials(@Part() List<MultipartBody.Part> parts);
+    @POST("api/material/get_materials")
+    Flowable<List<MaterialBean>> getMaterials(@Part() List<MultipartBody.Part> parts);
 
     @GET("api/material/get")
-    Observable<List<MaterialBean>> getMaterials();
+    Flowable<List<MaterialBean>> getMaterials();
 }
