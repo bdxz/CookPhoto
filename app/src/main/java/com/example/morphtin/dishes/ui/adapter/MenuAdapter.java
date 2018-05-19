@@ -1,6 +1,8 @@
 package com.example.morphtin.dishes.ui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.CardView;
@@ -9,9 +11,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.morphtin.dishes.R;
+import com.example.morphtin.dishes.api.contract.ChooseContract;
 import com.example.morphtin.dishes.bean.Menu_in_List;
+import com.example.morphtin.dishes.ui.activity.DishDetailActivity;
+import com.example.morphtin.dishes.ui.activity.MaterialListActivity;
+import com.example.morphtin.dishes.ui.activity.MenuListActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -25,19 +32,38 @@ import io.rmiri.skeleton.SkeletonGroup;
  */
 
 public class MenuAdapter extends AdapterSkeleton<Menu_in_List,MenuAdapter.ViewHolder> {
+    private ArrayList<Menu_in_List> mfruitList;
     public MenuAdapter(final Context context, final ArrayList<Menu_in_List> items, final RecyclerView recyclerView, final IsCanSetAdapterListener isCanSetAdapterListener) {
         this.context = context;
         this.items = items;
         this.isCanSetAdapterListener = isCanSetAdapterListener;
+        mfruitList = items;
 
         measureHeightRecyclerViewAndItem(recyclerView, R.layout.item_cookbook);// Set height
 
     }
 
 
+
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cookbook, parent, false);
+        final ViewHolder holder = new ViewHolder(view);
+        holder.fruitView.setOnClickListener(new View.OnClickListener(){
+
+            public void onClick(View v){
+                int position =holder.getAdapterPosition();
+                Toast.makeText(v.getContext(),"2333",Toast.LENGTH_SHORT).show();
+                //page1为先前已添加的类，并已在AndroidManifest.xml内添加活动事件(<activity android:name="page1"></activity>),在存放资源代码的文件夹下下，
+                Intent i = new Intent(context , DishDetailActivity.class);
+
+                ////启动
+                context.startActivity(i);
+            }
+        });
+
+
         return new ViewHolder(view);
     }
 
@@ -49,10 +75,10 @@ public class MenuAdapter extends AdapterSkeleton<Menu_in_List,MenuAdapter.ViewHo
         private TextView titleTv;
         private TextView descriptionTv;
         private AppCompatImageButton addToParkingImgBtn;
+        View fruitView;
 
-
-        ViewHolder(View itemView) {
-            super(itemView);
+        ViewHolder(View view) {
+            super(view);
 
             cardView = (CardView) itemView.findViewById(R.id.cardView);
             skeletonGroup = (SkeletonGroup) itemView.findViewById(R.id.skeletonGroup);
@@ -60,8 +86,10 @@ public class MenuAdapter extends AdapterSkeleton<Menu_in_List,MenuAdapter.ViewHo
             titleTv = (TextView) itemView.findViewById(R.id.titleTv);
             descriptionTv = (TextView) itemView.findViewById(R.id.descriptionTv);
             addToParkingImgBtn = (AppCompatImageButton) itemView.findViewById(R.id.addToParkingImgBtn);
-
+            fruitView = view;
         }
+
+
     }
 
     @Override

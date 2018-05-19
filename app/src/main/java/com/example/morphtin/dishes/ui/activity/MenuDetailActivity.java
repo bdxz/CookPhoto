@@ -30,12 +30,12 @@ public class MenuDetailActivity extends BaseActivity implements MenuContract.Vie
 
     public static final String EXTRA_MENU_ID = "EXTRA_MENU_ID";
 
-    @BindView(R.id.collapsing_toolbar_layout)
+    /*@BindView(R.id.collapsing_toolbar_layout)
     CollapsingToolbarLayout mCollapsingToolbarLayout;
-    @BindView(R.id.menu_detail_image)
+    @BindView(R.id.iv_back)
     ImageView mImageView;
     @BindView(R.id.menuDetailRecyclerView)
-    RecyclerView ItemRecyclerView;
+    RecyclerView ItemRecyclerView;*/
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
@@ -73,19 +73,19 @@ public class MenuDetailActivity extends BaseActivity implements MenuContract.Vie
                 onBackPressed();
             }
         });
-        Picasso.get()
-                .load(menu.getImage())
-                .into(mImageView);
+        //Picasso.get()
+        //        .load(menu.getImage())
+        //        .into(mImageView);
         //使用CollapsingToolbarLayout必须把title设置到CollapsingToolbarLayout上，设置到Toolbar上则不会显示
-        mCollapsingToolbarLayout.setTitle(menu.getTitle());
+        //mCollapsingToolbarLayout.setTitle(menu.getTitle());
         //通过CollapsingToolbarLayout修改字体颜色
-        mCollapsingToolbarLayout.setExpandedTitleColor(Color.WHITE);//设置还没收缩时状态下字体颜色
-        mCollapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);//设置收缩后Toolbar上字体的颜色
+        //mCollapsingToolbarLayout.setExpandedTitleColor(Color.WHITE);//设置还没收缩时状态下字体颜色
+        //mCollapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);//设置收缩后Toolbar上字体的颜色
 
-        adapter = new ItemAdapter(menu.getSteps());
-        ItemRecyclerView.setAdapter(adapter);
+        //adapter = new ItemAdapter(menu.getSteps());
+        //ItemRecyclerView.setAdapter(adapter);
 
-        ItemRecyclerView.setLayoutManager (new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        //ItemRecyclerView.setLayoutManager (new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
     }
 

@@ -34,7 +34,8 @@
             <!--Photo-->
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="230dp">
+                android:layout_height="230dp"
+                android:id="@+id/relative_layout">
 
                 <io.rmiri.skeleton.SkeletonView
                     android:layout_width="match_parent"

@@ -12,10 +12,11 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.view.View;
+import android.view.ViewGroup;
+
 
 import com.example.morphtin.dishes.R;
 import com.example.morphtin.dishes.api.contract.MaterialContract;
@@ -32,7 +33,6 @@ public class MaterialListActivity extends BaseActivity implements MaterialContra
     private RecyclerView ItemRecyclerView;
     private ItemAdapter adapter;
     private ArrayList<String> cookList= new ArrayList<String>();
-
     private MaterialContract.Presenter presenter;
 
     // adding the toolbar
@@ -180,7 +180,6 @@ public class MaterialListActivity extends BaseActivity implements MaterialContra
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.cook_item, parent, false);
             return new ItemHolder(v);
         }
-
         @Override
         public void onBindViewHolder(ItemHolder holder, int position) {
             String name = mData.get(position);
