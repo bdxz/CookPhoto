@@ -12,11 +12,10 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.morphtin.dishes.R;
 import com.example.morphtin.dishes.api.contract.MaterialContract;
@@ -25,7 +24,6 @@ import com.example.morphtin.dishes.bean.MaterialBean;
 import com.example.morphtin.dishes.ui.base.BaseActivity;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MaterialListActivity extends BaseActivity implements MaterialContract.View{
     private static final int ADD_COOK_ITEM = 1;
@@ -91,7 +89,7 @@ public class MaterialListActivity extends BaseActivity implements MaterialContra
 
     public void matchMenus(){
         //TODO 匹配菜谱,参数为已选中的原材料列表
-        List<MaterialBean> data = new ArrayList<>();
+        ArrayList<MaterialBean> data = new ArrayList<>();
         presenter.matchMenus(data);
     }
 
@@ -102,7 +100,7 @@ public class MaterialListActivity extends BaseActivity implements MaterialContra
 
 
     @Override
-    public void showMaterials(List<MaterialBean> data) {
+    public void showMaterials(ArrayList<MaterialBean> data) {
         //TODO 显示所有已选中的原材料
     }
 

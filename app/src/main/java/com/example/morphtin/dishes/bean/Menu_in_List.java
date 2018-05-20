@@ -9,8 +9,6 @@ public class Menu_in_List {
     private String title;
     private String description;
     private int photo;
-    private boolean isNew;
-    private String price;
 
     public int getId() {
         return id;

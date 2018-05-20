@@ -8,9 +8,7 @@ import android.view.View;
 
 import com.example.morphtin.dishes.R;
 import com.example.morphtin.dishes.api.contract.ChooseContract;
-import com.example.morphtin.dishes.api.contract.MaterialContract;
 import com.example.morphtin.dishes.api.presenter.ChoosePresenter;
-import com.example.morphtin.dishes.api.presenter.MaterialPresenter;
 import com.example.morphtin.dishes.bean.MaterialBean;
 import com.example.morphtin.dishes.ui.adapter.TagAdapter;
 import com.example.morphtin.dishes.ui.base.BaseActivity;
@@ -155,17 +153,17 @@ public class ChooseMaterialActivity extends BaseActivity implements ChooseContra
 
     private void select(){
         //TODO 点击确认提交的方法，参数为MaterialBean的列表
-        List<MaterialBean> data = new ArrayList<>();
+        ArrayList<MaterialBean> data = new ArrayList<>();
         presenter.select(data);
     }
 
     @Override
-    public void showMaterials(List<MaterialBean> data) {
+    public void showMaterials(ArrayList<MaterialBean> data) {
         //TODO 显示所有原材料以及选中状态
     }
 
     @Override
-    public void showSelected(List<MaterialBean> data) {
+    public void showSelected(ArrayList<MaterialBean> data) {
         Intent intent = new Intent(this,MaterialListActivity.class);
         startActivity(intent);
     }

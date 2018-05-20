@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 
 public class GeneratesFakeMenu {
-    private ArrayList<com.example.morphtin.dishes.bean.Menu_in_List> dataObjects = new ArrayList<>();
+    private ArrayList<com.example.morphtin.dishes.bean.MenuBean> dataObjects = new ArrayList<>();
 
 
     public GeneratesFakeMenu() {
@@ -41,9 +41,9 @@ public class GeneratesFakeMenu {
         }
     };
 
-    public ArrayList<com.example.morphtin.dishes.bean.Menu_in_List> generateDataFake() {
+    public ArrayList<com.example.morphtin.dishes.bean.MenuBean> generateDataFake() {
         for (int i = 0; i < 4; i++) {
-            com.example.morphtin.dishes.bean.Menu_in_List dataObject = new com.example.morphtin.dishes.bean.Menu_in_List();
+            com.example.morphtin.dishes.bean.MenuBean dataObject = new com.example.morphtin.dishes.bean.MenuBean();
             dataObject.setId(i);
             dataObject.setTitle(titles.get(i));
             dataObject.setDescription(descriptions.get(i));

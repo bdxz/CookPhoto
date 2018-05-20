@@ -30,7 +30,7 @@ import okhttp3.RequestBody;
 public class MaterialModelImpl implements IMaterialModel {
     private static final MaterialModelImpl ourInstance = new MaterialModelImpl();
 
-    private static List<MaterialBean> selectedMaterials = new ArrayList<>();
+    private static ArrayList<MaterialBean> selectedMaterials = new ArrayList<>();
     private IMaterialService mMaterialService;
 
     public static MaterialModelImpl getInstance() {
@@ -47,12 +47,12 @@ public class MaterialModelImpl implements IMaterialModel {
     }
 
     @Override
-    public Flowable<List<MaterialBean>> getMaterials() {
+    public Flowable<ArrayList<MaterialBean>> getMaterials() {
         return mMaterialService.getMaterials();
     }
 
     @Override
-    public Flowable<List<MaterialBean>> getMaterials(ArrayList<String> photoPaths) {
+    public Flowable<ArrayList<MaterialBean>> getMaterials(ArrayList<String> photoPaths) {
         return Flowable.just(photoPaths).subscribeOn(Schedulers.io()).flatMap(new Function<ArrayList<String>, Publisher<String>>() {
             @Override
             public Publisher<String> apply(ArrayList<String> strings) throws Exception {
@@ -66,21 +66,21 @@ public class MaterialModelImpl implements IMaterialModel {
 
                 return MultipartBody.Part.createFormData("photo", file.getName(), requestBody);
             }
-        }).toList().toFlowable().flatMap(new Function<List<MultipartBody.Part>, Publisher<List<MaterialBean>>>() {
+        }).toList().toFlowable().flatMap(new Function<List<MultipartBody.Part>, Publisher<ArrayList<MaterialBean>>>() {
             @Override
-            public Publisher<List<MaterialBean>> apply(List<MultipartBody.Part> parts) throws Exception {
+            public Publisher<ArrayList<MaterialBean>> apply(List<MultipartBody.Part> parts) throws Exception {
                 return mMaterialService.getMaterials(parts);
             }
         });
     }
 
     @Override
-    public Flowable<List<MaterialBean>> getSelected() {
+    public Flowable<ArrayList<MaterialBean>> getSelected() {
         return Flowable.just(selectedMaterials);
     }
 
     @Override
-    public void setSelected(List<MaterialBean> data) {
+    public void setSelected(ArrayList<MaterialBean> data) {
         selectedMaterials = data;
     }
 

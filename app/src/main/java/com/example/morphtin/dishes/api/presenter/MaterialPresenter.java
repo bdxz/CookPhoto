@@ -11,6 +11,7 @@ import com.example.morphtin.dishes.bean.MaterialBean;
 
 import org.reactivestreams.Subscription;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.FlowableSubscriber;
@@ -35,14 +36,14 @@ public class MaterialPresenter implements MaterialContract.Presenter {
 
     @Override
     public void loadSelected() {
-        mMaterialModel.getSelected().observeOn(AndroidSchedulers.mainThread()).subscribe(new FlowableSubscriber<List<MaterialBean>>() {
+        mMaterialModel.getSelected().observeOn(AndroidSchedulers.mainThread()).subscribe(new FlowableSubscriber<ArrayList<MaterialBean>>() {
             @Override
             public void onSubscribe(Subscription s) {
 
             }
 
             @Override
-            public void onNext(List<MaterialBean> materialBeans) {
+            public void onNext(ArrayList<MaterialBean> materialBeans) {
                 mMaterialView.showMaterials(materialBeans);
             }
 
@@ -59,7 +60,7 @@ public class MaterialPresenter implements MaterialContract.Presenter {
     }
 
     @Override
-    public void matchMenus(List<MaterialBean> data) {
+    public void matchMenus(ArrayList<MaterialBean> data) {
         mMatchModel.match(data);
         mMaterialView.showMenusUI();
     }

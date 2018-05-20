@@ -12,10 +12,8 @@ import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import io.reactivex.Flowable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -29,7 +27,7 @@ public class MatchModelImpl implements IMatchModel {
         return ourInstance;
     }
 
-    private static List<MenuBean> matchMenus = new ArrayList<>();
+    private static ArrayList<MenuBean> matchMenus = new ArrayList<>();
 
     private IMatchService mMatchService;
 
@@ -42,16 +40,16 @@ public class MatchModelImpl implements IMatchModel {
     }
 
     @Override
-    public void match(final List<MaterialBean> data) {
+    public void match(final ArrayList<MaterialBean> data) {
         clear();
-        mMatchService.match(data).subscribeOn(Schedulers.io()).subscribe(new Subscriber<List<MenuBean>>() {
+        mMatchService.match(data).subscribeOn(Schedulers.io()).subscribe(new Subscriber<ArrayList<MenuBean>>() {
             @Override
             public void onSubscribe(Subscription s) {
 
             }
 
             @Override
-            public void onNext(List<MenuBean> menuBeans) {
+            public void onNext(ArrayList<MenuBean> menuBeans) {
                 matchMenus.addAll(menuBeans);
             }
 
@@ -68,7 +66,7 @@ public class MatchModelImpl implements IMatchModel {
     }
 
     @Override
-    public Flowable<List<MenuBean>> get() {
+    public Flowable<ArrayList<MenuBean>> get() {
         return Flowable.just(matchMenus);
     }
 

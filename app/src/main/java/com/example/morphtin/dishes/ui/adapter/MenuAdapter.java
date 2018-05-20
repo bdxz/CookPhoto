@@ -2,7 +2,6 @@ package com.example.morphtin.dishes.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.CardView;
@@ -14,11 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.morphtin.dishes.R;
-import com.example.morphtin.dishes.api.contract.ChooseContract;
-import com.example.morphtin.dishes.bean.Menu_in_List;
+import com.example.morphtin.dishes.bean.MenuBean;
 import com.example.morphtin.dishes.ui.activity.DishDetailActivity;
-import com.example.morphtin.dishes.ui.activity.MaterialListActivity;
-import com.example.morphtin.dishes.ui.activity.MenuListActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -31,9 +27,9 @@ import io.rmiri.skeleton.SkeletonGroup;
  * Created by Administrator on 2018/5/11/011.
  */
 
-public class MenuAdapter extends AdapterSkeleton<Menu_in_List,MenuAdapter.ViewHolder> {
-    private ArrayList<Menu_in_List> mfruitList;
-    public MenuAdapter(final Context context, final ArrayList<Menu_in_List> items, final RecyclerView recyclerView, final IsCanSetAdapterListener isCanSetAdapterListener) {
+public class MenuAdapter extends AdapterSkeleton<MenuBean,MenuAdapter.ViewHolder> {
+    private ArrayList<MenuBean> mfruitList;
+    public MenuAdapter(final Context context, final ArrayList<MenuBean> items, final RecyclerView recyclerView, final IsCanSetAdapterListener isCanSetAdapterListener) {
         this.context = context;
         this.items = items;
         this.isCanSetAdapterListener = isCanSetAdapterListener;
@@ -107,7 +103,7 @@ public class MenuAdapter extends AdapterSkeleton<Menu_in_List,MenuAdapter.ViewHo
         }
 
         //set data in view
-        final Menu_in_List cardObj = items.get(position);
+        final MenuBean cardObj = items.get(position);
 
         holder.titleTv.setText(cardObj.getTitle());
         holder.descriptionTv.setText(cardObj.getDescription());

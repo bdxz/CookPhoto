@@ -4,21 +4,26 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by elevation on 18-5-4.
  */
 
 public class MenuBean implements Parcelable {
+    private int id;
     private String title;
     private String imageUrl;
+    private String description;
     private ArrayList<MenuStep> steps;
+    private int photo;
 
     public MenuBean(){
 
     }
 
+    public int getId() {
+        return id;
+    }
 
     public String getTitle(){
         return title;
@@ -27,14 +32,28 @@ public class MenuBean implements Parcelable {
     public String getImage(){
         return imageUrl;
     }
+    public String getDescription() {
+        return description;
+    }
 
     public ArrayList<MenuStep> getSteps(){
         return steps;
     }
+    public int getPhoto() {
+        return photo;
+    }
 
-
+    public void setPhoto(int photo) {
+        this.photo = photo;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
     public void setTitle(String title){
         this.title = title;
+    }
+    public void setDescription(String description) {
+        this.description = description;
     }
     public void setImageTitle(String imageUrl){
         this.imageUrl = imageUrl;

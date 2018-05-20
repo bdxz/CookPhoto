@@ -3,7 +3,6 @@ package com.example.morphtin.dishes.api.contract;
 import com.example.morphtin.dishes.bean.MaterialBean;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by elevation on 18-5-14.
@@ -11,14 +10,14 @@ import java.util.List;
 
 public interface ChooseContract {
     interface View{
-        void showMaterials(List<MaterialBean> data);
+        void showMaterials(ArrayList<MaterialBean> data);
 
-        void showSelected(List<MaterialBean> data);
+        void showSelected(ArrayList<MaterialBean> data);
     }
     interface Presenter{
         void loadAllMaterials();
 
-        void select(List<MaterialBean> data);
+        void select(ArrayList<MaterialBean> data);
 
         void selectByPhoto(ArrayList<String> photoPaths);
     }

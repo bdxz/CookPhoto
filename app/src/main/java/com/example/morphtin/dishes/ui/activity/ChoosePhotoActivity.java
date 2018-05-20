@@ -10,15 +10,12 @@ import android.view.View;
 import com.dd.processbutton.iml.ActionProcessButton;
 import com.example.morphtin.dishes.R;
 import com.example.morphtin.dishes.api.contract.ChooseContract;
-import com.example.morphtin.dishes.api.contract.MaterialContract;
 import com.example.morphtin.dishes.api.presenter.ChoosePresenter;
-import com.example.morphtin.dishes.api.presenter.MaterialPresenter;
 import com.example.morphtin.dishes.bean.MaterialBean;
 import com.example.morphtin.dishes.ui.adapter.PhotoAdapter;
 import com.example.morphtin.dishes.ui.base.BaseActivity;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -68,12 +65,12 @@ public class ChoosePhotoActivity extends BaseActivity implements ChooseContract.
     }
 
     @Override
-    public void showMaterials(List<MaterialBean> data) {
+    public void showMaterials(ArrayList<MaterialBean> data) {
 
     }
 
     @Override
-    public void showSelected(List<MaterialBean> data) {
+    public void showSelected(ArrayList<MaterialBean> data) {
         Intent intent = new Intent(this,MaterialListActivity.class);
         startActivity(intent);
     }

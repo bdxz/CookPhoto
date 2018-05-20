@@ -3,7 +3,7 @@ package com.example.morphtin.dishes.api.model;
 import com.example.morphtin.dishes.bean.MaterialBean;
 import com.example.morphtin.dishes.bean.MenuBean;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import io.reactivex.Flowable;
 
@@ -12,9 +12,9 @@ import io.reactivex.Flowable;
  */
 
 public interface IMatchModel {
-    void match(List<MaterialBean> data);
+    void match(ArrayList<MaterialBean> data);
 
-    Flowable<List<MenuBean>> get();
+    Flowable<ArrayList<MenuBean>> get();
 
     void clear();
 }

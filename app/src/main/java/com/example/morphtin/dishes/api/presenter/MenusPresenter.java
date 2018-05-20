@@ -8,6 +8,7 @@ import com.example.morphtin.dishes.bean.MenuBean;
 
 import org.reactivestreams.Subscription;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.FlowableSubscriber;
@@ -28,14 +29,14 @@ public class MenusPresenter implements MenusContract.Presenter {
 
     @Override
     public void loadMatchMenus() {
-        mMatchModel.get().observeOn(AndroidSchedulers.mainThread()).subscribe(new FlowableSubscriber<List<MenuBean>>() {
+        mMatchModel.get().observeOn(AndroidSchedulers.mainThread()).subscribe(new FlowableSubscriber<ArrayList<MenuBean>>() {
             @Override
             public void onSubscribe(Subscription s) {
 
             }
 
             @Override
-            public void onNext(List<MenuBean> menuBeans) {
+            public void onNext(ArrayList<MenuBean> menuBeans) {
                 mMenusView.showMenus(menuBeans);
             }
 

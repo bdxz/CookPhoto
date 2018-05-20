@@ -8,7 +8,6 @@ import com.example.morphtin.dishes.bean.MaterialBean;
 import org.reactivestreams.Subscription;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import io.reactivex.FlowableSubscriber;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -28,14 +27,14 @@ public class ChoosePresenter implements ChooseContract.Presenter {
 
     @Override
     public void loadAllMaterials() {
-        mMaterialModel.getMaterials().observeOn(AndroidSchedulers.mainThread()).subscribe(new FlowableSubscriber<List<MaterialBean>>() {
+        mMaterialModel.getMaterials().observeOn(AndroidSchedulers.mainThread()).subscribe(new FlowableSubscriber<ArrayList<MaterialBean>>() {
             @Override
             public void onSubscribe(Subscription s) {
 
             }
 
             @Override
-            public void onNext(List<MaterialBean> materialBeans) {
+            public void onNext(ArrayList<MaterialBean> materialBeans) {
                 mChooseView.showMaterials(materialBeans);
             }
 
@@ -52,21 +51,21 @@ public class ChoosePresenter implements ChooseContract.Presenter {
     }
 
     @Override
-    public void select(List<MaterialBean> data) {
+    public void select(ArrayList<MaterialBean> data) {
         mMaterialModel.setSelected(data);
         mChooseView.showSelected(data);
     }
 
     @Override
     public void selectByPhoto(ArrayList<String> photoPaths) {
-        mMaterialModel.getMaterials(photoPaths).observeOn(AndroidSchedulers.mainThread()).subscribe(new FlowableSubscriber<List<MaterialBean>>() {
+        mMaterialModel.getMaterials(photoPaths).observeOn(AndroidSchedulers.mainThread()).subscribe(new FlowableSubscriber<ArrayList<MaterialBean>>() {
             @Override
             public void onSubscribe(Subscription s) {
 
             }
 
             @Override
-            public void onNext(List<MaterialBean> materialBeans) {
+            public void onNext(ArrayList<MaterialBean> materialBeans) {
                 mMaterialModel.setSelected(materialBeans);
                 mChooseView.showSelected(materialBeans);
             }

@@ -3,7 +3,7 @@ package com.example.morphtin.dishes.api.common.service;
 import com.example.morphtin.dishes.bean.MaterialBean;
 import com.example.morphtin.dishes.bean.MenuBean;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import io.reactivex.Flowable;
 
@@ -12,5 +12,5 @@ import io.reactivex.Flowable;
  */
 
 public interface IMatchService {
-    Flowable<List<MenuBean>> match(List<MaterialBean> data);
+    Flowable<ArrayList<MenuBean>> match(ArrayList<MaterialBean> data);
 }
