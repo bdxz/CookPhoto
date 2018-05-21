@@ -72,7 +72,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(),
-                        DishDetailActivity.class);
+                        MenuDetailActivity.class);
                 startActivity(intent);
             }
         });
