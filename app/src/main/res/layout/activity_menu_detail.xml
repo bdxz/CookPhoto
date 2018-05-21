@@ -49,13 +49,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp">
-            <SurfaceView
-                android:id="@+id/surfaceView"
+            <ImageView
+                android:id="@+id/iv_maincover"
                 android:layout_width="match_parent"
                 android:layout_height="220dp"
                 android:backgroundTint="#E6E6FA"
-                android:textAlignment="center"
-                android:tooltipText="菜谱封面（或1分钟视频）"/>
+                android:textAlignment="center" />
         </RelativeLayout>
 
         <TextView
@@ -113,7 +112,7 @@
             android:src="@drawable/left_quote"/>
 
         <TextView
-            android:id="@+id/tv_describtion"
+            android:id="@+id/tv_description"
             android:layout_below="@+id/iv_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -129,7 +128,7 @@
 
         <ImageView
             android:id="@+id/iv_2"
-            android:layout_below="@+id/tv_describtion"
+            android:layout_below="@+id/tv_description"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_gravity="right"
@@ -263,54 +262,12 @@
                 android:orientation="vertical"
                 android:layout_marginBottom="15dp">
 
-                <!-- 动态生成部分开始 -->
-                <RelativeLayout
-                    android:id="@+id/rl_step"
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rvTrace"
                     android:layout_width="match_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:id="@+id/tv_stepnum"
-                        android:layout_width="20dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="0dp"
-                        android:layout_marginLeft="15dp"
-                        android:editable="false"
-                        android:text="1"
-                        android:gravity="right"
-                        android:textSize="25dp" />
-                    <RelativeLayout
-                        android:layout_width="280dp"
-                        android:layout_marginTop="4dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="25dp"
-                        android:layout_alignParentRight="true"
-                        android:orientation="vertical" >
+                    android:layout_height="wrap_content"
+                    android:overScrollMode="never"/>
 
-                        <ImageView
-                            android:id="@+id/iv_stepPic"
-                            android:layout_width="280dp"
-                            android:layout_height="210dp"
-                            android:background="@drawable/xia" />
-
-                        <TextView
-                            android:id="@+id/iv_stepDescribtion"
-                            android:layout_below="@+id/iv_stepPic"
-                            android:layout_width="280dp"
-                            android:layout_marginTop="4dp"
-                            android:layout_height="wrap_content"
-                            android:hint="还没有描述哦~"
-                            android:gravity="left"
-                            android:textColorHint="#DCDCDC"
-                            android:textColor="#696969"
-                            android:textSize="19dp"/>
-                    </RelativeLayout>
-
-                </RelativeLayout>
-                <!-- 动态生成部分结束 -->
 
             </LinearLayout>
         </ScrollView>

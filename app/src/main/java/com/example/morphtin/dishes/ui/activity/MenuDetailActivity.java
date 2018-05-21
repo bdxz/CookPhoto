@@ -1,12 +1,16 @@
 package com.example.morphtin.dishes.ui.activity;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -14,13 +18,20 @@ import android.widget.TextView;
 
 import com.example.morphtin.dishes.R;
 import com.example.morphtin.dishes.api.contract.MenuContract;
+import com.example.morphtin.dishes.api.model.Trace;
 import com.example.morphtin.dishes.api.presenter.MenuPresenter;
 import com.example.morphtin.dishes.bean.MenuBean;
 import com.example.morphtin.dishes.bean.MenuStep;
+import com.example.morphtin.dishes.ui.adapter.TraceListAdapter;
 import com.example.morphtin.dishes.ui.base.BaseActivity;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,10 +48,19 @@ public class MenuDetailActivity extends BaseActivity implements MenuContract.Vie
     @BindView(R.id.menuDetailRecyclerView)
     RecyclerView ItemRecyclerView;*/
     @BindView(R.id.toolbar)
+
     Toolbar mToolbar;
+    ImageView iv_maincover;
+    TextView tv_title;
+    ImageView iv_mainPic;
+    TextView tv_author;
+    TextView tv_description;
+    RecyclerView rvTrace;
 
     private ItemAdapter adapter;
     private MenuContract.Presenter presenter;
+    private TraceListAdapter traceListadapter;
+    private List<Trace> traceList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +68,7 @@ public class MenuDetailActivity extends BaseActivity implements MenuContract.Vie
         setContentView(R.layout.activity_menu_detail);
 
         ButterKnife.bind(this);
-
+        findView();
     }
 
     @Override
@@ -63,6 +83,14 @@ public class MenuDetailActivity extends BaseActivity implements MenuContract.Vie
 
     }
 
+    private void findView() {
+        rvTrace = (RecyclerView) findViewById(R.id.rvTrace);
+        tv_description = (TextView)findViewById(R.id.tv_description);
+        tv_author = (TextView)findViewById(R.id.tv_author);
+        iv_mainPic = (ImageView)findViewById(R.id.iv_mainPic);
+        tv_title = (TextView)findViewById(R.id.tv_title);
+        iv_maincover = (ImageView)findViewById(R.id.iv_maincover);
+    }
 
     public void initView(MenuBean menu){
         setSupportActionBar(mToolbar);
@@ -89,9 +117,68 @@ public class MenuDetailActivity extends BaseActivity implements MenuContract.Vie
 
     }
 
+    /*
+      菜谱信息模拟数据
+     */
+    public MenuBean zaojia(){
+        MenuBean mb = new MenuBean();
+        mb.setDescription("这是菜谱描述");
+        mb.setImageTitle("url");
+        mb.setPhoto(1);
+        mb.setTitle("菜谱");
+        ArrayList<MenuStep> list = new ArrayList<>();
+        MenuStep ms1 = new MenuStep("这是步骤","hhh");
+        MenuStep ms2 = new MenuStep("这是步骤","hhh");
+        MenuStep ms3 = new MenuStep("这是步骤","hhh");
+        MenuStep ms4 = new MenuStep("这是步骤","hhh");
+        list.add(ms1);
+        list.add(ms2);
+        list.add(ms3);
+        list.add(ms4);
+        mb.setSteps(list);
+        return mb;
+    }
+
     @Override
     public void showDetail(MenuBean data) {
-        //TODO
+        Trace trace = new Trace();
+        String stepCountDesc = "";
+
+        //data = zaojia();//测试时获取模拟数据
+
+        for(int i=0;i < data.getSteps().size();i++){
+            stepCountDesc = "第"+(i+1)+"步";
+            trace = new Trace(stepCountDesc,data.getSteps().get(i).getDescription(),data.getSteps().get(i).getImageUrl());
+            traceList.add(trace);
+        }
+        traceListadapter = new TraceListAdapter(this, traceList);
+        rvTrace.setLayoutManager(new LinearLayoutManager(this));
+        rvTrace.setAdapter(traceListadapter);
+
+        Bitmap bimage=  getBitmapFromURL(data.getImage());
+        iv_maincover.setImageBitmap(bimage);
+        tv_title.setText(data.getTitle());
+        //Bitmap bimage=  getBitmapFromURL(data.getImage()); //显示作者头像
+        //iv_mainPic.setImageBitmap(bimage);
+
+        //tv_author.setText("作者名称");// 显示作者名称
+        tv_description.setText(data.getDescription());
+
+    }
+
+    public static Bitmap getBitmapFromURL(String src) {
+        try {
+            URL url = new URL(src);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            Bitmap myBitmap = BitmapFactory.decodeStream(input);
+            return myBitmap;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private class ItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
