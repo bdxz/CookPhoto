@@ -7,7 +7,11 @@ import com.example.morphtin.dishes.api.model.IMenuModel;
 import com.example.morphtin.dishes.api.model.impl.MatchModelImpl;
 import com.example.morphtin.dishes.api.model.impl.MaterialModelImpl;
 import com.example.morphtin.dishes.api.model.impl.MenuModelImpl;
+import com.example.morphtin.dishes.api.model.mock.FakeMatchModel;
+import com.example.morphtin.dishes.api.model.mock.FakeMaterialModel;
+import com.example.morphtin.dishes.api.model.mock.FakeMenuModel;
 import com.example.morphtin.dishes.bean.MaterialBean;
+import com.example.morphtin.dishes.common.Constant;
 
 import org.reactivestreams.Subscription;
 
@@ -28,9 +32,15 @@ public class MaterialPresenter implements MaterialContract.Presenter {
 
     public MaterialPresenter(MaterialContract.View view) {
         this.mMaterialView = view;
-        mMaterialModel = MaterialModelImpl.getInstance();
-        mMenuModel = MenuModelImpl.getInstance();
-        mMatchModel = MatchModelImpl.getInstance();
+        if(Constant.MOCK){
+            mMaterialModel = FakeMaterialModel.getInstance();
+            mMenuModel = FakeMenuModel.getInstance();
+            mMatchModel = FakeMatchModel.getInstance();
+        }else{
+            mMaterialModel = MaterialModelImpl.getInstance();
+            mMenuModel = MenuModelImpl.getInstance();
+            mMatchModel = MatchModelImpl.getInstance();
+        }
     }
 
     @Override

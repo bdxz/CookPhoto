@@ -3,8 +3,11 @@ package com.example.morphtin.dishes.api.presenter;
 import com.example.morphtin.dishes.api.contract.HomeContract;
 import com.example.morphtin.dishes.api.model.IMenuModel;
 import com.example.morphtin.dishes.api.model.impl.MenuModelImpl;
+import com.example.morphtin.dishes.api.model.mock.FakeMatchModel;
+import com.example.morphtin.dishes.api.model.mock.FakeMenuModel;
 import com.example.morphtin.dishes.bean.BannerItem;
 import com.example.morphtin.dishes.bean.MenuBean;
+import com.example.morphtin.dishes.common.Constant;
 
 import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscription;
@@ -26,13 +29,16 @@ public class HomePresenter implements HomeContract.Presenter {
 
     public HomePresenter(HomeContract.View view) {
         this.mHomeView = view;
-        mMenuModel = MenuModelImpl.getInstance();
+        if(Constant.MOCK){
+            mMenuModel = FakeMenuModel.getInstance();
+        }else{
+            mMenuModel = MenuModelImpl.getInstance();
+        }
     }
 
     @Override
     public void load() {
         mMenuModel.getBannerMenus().flatMap(new Function<List<MenuBean>, Publisher<MenuBean>>() {
-
             @Override
             public Publisher<MenuBean> apply(List<MenuBean> menuBeans) throws Exception {
                 return Flowable.fromIterable(menuBeans);

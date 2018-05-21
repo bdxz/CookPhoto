@@ -11,6 +11,29 @@ public class MaterialBean implements Parcelable{
     private String title;
     private String catelog;
 
+    public MaterialBean(){
+
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getCatelog() {
+        return catelog;
+    }
+
+    public void setCatelog(String catelog) {
+        this.catelog = catelog;
+    }
+
+    public static Creator<MaterialBean> getCREATOR() {
+        return CREATOR;
+    }
 
     @Override
     public int describeContents() {

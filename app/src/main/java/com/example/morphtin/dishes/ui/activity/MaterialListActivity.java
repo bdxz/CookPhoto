@@ -60,7 +60,7 @@ public class MaterialListActivity extends BaseActivity implements MaterialContra
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_item);
+        setContentView(R.layout.activity_material_list);
         getSupportActionBar().setTitle("已选食材");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -72,7 +72,7 @@ public class MaterialListActivity extends BaseActivity implements MaterialContra
 
         adapter = new ItemAdapter(cookList);
         ItemRecyclerView.setAdapter(adapter);
-
+        
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(ItemRecyclerView); //set swipe to recylcerview
 

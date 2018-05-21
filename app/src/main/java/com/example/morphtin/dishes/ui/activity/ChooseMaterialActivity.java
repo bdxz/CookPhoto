@@ -2,33 +2,34 @@ package com.example.morphtin.dishes.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.morphtin.dishes.R;
 import com.example.morphtin.dishes.api.contract.ChooseContract;
-import com.example.morphtin.dishes.api.contract.MaterialContract;
 import com.example.morphtin.dishes.api.presenter.ChoosePresenter;
-import com.example.morphtin.dishes.api.presenter.MaterialPresenter;
 import com.example.morphtin.dishes.bean.MaterialBean;
 import com.example.morphtin.dishes.ui.adapter.TagAdapter;
 import com.example.morphtin.dishes.ui.base.BaseActivity;
 import com.hhl.library.FlowTagLayout;
-import com.hhl.library.OnTagSelectListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class ChooseMaterialActivity extends BaseActivity implements ChooseContract.View{
+    private static final String TAG = "ChooseMaterialActivity";
     private ChooseContract.Presenter presenter;
 
-    private FlowTagLayout mVegetableFlowTagLayout;
-    private FlowTagLayout mMeatFlowTagLayout;
-    private TagAdapter<String> mVegetableTagAdapter;
-    private TagAdapter<String> mMeatTagAdapter;
-    private ArrayList<String> cookList=new ArrayList<>();
-    private ArrayList<String> cookList2=new ArrayList<>();
+    private LayoutInflater inflater;
+    // 获取需要被添加控件的布局
+    private LinearLayout lin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,63 +39,8 @@ public class ChooseMaterialActivity extends BaseActivity implements ChooseContra
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mVegetableFlowTagLayout = (FlowTagLayout) findViewById(R.id.vegetable_flow_layout);
-        mMeatFlowTagLayout = (FlowTagLayout) findViewById(R.id.meat_flow_layout);
-
-        //多选标签
-        mVegetableTagAdapter = new TagAdapter<>(this);
-        mVegetableFlowTagLayout.setTagCheckedMode(FlowTagLayout.FLOW_TAG_CHECKED_MULTI);
-        mVegetableFlowTagLayout.setAdapter(mVegetableTagAdapter);
-        mVegetableFlowTagLayout.setOnTagSelectListener(new OnTagSelectListener() {
-            @Override
-            public void onItemSelect(FlowTagLayout parent, List<Integer> selectedList) {
-                if (selectedList != null && selectedList.size() > 0) {
-                    StringBuilder sb = new StringBuilder();
-                    if(cookList.size() != 0){
-                    cookList.clear();}
-                    for (int i : selectedList) {
-                        String item =  String.valueOf(parent.getAdapter().getItem(i));
-                        sb.append(item);
-                        sb.append(":");
-                        cookList.add(item);
-                    }
-                    Snackbar.make(parent, "蔬菜:" + sb.toString(), Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }else{
-                    Snackbar.make(parent, "没有选择标签", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
-            }
-        });
-
-        mMeatTagAdapter = new TagAdapter<>(this);
-        mMeatFlowTagLayout.setTagCheckedMode(FlowTagLayout.FLOW_TAG_CHECKED_MULTI);
-        mMeatFlowTagLayout.setAdapter(mMeatTagAdapter);
-        mMeatFlowTagLayout.setOnTagSelectListener(new OnTagSelectListener() {
-            @Override
-            public void onItemSelect(FlowTagLayout parent, List<Integer> selectedList) {
-                if (selectedList != null && selectedList.size() > 0) {
-                    StringBuilder sb2 = new StringBuilder();
-                    if(cookList2.size() != 0){
-                        cookList2.clear();}
-
-                    for (int i : selectedList) {
-                        String item = String.valueOf(parent.getAdapter().getItem(i));
-                        sb2.append(item);
-                        sb2.append(":");
-                        cookList2.add(item);
-                    }
-                    Snackbar.make(parent, "肉类:" + sb2.toString(), Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }else{
-                    Snackbar.make(parent, "没有选择标签", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
-            }
-        });
-
-        initVegetableData();
-        initMeatData();
+        inflater = LayoutInflater.from(this);
+        lin = (LinearLayout) findViewById(R.id.tagContianer);
     }
 
     @Override
@@ -119,39 +65,8 @@ public class ChooseMaterialActivity extends BaseActivity implements ChooseContra
     }
 
     public void sendCookList(View v){
-        Intent data = new Intent();
-        cookList.addAll(cookList2);
-        data.putStringArrayListExtra("ADDCOOKLIST", cookList);
-        setResult(RESULT_OK, data);
-        finish();
-    }
 
-    private void initVegetableData() {
-        List<String> dataSource = new ArrayList<>();
-        dataSource.add("白菜");
-        dataSource.add("荠菜");
-        dataSource.add("娃娃菜");
-        dataSource.add("韭菜");
-        dataSource.add("菠菜");
-        dataSource.add("胡萝卜");
-        dataSource.add("西红柿");
-        dataSource.add("西兰花");
-        dataSource.add("甘蓝");
-        dataSource.add("油麦菜");
-        mVegetableTagAdapter.onlyAddAll(dataSource);
     }
-
-    private void initMeatData() {
-        List<String> dataSource = new ArrayList<>();
-        dataSource.add("猪肉");
-        dataSource.add("牛肉");
-        dataSource.add("羊肉");
-        dataSource.add("鱼肉");
-        dataSource.add("鸡肉");
-        dataSource.add("鸭肉");
-        mMeatTagAdapter.onlyAddAll(dataSource);
-    }
-
 
     private void select(){
         //TODO 点击确认提交的方法，参数为MaterialBean的列表
@@ -162,6 +77,42 @@ public class ChooseMaterialActivity extends BaseActivity implements ChooseContra
     @Override
     public void showMaterials(List<MaterialBean> data) {
         //TODO 显示所有原材料以及选中状态
+        HashMap<String,List<MaterialBean>> map = new HashMap<>();
+        for (MaterialBean material:data) {
+            Log.d(TAG, "showMaterials: "+material.getTitle());
+            if(map.containsKey(material.getCatelog())){
+                map.get(material.getCatelog()).add(material);
+            }else{
+                List<MaterialBean> list = new ArrayList<>();
+                list.add(material);
+                map.put(material.getCatelog(),list);
+            }
+        }
+
+        Iterator<Map.Entry<String, List<MaterialBean>>> iterator = map.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<String, List<MaterialBean>> entry = iterator.next();
+            String catelog = entry.getKey();
+            List<MaterialBean> list = entry.getValue();
+            addTags(catelog,list);
+        }
+    }
+
+    private void addTags(String catelog, List<MaterialBean> list) {
+        // 获取需要添加的布局
+        LinearLayout layout = (LinearLayout) inflater.inflate(
+                R.layout.title_tags, null).findViewById(R.id.titleTags);
+        // 将布局加入到当前布局中
+        lin.addView(layout);
+
+        TextView textView = (TextView)findViewById(R.id.catelog);
+        textView.setText(catelog);
+        FlowTagLayout flowTagLayout = (FlowTagLayout)findViewById(R.id.flow_layout);
+
+        TagAdapter adapter = new TagAdapter<>(this);
+        flowTagLayout.setAdapter(adapter);
+
+        adapter.onlyAddAll(list);
     }
 
     @Override

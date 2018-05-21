@@ -3,7 +3,9 @@ package com.example.morphtin.dishes.api.presenter;
 import com.example.morphtin.dishes.api.contract.MenuContract;
 import com.example.morphtin.dishes.api.model.IMenuModel;
 import com.example.morphtin.dishes.api.model.impl.MenuModelImpl;
+import com.example.morphtin.dishes.api.model.mock.FakeMenuModel;
 import com.example.morphtin.dishes.bean.MenuBean;
+import com.example.morphtin.dishes.common.Constant;
 
 import org.reactivestreams.Subscription;
 
@@ -20,7 +22,11 @@ public class MenuPresenter implements MenuContract.Presenter {
 
     public MenuPresenter(MenuContract.View view) {
         this.mMenuView = view;
-        mMenuModel = MenuModelImpl.getInstance();
+        if(Constant.MOCK){
+            mMenuModel = FakeMenuModel.getInstance();
+        }else{
+            mMenuModel = MenuModelImpl.getInstance();
+        }
     }
 
     @Override

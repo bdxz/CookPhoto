@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.morphtin.dishes.R;
+import com.example.morphtin.dishes.bean.MaterialBean;
 import com.hhl.library.OnInitSelectedPosition;
 
 import java.util.ArrayList;
@@ -52,6 +53,8 @@ public class TagAdapter<T> extends BaseAdapter implements OnInitSelectedPosition
 
         if (t instanceof String) {
             textView.setText((String) t);
+        }else if(t instanceof MaterialBean){
+            textView.setText((((MaterialBean) t).getTitle()));
         }
         return view;
     }
