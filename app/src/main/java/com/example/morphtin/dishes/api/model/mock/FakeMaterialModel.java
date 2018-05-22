@@ -37,6 +37,7 @@ public class FakeMaterialModel implements IMaterialModel {
                 MaterialBean material = new MaterialBean();
                 material.setCatelog("蔬菜");
                 material.setTitle("茄子");
+                material.setStatus(true);
                 MaterialBean egg = new MaterialBean();
                 egg.setCatelog("蛋");
                 egg.setTitle("鸡蛋");

@@ -224,17 +224,17 @@ public class FlowTagLayout extends ViewGroup {
                 //判断一下模式
                 if (mTagCheckMode == FLOW_TAG_CHECKED_SINGLE) {
                     //单选只有第一个起作用
-                    /*if (isSelected && !isSetted) {
+                    if (isSelected && !isSetted) {
                         mCheckedTagArray.put(i, true);
                         childView.setSelected(true);
                         isSetted = true;
-                    }*/
+                    }
                 } else if (mTagCheckMode == FLOW_TAG_CHECKED_MULTI) {
                     //初始化时选择的标签
-                    /*if (isSelected) {
+                    if (isSelected) {
                         mCheckedTagArray.put(i, true);
                         childView.setSelected(true);
-                    }*/
+                    }
                 }
             }
 

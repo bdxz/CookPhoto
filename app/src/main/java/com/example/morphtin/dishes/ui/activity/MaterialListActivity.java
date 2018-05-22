@@ -31,7 +31,7 @@ public class MaterialListActivity extends BaseActivity implements MaterialContra
 
     private RecyclerView ItemRecyclerView;
     private ItemAdapter adapter;
-    private ArrayList<String> cookList= new ArrayList<String>();
+    private ArrayList<MaterialBean> cookList= new ArrayList<MaterialBean>();
 
     private MaterialContract.Presenter presenter;
 
@@ -64,15 +64,13 @@ public class MaterialListActivity extends BaseActivity implements MaterialContra
         getSupportActionBar().setTitle("已选食材");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-//        Intent intent = getIntent();
-//        cookList = intent.getParcelableExtra(EXTRA_MESSAGE);
 
         ItemRecyclerView = (RecyclerView) findViewById(R.id.item_recycler_view);
         ItemRecyclerView.setLayoutManager (new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
         adapter = new ItemAdapter(cookList);
         ItemRecyclerView.setAdapter(adapter);
-        
+
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(ItemRecyclerView); //set swipe to recylcerview
 
@@ -91,7 +89,7 @@ public class MaterialListActivity extends BaseActivity implements MaterialContra
 
     public void matchMenus(){
         //TODO 匹配菜谱,参数为已选中的原材料列表
-        List<MaterialBean> data = new ArrayList<>();
+        List<MaterialBean> data = cookList;
         presenter.matchMenus(data);
     }
 
@@ -104,6 +102,13 @@ public class MaterialListActivity extends BaseActivity implements MaterialContra
     @Override
     public void showMaterials(List<MaterialBean> data) {
         //TODO 显示所有已选中的原材料
+        setCookItemOntoView(data);
+
+    }
+
+    public void setCookItemOntoView(List<MaterialBean> data){
+        cookList.addAll(data);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -120,22 +125,23 @@ public class MaterialListActivity extends BaseActivity implements MaterialContra
 
     private class ItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        private String ItemName;
-        private TextView mTv;
+        private TextView nameTv;
+        private TextView catelogTv;
         private ImageView imageView;
 
         public ItemHolder(View itemView) {
             super(itemView);
             // super(inflater.inflate(R.layout.item_item,,false));
             itemView.setOnClickListener(this);
-
-            mTv = itemView.findViewById(R.id.cook_item_title);
+            catelogTv = itemView.findViewById(R.id.cook_item_detail);
+            nameTv = itemView.findViewById(R.id.cook_item_title);
             imageView = itemView.findViewById(R.id.cook_item_photo);
         }
 
-        public void bind(String name){
-            ItemName = name;
-            mTv.setText(name);
+        public void bind(String name,String catelog){
+
+            nameTv.setText(name);
+            catelogTv.setText(catelog);
             imageView.setImageResource(R.drawable.vegetable);
 
         }
@@ -144,16 +150,16 @@ public class MaterialListActivity extends BaseActivity implements MaterialContra
         @Override
         public void onClick(View view) {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(MaterialListActivity.this);//MainActivity.this); //alert for confirm
-                builder.setMessage("++++++"); //set message
-                builder.show();
+            AlertDialog.Builder builder = new AlertDialog.Builder(MaterialListActivity.this);//MainActivity.this); //alert for confirm
+            builder.setMessage("++++++"); //set message
+            builder.show();
 
         }
 
     }
 
     public void addCookItem(View view) {
-        Intent intent = new Intent(getApplicationContext(),ChooseMaterialActivity.class);
+        Intent intent = new Intent(this,ChooseMaterialActivity.class);
         startActivityForResult(intent, ADD_COOK_ITEM);
     }
 
@@ -161,7 +167,7 @@ public class MaterialListActivity extends BaseActivity implements MaterialContra
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK && requestCode == ADD_COOK_ITEM){
-            ArrayList<String> list = data.getStringArrayListExtra("ADDCOOKLIST");
+            ArrayList<MaterialBean> list = data.getParcelableArrayListExtra("ADDCOOKLIST");
             cookList.addAll(list);
             adapter.notifyDataSetChanged();
         }
@@ -169,10 +175,10 @@ public class MaterialListActivity extends BaseActivity implements MaterialContra
 
     private class ItemAdapter extends RecyclerView.Adapter<ItemHolder> {
 
-        private ArrayList<String> mData;
+        private ArrayList<MaterialBean> mData;
 
-        public ItemAdapter(ArrayList<String> names) {
-            mData = names;
+        public ItemAdapter(ArrayList<MaterialBean> beans) {
+            mData = beans;
         }
 
         @Override
@@ -183,8 +189,9 @@ public class MaterialListActivity extends BaseActivity implements MaterialContra
 
         @Override
         public void onBindViewHolder(ItemHolder holder, int position) {
-            String name = mData.get(position);
-            holder.bind(name);
+            String name = mData.get(position).getTitle();
+            String catelog = mData.get(position).getCatelog();
+            holder.bind(name,catelog);
         }
 
 
@@ -211,6 +218,7 @@ public class MaterialListActivity extends BaseActivity implements MaterialContra
                 builder.setPositiveButton("是的", new DialogInterface.OnClickListener() { //when click on DELETE
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        unselect(adapter.mData.get(position));
                         adapter.notifyItemRemoved(position); //item removed from recylcerview
                         adapter.mData.remove(position);
                         return;

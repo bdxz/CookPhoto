@@ -17,6 +17,7 @@ import com.example.morphtin.dishes.ui.activity.CreateDishActivity;
 import com.example.morphtin.dishes.ui.activity.DishDetailActivity;
 import com.example.morphtin.dishes.ui.activity.MenuDetailActivity;
 import com.example.morphtin.dishes.ui.activity.MenuListActivity;
+import com.example.morphtin.dishes.ui.activity.UploadMenuActivity;
 import com.example.morphtin.dishes.ui.base.BaseFragment;
 import com.squareup.picasso.Picasso;
 import com.zhouwei.mzbanner.MZBannerView;
@@ -83,7 +84,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(),
-                        CreateDishActivity .class);
+                        UploadMenuActivity .class);
                 startActivity(intent);
             }
         });

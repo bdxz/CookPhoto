@@ -10,10 +10,13 @@ import android.os.Parcelable;
 public class MaterialBean implements Parcelable{
     private String title;
     private String catelog;
+    private boolean status;
 
     public MaterialBean(){
 
     }
+
+    public boolean getStatus(){return status;}
 
     public String getTitle() {
         return title;
@@ -30,6 +33,8 @@ public class MaterialBean implements Parcelable{
     public void setCatelog(String catelog) {
         this.catelog = catelog;
     }
+
+    public void setStatus(boolean status){this.status = status;}
 
     public static Creator<MaterialBean> getCREATOR() {
         return CREATOR;

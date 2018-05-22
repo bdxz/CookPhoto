@@ -27,6 +27,13 @@
                 android:orientation="vertical"
                 android:paddingBottom="30dp" />
 
+            <android.support.v7.widget.RecyclerView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/tag_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
 
             <com.dd.processbutton.iml.ActionProcessButton
                 android:id="@+id/add_cook_item_button"
