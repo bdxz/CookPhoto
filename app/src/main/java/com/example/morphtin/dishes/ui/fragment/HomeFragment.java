@@ -128,6 +128,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View{
 
     @Override
     public void setBanner(List<BannerItem> data) {
+        this.data = data;
         // 设置数据
         mMZBanner.setPages(data, new MZHolderCreator<BannerViewHolder>() {
             @Override

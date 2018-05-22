@@ -11,6 +11,7 @@ import java.util.List;
  */
 
 public class MenuBean implements Parcelable {
+    private String menu_id;
     private String title;
     private String imageUrl;
     private ArrayList<MenuStep> steps;
@@ -19,27 +20,35 @@ public class MenuBean implements Parcelable {
 
     }
 
+    public String getMenu_id() {
+        return menu_id;
+    }
 
-    public String getTitle(){
+    public void setMenu_id(String menu_id) {
+        this.menu_id = menu_id;
+    }
+
+    public String getTitle() {
         return title;
     }
 
-    public String getImage(){
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getImageUrl() {
         return imageUrl;
     }
 
-    public ArrayList<MenuStep> getSteps(){
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public ArrayList<MenuStep> getSteps() {
         return steps;
     }
 
-
-    public void setTitle(String title){
-        this.title = title;
-    }
-    public void setImageTitle(String imageUrl){
-        this.imageUrl = imageUrl;
-    }
-    public void setSteps(ArrayList<MenuStep> steps){
+    public void setSteps(ArrayList<MenuStep> steps) {
         this.steps = steps;
     }
 
@@ -49,34 +58,22 @@ public class MenuBean implements Parcelable {
         return 0;
     }
 
-    /**
-     * Storing the Company data to Parcel object
-     **/
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(title);
-        dest.writeString(imageUrl);
-//        MenuStep[] stepsArray = new MenuStep[steps.size()];
-//        steps.toArray(stepsArray);
-//        dest.writeParcelableArray(stepsArray,1);
-        dest.writeList(steps);
+        dest.writeString(this.menu_id);
+        dest.writeString(this.title);
+        dest.writeString(this.imageUrl);
+        dest.writeTypedList(this.steps);
     }
 
-
-    private MenuBean(Parcel in){
+    protected MenuBean(Parcel in) {
+        this.menu_id = in.readString();
         this.title = in.readString();
         this.imageUrl = in.readString();
-//        MenuStep[] stepsArray = (MenuStep[])in.readParcelableArray(com.example.morphtin.dishes.bean.MenuStep.class.getClassLoader());
-//        for(int i = 0;i<stepsArray.length;i++) {
-//            this.steps.add(stepsArray[i]);
-//        }
-        ArrayList<MenuStep> s = new ArrayList<>();
-        s=in.readArrayList(MenuStep.class.getClassLoader());
-        this.steps = s;
+        this.steps = in.createTypedArrayList(MenuStep.CREATOR);
     }
 
     public static final Creator<MenuBean> CREATOR = new Creator<MenuBean>() {
-
         @Override
         public MenuBean createFromParcel(Parcel source) {
             return new MenuBean(source);

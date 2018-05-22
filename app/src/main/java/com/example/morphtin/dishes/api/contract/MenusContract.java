@@ -2,6 +2,7 @@ package com.example.morphtin.dishes.api.contract;
 
 import com.example.morphtin.dishes.bean.MenuBean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,7 +11,7 @@ import java.util.List;
 
 public interface MenusContract {
     interface View{
-        void showMenus(List<MenuBean> data);
+        void showMenus(ArrayList<MenuBean> data);
 
         void showDetailUI(String menu_id);
     }

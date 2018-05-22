@@ -124,7 +124,7 @@ public class UploadMenuActivity extends BaseActivity implements MenuContract.Vie
 
         MenuBean menuBean = new MenuBean();
         menuBean.setTitle(Title);
-        menuBean.setImageTitle(imagePath);
+        menuBean.setImageUrl(imagePath);
         menuBean.setSteps(menuList);
 
         presenter.addMenu(menuBean);
