@@ -46,12 +46,12 @@ public class HomePresenter implements HomeContract.Presenter {
         }).map(new Function<MenuBean, BannerItem>() {
             @Override
             public BannerItem apply(MenuBean menuBean) throws Exception {
-                return new BannerItem(menuBean.getImage(),"","");
+                return new BannerItem(menuBean.getImageUrl(),"",menuBean.getMenu_id());
             }
         }).toList().toFlowable().observeOn(AndroidSchedulers.mainThread()).subscribe(new FlowableSubscriber<List<BannerItem>>() {
             @Override
             public void onSubscribe(Subscription s) {
-
+                s.request(100);
             }
 
             @Override

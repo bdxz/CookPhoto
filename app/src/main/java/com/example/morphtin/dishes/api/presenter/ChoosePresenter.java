@@ -75,7 +75,7 @@ public class ChoosePresenter implements ChooseContract.Presenter {
         mMaterialModel.getMaterials(photoPaths).observeOn(AndroidSchedulers.mainThread()).subscribe(new FlowableSubscriber<List<MaterialBean>>() {
             @Override
             public void onSubscribe(Subscription s) {
-
+                s.request(1);
             }
 
             @Override

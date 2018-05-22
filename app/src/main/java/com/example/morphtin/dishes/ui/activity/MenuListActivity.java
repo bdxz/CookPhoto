@@ -12,7 +12,6 @@ import com.example.morphtin.dishes.R;
 import com.example.morphtin.dishes.api.contract.MenusContract;
 import com.example.morphtin.dishes.api.presenter.MenusPresenter;
 import com.example.morphtin.dishes.bean.MenuBean;
-import com.example.morphtin.dishes.bean.Menu_in_List;
 import com.example.morphtin.dishes.database.GeneratesFakeMenu;
 import com.example.morphtin.dishes.ui.adapter.MenuAdapter;
 import com.example.morphtin.dishes.ui.base.BaseActivity;
@@ -24,8 +23,8 @@ import io.rmiri.skeleton.Master.IsCanSetAdapterListener;
 
 public class MenuListActivity extends BaseActivity implements MenusContract.View{
     private RecyclerView recyclerView;
-    private MenuAdapter adapterSample1;
-    private ArrayList<Menu_in_List> dataObjects = new ArrayList<>();
+    private MenuAdapter adapter;
+    private ArrayList<MenuBean> data = new ArrayList<>();
 
     private MenusContract.Presenter presenter;
 
@@ -50,22 +49,12 @@ public class MenuListActivity extends BaseActivity implements MenusContract.View
         recyclerView.setHasFixedSize(true);
 
         // Set adapter in recyclerView
-        adapterSample1 = new MenuAdapter(getApplicationContext(), dataObjects,recyclerView, new IsCanSetAdapterListener() {
+        adapter = new MenuAdapter(getApplicationContext(), data,recyclerView, new IsCanSetAdapterListener() {
             @Override
             public void isCanSet() {
-                recyclerView.setAdapter(adapterSample1);
+                recyclerView.setAdapter(adapter);
             }
         });
-
-
-        // After 5 second get data fake
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                dataObjects = new GeneratesFakeMenu().generateDataFake();
-                adapterSample1.addMoreDataAndSkeletonFinish(dataObjects);
-            }
-        }, 50);
     }
 
     @Override
@@ -80,9 +69,10 @@ public class MenuListActivity extends BaseActivity implements MenusContract.View
     }
 
     @Override
-    public void showMenus(List<MenuBean> data) {
+    public void showMenus(ArrayList<MenuBean> data) {
         //TODO 将MenuBean的List渲染到界面上
-
+        adapter.addMoreDataAndSkeletonFinish(data);
+        this.data = data;
     }
 
     @Override

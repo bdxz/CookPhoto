@@ -30,33 +30,35 @@ public class FakeMaterialModel implements IMaterialModel {
 
     @Override
     public Flowable<List<MaterialBean>> getMaterials() {
-        return Flowable.create(new FlowableOnSubscribe<List<MaterialBean>>() {
-            @Override
-            public void subscribe(FlowableEmitter<List<MaterialBean>> e) throws Exception {
-                List<MaterialBean> data = new ArrayList<>();
-                MaterialBean material = new MaterialBean();
-                material.setCatelog("蔬菜");
-                material.setTitle("茄子");
-                MaterialBean egg = new MaterialBean();
-                egg.setCatelog("蛋");
-                egg.setTitle("鸡蛋");
-                data.add(egg);
-                data.add(material);
-                Log.d(TAG, "subscribe: 发射");
-                e.onNext(data);
-                e.onComplete();
-            }
-        }, BackpressureStrategy.DROP);
+        List<MaterialBean> data = new ArrayList<>();
+        MaterialBean material = new MaterialBean();
+        material.setCatelog("蔬菜");
+        material.setTitle("茄子");
+        MaterialBean egg = new MaterialBean();
+        egg.setCatelog("蛋");
+        egg.setTitle("鸡蛋");
+        data.add(egg);
+        data.add(material);
+        return Flowable.just(data);
     }
 
     @Override
     public Flowable<List<MaterialBean>> getMaterials(ArrayList<String> photoPaths) {
-        return null;
+        List<MaterialBean> data = new ArrayList<>();
+        MaterialBean material = new MaterialBean();
+        material.setCatelog("蔬菜");
+        material.setTitle("茄子");
+        data.add(material);
+        return Flowable.just(data);
     }
 
     @Override
     public Flowable<List<MaterialBean>> getSelected() {
         List<MaterialBean> data = new ArrayList<>();
+        MaterialBean material = new MaterialBean();
+        material.setCatelog("蔬菜");
+        material.setTitle("茄子");
+        data.add(material);
         return Flowable.just(data);
     }
 

@@ -72,7 +72,7 @@ public class MaterialListActivity extends BaseActivity implements MaterialContra
 
         adapter = new ItemAdapter(cookList);
         ItemRecyclerView.setAdapter(adapter);
-        
+
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(ItemRecyclerView); //set swipe to recylcerview
 
@@ -104,6 +104,11 @@ public class MaterialListActivity extends BaseActivity implements MaterialContra
     @Override
     public void showMaterials(List<MaterialBean> data) {
         //TODO 显示所有已选中的原材料
+        for (MaterialBean material:data) {
+            cookList.add(material.getTitle());
+        }
+
+        adapter.notifyDataSetChanged();
     }
 
     @Override

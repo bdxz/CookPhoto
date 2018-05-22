@@ -74,7 +74,7 @@ public class MenuDetailActivity extends BaseActivity implements MenuContract.Vie
             }
         });
         Picasso.get()
-                .load(menu.getImage())
+                .load(menu.getImageUrl())
                 .into(mImageView);
         //使用CollapsingToolbarLayout必须把title设置到CollapsingToolbarLayout上，设置到Toolbar上则不会显示
         mCollapsingToolbarLayout.setTitle(menu.getTitle());
@@ -92,6 +92,7 @@ public class MenuDetailActivity extends BaseActivity implements MenuContract.Vie
     @Override
     public void showDetail(MenuBean data) {
         //TODO
+        initView(data);
     }
 
     private class ItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

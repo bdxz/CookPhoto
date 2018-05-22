@@ -31,11 +31,10 @@ public class MenuPresenter implements MenuContract.Presenter {
 
     @Override
     public void loadDetail(String menu_id) {
-        //TODO 判断是否在缓存中，如果缓存中没有，再去请求网络
         mMenuModel.getMenu(menu_id).observeOn(AndroidSchedulers.mainThread()).subscribe(new FlowableSubscriber<MenuBean>() {
             @Override
             public void onSubscribe(Subscription s) {
-
+                s.request(1);
             }
 
             @Override

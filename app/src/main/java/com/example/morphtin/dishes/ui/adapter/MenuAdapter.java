@@ -11,10 +11,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.morphtin.dishes.R;
+import com.example.morphtin.dishes.bean.MenuBean;
 import com.example.morphtin.dishes.bean.Menu_in_List;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import io.rmiri.skeleton.Master.AdapterSkeleton;
 import io.rmiri.skeleton.Master.IsCanSetAdapterListener;
@@ -24,8 +26,8 @@ import io.rmiri.skeleton.SkeletonGroup;
  * Created by Administrator on 2018/5/11/011.
  */
 
-public class MenuAdapter extends AdapterSkeleton<Menu_in_List,MenuAdapter.ViewHolder> {
-    public MenuAdapter(final Context context, final ArrayList<Menu_in_List> items, final RecyclerView recyclerView, final IsCanSetAdapterListener isCanSetAdapterListener) {
+public class MenuAdapter extends AdapterSkeleton<MenuBean,MenuAdapter.ViewHolder> {
+    public MenuAdapter(final Context context, final List<MenuBean> items, final RecyclerView recyclerView, final IsCanSetAdapterListener isCanSetAdapterListener) {
         this.context = context;
         this.items = items;
         this.isCanSetAdapterListener = isCanSetAdapterListener;
@@ -79,13 +81,13 @@ public class MenuAdapter extends AdapterSkeleton<Menu_in_List,MenuAdapter.ViewHo
         }
 
         //set data in view
-        final Menu_in_List cardObj = items.get(position);
+        final MenuBean cardObj = items.get(position);
 
         holder.titleTv.setText(cardObj.getTitle());
-        holder.descriptionTv.setText(cardObj.getDescription());
+        holder.descriptionTv.setText(cardObj.getTitle());
 
         //set photo by Picasso lib
-        Picasso.get().load(cardObj.getPhoto()).into(holder.photoACImgV);
+        Picasso.get().load(cardObj.getImageUrl()).into(holder.photoACImgV);
 
     }
 }
