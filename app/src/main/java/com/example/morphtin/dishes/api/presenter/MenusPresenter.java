@@ -10,6 +10,7 @@ import com.example.morphtin.dishes.common.Constant;
 
 import org.reactivestreams.Subscription;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.FlowableSubscriber;
@@ -42,7 +43,9 @@ public class MenusPresenter implements MenusContract.Presenter {
 
             @Override
             public void onNext(List<MenuBean> menuBeans) {
-                mMenusView.showMenus(menuBeans);
+                if(menuBeans instanceof ArrayList){
+                    mMenusView.showMenus((ArrayList<MenuBean>) menuBeans);
+                }
             }
 
             @Override
