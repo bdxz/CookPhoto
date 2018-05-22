@@ -1,6 +1,7 @@
 package com.example.morphtin.dishes.ui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.CardView;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import com.example.morphtin.dishes.R;
 import com.example.morphtin.dishes.bean.MenuBean;
 import com.example.morphtin.dishes.bean.Menu_in_List;
+import com.example.morphtin.dishes.ui.activity.MenuDetailActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -40,7 +42,17 @@ public class MenuAdapter extends AdapterSkeleton<MenuBean,MenuAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cookbook, parent, false);
-        return new ViewHolder(view);
+        final ViewHolder holder = new ViewHolder(view);
+        holder.photoACImgV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int position = holder.getAdapterPosition();
+                Intent intent = new Intent(context, MenuDetailActivity.class);
+                intent.putExtra(MenuDetailActivity.EXTRA_MENU_ID,items.get(position).getMenu_id());
+                context.startActivity(intent);
+            }
+        });
+        return holder;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

@@ -11,6 +11,7 @@ import com.example.morphtin.dishes.api.model.mock.FakeMatchModel;
 import com.example.morphtin.dishes.api.model.mock.FakeMaterialModel;
 import com.example.morphtin.dishes.api.model.mock.FakeMenuModel;
 import com.example.morphtin.dishes.bean.MaterialBean;
+import com.example.morphtin.dishes.bean.MenuBean;
 import com.example.morphtin.dishes.common.Constant;
 
 import org.reactivestreams.Subscription;
@@ -18,7 +19,10 @@ import org.reactivestreams.Subscription;
 import java.util.List;
 
 import io.reactivex.FlowableSubscriber;
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by elevation on 18-5-14.
@@ -70,8 +74,29 @@ public class MaterialPresenter implements MaterialContract.Presenter {
 
     @Override
     public void matchMenus(List<MaterialBean> data) {
-        mMatchModel.match(data);
-        mMaterialView.showMenusUI();
+        mMatchModel.match(data).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<List<MenuBean>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(List<MenuBean> menuBeans) {
+                mMatchModel.setMatch(menuBeans);
+                mMaterialView.showMenusUI();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+
     }
 
     @Override

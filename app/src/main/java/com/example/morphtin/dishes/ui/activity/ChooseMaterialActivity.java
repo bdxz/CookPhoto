@@ -80,6 +80,7 @@ public class ChooseMaterialActivity extends BaseActivity implements ChooseContra
     private void select(){
         //TODO 点击确认提交的方法，参数为MaterialBean的列表
         List<MaterialBean> data = new ArrayList<>();
+
         Iterator<Map.Entry<String, List<MaterialBean>>> iterator = mTagsMap.entrySet().iterator();
         while (iterator.hasNext()) {
             Map.Entry<String, List<MaterialBean>> entry = iterator.next();
@@ -103,32 +104,9 @@ public class ChooseMaterialActivity extends BaseActivity implements ChooseContra
             }
         }
 
-//        Iterator<Map.Entry<String, List<MaterialBean>>> iterator = mTagsMap.entrySet().iterator();
-//        while (iterator.hasNext()) {
-//            Map.Entry<String, List<MaterialBean>> entry = iterator.next();
-//            String catelog = entry.getKey();
-//            List<MaterialBean> list = entry.getValue();
-//            addTags(catelog,list);
-//        }
         tagsAdapter.notifyDataSetChanged();
 
     }
-
-//    private void addTags(String catelog, List<MaterialBean> list) {
-//        // 获取需要添加的布局
-//        LinearLayout layout = (LinearLayout) inflater.inflate(
-//                R.layout.title_tags, null).findViewById(R.id.titleTags);
-//        // 将布局加入到当前布局中
-//        lin.addView(layout);
-//
-//        TextView textView = (TextView)findViewById(R.id.catelog);
-//        textView.setText(catelog);
-//        FlowTagLayout flowTagLayout = (FlowTagLayout)findViewById(R.id.flow_layout);
-//
-//        TagAdapter adapter = new TagAdapter<>(this);
-//        flowTagLayout.setAdapter(adapter);
-//        adapter.onlyAddAll(list);
-//    }
 
     @Override
     public void showSelected(List<MaterialBean> data) {

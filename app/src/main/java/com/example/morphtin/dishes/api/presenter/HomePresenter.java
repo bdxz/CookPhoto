@@ -1,5 +1,7 @@
 package com.example.morphtin.dishes.api.presenter;
 
+import android.util.Log;
+
 import com.example.morphtin.dishes.api.contract.HomeContract;
 import com.example.morphtin.dishes.api.model.IMenuModel;
 import com.example.morphtin.dishes.api.model.impl.MenuModelImpl;
@@ -18,12 +20,15 @@ import io.reactivex.Flowable;
 import io.reactivex.FlowableSubscriber;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by elevation on 18-5-14.
  */
 
 public class HomePresenter implements HomeContract.Presenter {
+    private static final String TAG = "HomePresenter";
+
     private IMenuModel mMenuModel;
     private HomeContract.View mHomeView;
 
@@ -48,14 +53,15 @@ public class HomePresenter implements HomeContract.Presenter {
             public BannerItem apply(MenuBean menuBean) throws Exception {
                 return new BannerItem(menuBean.getImageUrl(),"",menuBean.getMenu_id());
             }
-        }).toList().toFlowable().observeOn(AndroidSchedulers.mainThread()).subscribe(new FlowableSubscriber<List<BannerItem>>() {
+        }).toList().toFlowable().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new FlowableSubscriber<List<BannerItem>>() {
             @Override
             public void onSubscribe(Subscription s) {
-                s.request(100);
+                s.request(1);
             }
 
             @Override
             public void onNext(List<BannerItem> bannerItems) {
+                Log.d(TAG, "onNext: "+bannerItems.get(0).getMenu_id());
                 mHomeView.setBanner(bannerItems);
             }
 

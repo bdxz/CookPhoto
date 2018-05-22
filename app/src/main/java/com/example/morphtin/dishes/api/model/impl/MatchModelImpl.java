@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
@@ -42,29 +43,9 @@ public class MatchModelImpl implements IMatchModel {
     }
 
     @Override
-    public void match(final List<MaterialBean> data) {
+    public Observable<List<MenuBean>> match(final List<MaterialBean> data) {
         clear();
-        mMatchService.match(data).subscribeOn(Schedulers.io()).subscribe(new Subscriber<List<MenuBean>>() {
-            @Override
-            public void onSubscribe(Subscription s) {
-
-            }
-
-            @Override
-            public void onNext(List<MenuBean> menuBeans) {
-                matchMenus.addAll(menuBeans);
-            }
-
-            @Override
-            public void onError(Throwable t) {
-
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        });
+        return mMatchService.match(data);
     }
 
     @Override
@@ -75,5 +56,10 @@ public class MatchModelImpl implements IMatchModel {
     @Override
     public void clear() {
         matchMenus.clear();
+    }
+
+    @Override
+    public void setMatch(List<MenuBean> menuBeans) {
+        matchMenus = menuBeans;
     }
 }
