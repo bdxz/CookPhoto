@@ -3,11 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CookPhoto.iml" filepath="$PROJECT_DIR$/CookPhoto.iml" />
-      <module fileurl="file://D:\GitHubrs\CookPhoto\CookPhoto.iml" filepath="D:\GitHubrs\CookPhoto\CookPhoto.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://D:\GitHubrs\CookPhoto\app\app.iml" filepath="D:\GitHubrs\CookPhoto\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
-      <module fileurl="file://D:\GitHubrs\CookPhoto\library\library.iml" filepath="D:\GitHubrs\CookPhoto\library\library.iml" />
     </modules>
   </component>
 </project>

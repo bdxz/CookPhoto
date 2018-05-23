@@ -1,8 +1,6 @@
 package com.example.morphtin.dishes.ui.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +11,6 @@ import android.widget.TextView;
 import com.example.morphtin.dishes.R;
 import com.example.morphtin.dishes.api.model.Trace;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,26 +84,7 @@ public class TraceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         public void bindHolder(Trace trace) {
             tvAcceptTime.setText(trace.getStepCountDesc());
             tvAcceptStation.setText(trace.getDescription());
-            Bitmap bimage =  getBitmapFromURL(trace.getPicUrl());
-            iv_stepPic.setImageBitmap(bimage);//放置每个步骤的图片
-        }
-
-        /*
-        将url转成Bitmap
-         */
-        public Bitmap getBitmapFromURL(String src) {
-            try {
-                URL url = new URL(src);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setDoInput(true);
-                connection.connect();
-                InputStream input = connection.getInputStream();
-                Bitmap myBitmap = BitmapFactory.decodeStream(input);
-                return myBitmap;
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;
-            }
+            iv_stepPic.setImageResource(R.drawable.xia);
         }
     }
 }

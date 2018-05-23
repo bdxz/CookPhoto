@@ -144,7 +144,7 @@ public class MenuDetailActivity extends BaseActivity implements MenuContract.Vie
         Trace trace = new Trace();
         String stepCountDesc = "";
 
-        //data = zaojia();//测试时获取模拟数据
+        data = zaojia();//zaojia()为测试时模拟的数据，当正式使用showdetail()函数时应删除该行代码
 
         for(int i=0;i < data.getSteps().size();i++){
             stepCountDesc = "第"+(i+1)+"步";
