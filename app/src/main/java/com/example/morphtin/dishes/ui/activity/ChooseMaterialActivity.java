@@ -16,6 +16,7 @@ import com.example.morphtin.dishes.api.contract.ChooseContract;
 import com.example.morphtin.dishes.api.presenter.ChoosePresenter;
 import com.example.morphtin.dishes.bean.MaterialBean;
 import com.example.morphtin.dishes.ui.adapter.TagAdapter;
+import com.example.morphtin.dishes.ui.adapter.TagHolder;
 import com.example.morphtin.dishes.ui.adapter.TagsAdapter;
 import com.example.morphtin.dishes.ui.base.BaseActivity;
 import com.hhl.library.FlowTagLayout;
@@ -79,15 +80,11 @@ public class ChooseMaterialActivity extends BaseActivity implements ChooseContra
 
     private void select(){
         //TODO 点击确认提交的方法，参数为MaterialBean的列表
-        List<MaterialBean> data = new ArrayList<>();
-
-        Iterator<Map.Entry<String, List<MaterialBean>>> iterator = mTagsMap.entrySet().iterator();
-        while (iterator.hasNext()) {
-            Map.Entry<String, List<MaterialBean>> entry = iterator.next();
-            List<MaterialBean> list = entry.getValue();
-            data.addAll(list);
+        List<MaterialBean> materialBeanList = new ArrayList<>();
+        for(TagHolder th: tagsAdapter.getHolderList()){
+            materialBeanList.addAll(th.getSelectedMaterialBeanList());
         }
-        presenter.select(data);
+        presenter.select(materialBeanList);
     }
 
     @Override
@@ -107,6 +104,8 @@ public class ChooseMaterialActivity extends BaseActivity implements ChooseContra
         tagsAdapter.notifyDataSetChanged();
 
     }
+
+
 
     @Override
     public void showSelected(List<MaterialBean> data) {
