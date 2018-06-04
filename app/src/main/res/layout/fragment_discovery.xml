@@ -3,8 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <com.skyfishjy.library.RippleBackground
 
+
+
+    <com.skyfishjy.library.RippleBackground
         android:id="@+id/processingBack"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,5 +21,6 @@
         app:rb_radius="32dp"
         app:rb_rippleAmount="4"
         app:rb_scale="6">
+
     </com.skyfishjy.library.RippleBackground>
 </android.support.constraint.ConstraintLayout>

@@ -29,6 +29,7 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    //noinspection GradleCompatible
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support:design:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
@@ -67,6 +68,15 @@ dependencies {
     compile 'com.android.support:cardview-v7:26+'
     compile 'com.sackcentury:shinebutton:0.2.0'
     compile 'com.skyfishjy.ripplebackground:library:1.0.1'
+    // pull down to load more ,pull up to fresh
+    implementation 'com.jcodecraeer:xrecyclerview:1.5.9'
+    // to use SQLite database extremely easy
+    implementation 'org.litepal.android:core:1.6.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    implementation 'com.github.chrisbanes:PhotoView:2.0.0'
 
     //socket-io
     compile ('io.socket:socket.io-client:1.0.0') {
