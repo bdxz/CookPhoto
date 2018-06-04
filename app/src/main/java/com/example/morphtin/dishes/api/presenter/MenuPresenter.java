@@ -11,6 +11,7 @@ import org.reactivestreams.Subscription;
 
 import io.reactivex.FlowableSubscriber;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by elevation on 18-5-14.
@@ -31,7 +32,7 @@ public class MenuPresenter implements MenuContract.Presenter {
 
     @Override
     public void loadDetail(String menu_id) {
-        mMenuModel.getMenu(menu_id).observeOn(AndroidSchedulers.mainThread()).subscribe(new FlowableSubscriber<MenuBean>() {
+        mMenuModel.getMenu(menu_id).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new FlowableSubscriber<MenuBean>() {
             @Override
             public void onSubscribe(Subscription s) {
                 s.request(1);

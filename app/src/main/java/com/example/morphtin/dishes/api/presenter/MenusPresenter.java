@@ -1,5 +1,7 @@
 package com.example.morphtin.dishes.api.presenter;
 
+import android.util.Log;
+
 import com.example.morphtin.dishes.api.contract.MenusContract;
 import com.example.morphtin.dishes.api.model.IMatchModel;
 import com.example.morphtin.dishes.api.model.IMenuModel;
@@ -15,12 +17,14 @@ import java.util.List;
 
 import io.reactivex.FlowableSubscriber;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by elevation on 18-5-14.
  */
 
 public class MenusPresenter implements MenusContract.Presenter {
+    private static final String TAG = "MenusPresenter";
     private IMatchModel mMatchModel;
     private MenusContract.View mMenusView;
 
@@ -35,15 +39,17 @@ public class MenusPresenter implements MenusContract.Presenter {
 
     @Override
     public void loadMatchMenus() {
-        mMatchModel.get().observeOn(AndroidSchedulers.mainThread()).subscribe(new FlowableSubscriber<List<MenuBean>>() {
+        mMatchModel.get().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new FlowableSubscriber<List<MenuBean>>() {
             @Override
             public void onSubscribe(Subscription s) {
-
+                s.request(100);
             }
 
             @Override
             public void onNext(List<MenuBean> menuBeans) {
+                Log.d(TAG, "onNext: ");
                 if(menuBeans instanceof ArrayList){
+                    Log.d(TAG, "onNext: "+menuBeans.size());
                     mMenusView.showMenus((ArrayList<MenuBean>) menuBeans);
                 }
             }

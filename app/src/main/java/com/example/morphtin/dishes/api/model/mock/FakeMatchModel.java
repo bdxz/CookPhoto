@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Flowable;
+import io.reactivex.Observable;
 
 /**
  * Created by elevation on 18-5-21.
@@ -25,8 +26,9 @@ public class FakeMatchModel implements IMatchModel {
     }
 
     @Override
-    public void match(List<MaterialBean> data) {
-
+    public Observable<List<MenuBean>> match(List<MaterialBean> data) {
+        List<MenuBean> menuBeans = new ArrayList<>();
+        return Observable.just(menuBeans);
     }
 
     @Override
@@ -46,6 +48,11 @@ public class FakeMatchModel implements IMatchModel {
 
     @Override
     public void clear() {
+
+    }
+
+    @Override
+    public void setMatch(List<MenuBean> menuBeans) {
 
     }
 }

@@ -1,5 +1,7 @@
 package com.example.morphtin.dishes.api.model.impl;
 
+import android.util.Log;
+
 import com.example.morphtin.dishes.api.common.ServiceFactory;
 import com.example.morphtin.dishes.api.common.service.IHomeService;
 import com.example.morphtin.dishes.api.common.service.IMenuService;
@@ -21,6 +23,7 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 public class MenuModelImpl implements IMenuModel {
+    private static final String TAG = "MenuModelImpl";
     private static final MenuModelImpl ourInstance = new MenuModelImpl();
 
     public static MenuModelImpl getInstance() {
@@ -47,12 +50,8 @@ public class MenuModelImpl implements IMenuModel {
 
     @Override
     public Flowable<MenuBean> getMenu(String menu_id) {
-        return mMenuService.get(menu_id).subscribeOn(Schedulers.io()).doOnSubscribe(new Consumer<Subscription>() {
-            @Override
-            public void accept(Subscription subscription) throws Exception {
-
-            }
-        });
+        Log.d(TAG, "getMenu: "+menu_id);
+        return mMenuService.get(menu_id);
     }
 
     @Override

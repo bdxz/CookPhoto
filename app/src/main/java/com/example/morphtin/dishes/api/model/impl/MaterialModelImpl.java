@@ -31,6 +31,7 @@ public class MaterialModelImpl implements IMaterialModel {
     private static final MaterialModelImpl ourInstance = new MaterialModelImpl();
 
     private static List<MaterialBean> selectedMaterials = new ArrayList<>();
+
     private IMaterialService mMaterialService;
 
     public static MaterialModelImpl getInstance() {
@@ -48,15 +49,25 @@ public class MaterialModelImpl implements IMaterialModel {
 
     @Override
     public Flowable<List<MaterialBean>> getMaterials() {
-        return mMaterialService.getMaterials();
+        return mMaterialService.getMaterials().map(new Function<List<MaterialBean>, List<MaterialBean>>() {
+            @Override
+            public List<MaterialBean> apply(List<MaterialBean> materialBeans) throws Exception {
+                for(MaterialBean material:materialBeans){
+                    if(selectedMaterials.contains(material)){
+                        material.setStatus(true);
+                    }
+                }
+                return materialBeans;
+            }
+        });
     }
 
     @Override
     public Flowable<List<MaterialBean>> getMaterials(ArrayList<String> photoPaths) {
-        return Flowable.just(photoPaths).subscribeOn(Schedulers.io()).flatMap(new Function<ArrayList<String>, Publisher<String>>() {
+        return Flowable.just(photoPaths).flatMap(new Function<ArrayList<String>, Publisher<String>>() {
             @Override
             public Publisher<String> apply(ArrayList<String> strings) throws Exception {
-                return null;
+                return Flowable.fromIterable(strings);
             }
         }).map(new Function<String, MultipartBody.Part>() {
             @Override
@@ -82,6 +93,9 @@ public class MaterialModelImpl implements IMaterialModel {
     @Override
     public void setSelected(List<MaterialBean> data) {
         selectedMaterials = data;
+        for (MaterialBean material: data) {
+            material.setStatus(true);
+        }
     }
 
     @Override

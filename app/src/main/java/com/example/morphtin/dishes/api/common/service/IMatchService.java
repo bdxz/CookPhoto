@@ -6,6 +6,8 @@ import com.example.morphtin.dishes.bean.MenuBean;
 import java.util.List;
 
 import io.reactivex.Flowable;
+import io.reactivex.Observable;
+import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 /**
@@ -14,5 +16,5 @@ import retrofit2.http.POST;
 
 public interface IMatchService {
     @POST("api/match")
-    Flowable<List<MenuBean>> match(List<MaterialBean> data);
+    Observable<List<MenuBean>> match(@Body List<MaterialBean> data);
 }

@@ -11,6 +11,7 @@ import android.widget.BaseAdapter;
 import com.example.morphtin.dishes.R;
 import com.example.morphtin.dishes.bean.MaterialBean;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -24,7 +25,7 @@ public class TagsAdapter extends RecyclerView.Adapter<TagHolder>{
     private static final String TAG = "TagsAdapter";
     private final Context mContext;
     private HashMap<String,List<MaterialBean>> mTagsMap = new HashMap<>();
-
+    private List<TagHolder> holderList = new ArrayList<>();
 
     public TagsAdapter(Context mContext,HashMap<String,List<MaterialBean>> tagsMap) {
         this.mContext = mContext;
@@ -34,7 +35,9 @@ public class TagsAdapter extends RecyclerView.Adapter<TagHolder>{
     @Override
     public TagHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(mContext).inflate(R.layout.title_tags, parent, false);
-        return new TagHolder(v,mContext);
+        TagHolder th = new TagHolder(v,mContext);
+        holderList.add(th);
+        return th;
     }
 
     @Override
@@ -56,28 +59,12 @@ public class TagsAdapter extends RecyclerView.Adapter<TagHolder>{
         }
     }
 
-
     @Override
     public int getItemCount() {
         return mTagsMap == null ? 0 : mTagsMap.size();
     }
-//    @Override
-//    public int getCount() {
-//        return 0;
-//    }
-//
-//    @Override
-//    public Object getItem(int i) {
-//        return null;
-//    }
-//
-//    @Override
-//    public long getItemId(int i) {
-//        return 0;
-//    }
-//
-//    @Override
-//    public View getView(int i, View view, ViewGroup viewGroup) {
-//        return null;
-//    }
+
+    public List<TagHolder> getHolderList(){
+        return holderList;
+    }
 }

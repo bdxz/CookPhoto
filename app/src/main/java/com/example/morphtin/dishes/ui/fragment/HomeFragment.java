@@ -96,7 +96,9 @@ public class HomeFragment extends BaseFragment implements HomeContract.View{
             @Override
             public void onPageClick(View view, int position) {
                 Intent intent = new Intent(getActivity(), MenuDetailActivity.class);
-                intent.putExtra("MENU_ID", data.get(position).getMenu_id().toString());
+                String menu_id = data.get(position).getMenu_id();
+                Log.d(TAG, "onPageClick: "+menu_id);
+                intent.putExtra(MenuDetailActivity.EXTRA_MENU_ID, menu_id);
                 startActivity(intent);
             }
         });
