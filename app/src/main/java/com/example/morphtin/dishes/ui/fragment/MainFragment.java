@@ -22,6 +22,7 @@ import com.example.morphtin.dishes.bean.MenuBean;
 import com.example.morphtin.dishes.bean.MenuStep;
 import com.example.morphtin.dishes.ui.activity.MaterialListActivity;
 import com.example.morphtin.dishes.ui.activity.MenuDetailActivity;
+import com.example.morphtin.dishes.ui.activity.MessageActivity;
 import com.example.morphtin.dishes.ui.activity.UploadMenuActivity;
 import com.example.morphtin.dishes.ui.base.BaseFragment;
 import com.example.morphtin.dishes.ui.view.BottomBar;
@@ -104,6 +105,9 @@ public class MainFragment extends BaseFragment {
                 showHideFragment(mFragments[mSelectPosition], mFragments[mCurrentPosition]);
                 mCurrentPosition = 2;
                 ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("消息");
+               // Intent intent=new Intent(getActivity(), MessageActivity.class);
+               // startActivity(intent);
+
             }
 
             @Override

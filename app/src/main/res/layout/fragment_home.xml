@@ -23,12 +23,12 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="100dp" >
 
         <LinearLayout
             android:id="@+id/home1"
             android:layout_width="0dip"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:layout_marginBottom="210dip"
             android:layout_weight="1"
             android:gravity="center"
@@ -38,7 +38,7 @@
             <ImageView
                 android:layout_width="50dip"
                 android:layout_height="50dip"
-                android:src="@mipmap/pictomenu" />
+                android:src="@mipmap/paizhao" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -52,7 +52,7 @@
         <LinearLayout
             android:id="@+id/home2"
             android:layout_width="0dip"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:layout_marginBottom="210dip"
             android:layout_weight="1"
             android:gravity="center"
@@ -61,7 +61,7 @@
             <ImageView
                 android:layout_width="50dip"
                 android:layout_height="50dip"
-                android:src="@mipmap/texttomenu" />
+                android:src="@mipmap/wenzi" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -75,7 +75,7 @@
         <LinearLayout
             android:id="@+id/home3"
             android:layout_width="0dip"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:layout_marginBottom="210dip"
             android:layout_weight="1"
             android:gravity="center"
@@ -84,7 +84,7 @@
             <ImageView
                 android:layout_width="50dip"
                 android:layout_height="50dip"
-                android:src="@mipmap/share" />
+                android:src="@mipmap/fenxiang" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -98,7 +98,7 @@
         <LinearLayout
             android:id="@+id/home4"
             android:layout_width="0dip"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:layout_marginBottom="210dip"
             android:layout_weight="1"
             android:gravity="center"
@@ -107,7 +107,7 @@
             <ImageView
                 android:layout_width="50dip"
                 android:layout_height="50dip"
-                android:src="@mipmap/uploadmenu" />
+                android:src="@mipmap/shangchuan" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -119,5 +119,51 @@
         </LinearLayout>
 
     </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=" 猜你喜欢"
+            android:textSize="20sp"/>
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp">
+
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/mianbao" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="皇冠面包"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="简单易做的欧式面包" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
     </LinearLayout>
 </ScrollView>
