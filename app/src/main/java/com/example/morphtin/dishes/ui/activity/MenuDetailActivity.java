@@ -18,6 +18,8 @@ import com.example.morphtin.dishes.api.presenter.MenuPresenter;
 import com.example.morphtin.dishes.bean.MenuBean;
 import com.example.morphtin.dishes.bean.MenuStep;
 import com.example.morphtin.dishes.ui.base.BaseActivity;
+import com.ganxin.library.LoadDataLayout;
+import com.ganxin.library.SwipeLoadDataLayout;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -38,6 +40,8 @@ public class MenuDetailActivity extends BaseActivity implements MenuContract.Vie
     RecyclerView ItemRecyclerView;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
+    @BindView(R.id.loadMenuDetailLayout)
+    SwipeLoadDataLayout loadDataLayout;
 
     private ItemAdapter adapter;
     private MenuContract.Presenter presenter;
@@ -48,7 +52,51 @@ public class MenuDetailActivity extends BaseActivity implements MenuContract.Vie
         setContentView(R.layout.activity_menu_detail);
 
         ButterKnife.bind(this);
+        LoadDataLayout.getBuilder()
+                .setEmptyImgId(R.drawable.ic_empty)
+                .setErrorImgId(R.drawable.ic_error)
+                .setNoNetWorkImgId(R.drawable.ic_no_network)
+                .setEmptyImageVisible(true)
+                .setErrorImageVisible(true)
+                .setNoNetWorkImageVisible(true)
+                .setEmptyText("???")
+                .setErrorText("404")
+                .setNoNetWorkText("无网络")
+                .setAllTipTextSize(16)
+                .setReloadBtnText("重新加载")
+                .setReloadBtnTextSize(16)
+                .setReloadBtnTextColor(R.color.colorPrimary)
+                .setReloadBtnVisible(true)
+                .setReloadClickArea(LoadDataLayout.FULL);
+        loadDataLayout.setEmptyText("暂无数据显示")
+                .setErrorText("出错啦")
+                .setErrorImage(R.drawable.ic_error)
+                .setAllTipTextSize(20)
+                .setReloadBtnText("点我重新加载")
+                .setReloadClickArea(LoadDataLayout.FULL);
+        loadDataLayout.setVisibility(loadDataLayout.INVISIBLE);
 
+
+    }
+
+    @Override
+    public void loadingStatus(int status){
+        switch (status) {
+            case 0:
+                loadDataLayout.setStatus(LoadDataLayout.EMPTY);
+                break;
+            case 1:
+                loadDataLayout.setStatus(LoadDataLayout.ERROR);
+                break;
+            case 2:
+                loadDataLayout.setStatus(LoadDataLayout.NO_NETWORK);
+                break;
+            case 3:
+                loadDataLayout.setStatus(LoadDataLayout.SUCCESS);
+                break;
+            case 4:
+                loadDataLayout.setStatus(LoadDataLayout.LOADING);
+        }
     }
 
     @Override
@@ -97,20 +145,26 @@ public class MenuDetailActivity extends BaseActivity implements MenuContract.Vie
 
     private class ItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-
-        private TextView mTv;
+        private TextView tvTopLine, tvDot;
+        private TextView titleTextView;
         private ImageView imageView;
+        private TextView indexTextView;
+
 
         public ItemHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
-
-            mTv = itemView.findViewById(R.id.menu_item_title);
+            tvTopLine = itemView.findViewById(R.id.tvTopLine);
+            tvDot = itemView.findViewById(R.id.tvDot);
+            indexTextView = itemView.findViewById(R.id.menu_item_index);
+            titleTextView = itemView.findViewById(R.id.menu_item_title);
             imageView = itemView.findViewById(R.id.menu_item_photo);
         }
 
-        public void bind(String name,String image){
-            mTv.setText(name);
+        public void bind(String name,String image,int index){
+            int count = index+1;
+            indexTextView.setText("第"+count+"步：");
+            titleTextView.setText(name);
             Picasso.get()
                     .load(image)
                     .into(imageView);
@@ -120,7 +174,6 @@ public class MenuDetailActivity extends BaseActivity implements MenuContract.Vie
 
         @Override
         public void onClick(View view) {
-
         }
 
     }
@@ -128,6 +181,8 @@ public class MenuDetailActivity extends BaseActivity implements MenuContract.Vie
     private class ItemAdapter extends RecyclerView.Adapter<MenuDetailActivity.ItemHolder> {
 
         private ArrayList<MenuStep> mData;
+        private static final int TYPE_TOP = 0x0000;
+        private static final int TYPE_NORMAL= 0x0001;
 
         public ItemAdapter(ArrayList<MenuStep> steps) {
             mData = steps;
@@ -141,9 +196,16 @@ public class MenuDetailActivity extends BaseActivity implements MenuContract.Vie
 
         @Override
         public void onBindViewHolder(MenuDetailActivity.ItemHolder holder, int position) {
+            if (getItemViewType(position) == TYPE_TOP) {
+                holder.tvTopLine.setVisibility(View.INVISIBLE);
+                holder.tvDot.setBackgroundResource(R.drawable.timelline_dot_first);
+            }else if (getItemViewType(position) == TYPE_NORMAL) {
+                holder.tvTopLine.setVisibility(View.VISIBLE);
+                holder.tvDot.setBackgroundResource(R.drawable.timelline_dot_normal);
+            }
             String name = mData.get(position).getDescription();
             String image = mData.get(position).getImageUrl();
-            holder.bind(name,image);
+            holder.bind(name,image,position);
         }
 
 

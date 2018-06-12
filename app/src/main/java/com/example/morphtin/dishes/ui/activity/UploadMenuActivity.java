@@ -25,6 +25,7 @@ import com.example.morphtin.dishes.api.presenter.MenuPresenter;
 import com.example.morphtin.dishes.bean.MenuBean;
 import com.example.morphtin.dishes.bean.MenuStep;
 import com.example.morphtin.dishes.ui.base.BaseActivity;
+import com.ganxin.library.LoadDataLayout;
 
 
 import java.util.ArrayList;
@@ -104,6 +105,25 @@ public class UploadMenuActivity extends BaseActivity implements MenuContract.Vie
 
     }
 
+    @Override
+    public void loadingStatus(int status){
+//        switch (status) {
+//            case 0:
+//                loadDataLayout.setStatus(LoadDataLayout.EMPTY);
+//                break;
+//            case 1:
+//                loadDataLayout.setStatus(LoadDataLayout.ERROR);
+//                break;
+//            case 2:
+//                loadDataLayout.setStatus(LoadDataLayout.NO_NETWORK);
+//                break;
+//            case 3:
+//                loadDataLayout.setStatus(LoadDataLayout.SUCCESS);
+//                break;
+//            case 4:
+//                loadDataLayout.setStatus(LoadDataLayout.LOADING);
+//        }
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

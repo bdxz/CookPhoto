@@ -45,12 +45,12 @@ public class MenuPresenter implements MenuContract.Presenter {
 
             @Override
             public void onError(Throwable t) {
-
+                mMenuView.loadingStatus(1);
             }
 
             @Override
             public void onComplete() {
-
+                mMenuView.loadingStatus(3);
             }
         });
     }

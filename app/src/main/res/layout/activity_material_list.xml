@@ -11,6 +11,41 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
+    <!--<com.ganxin.library.SwipeLoadDataLayout-->
+        <!--android:id="@+id/swipeLoadDataLayout"-->
+        <!--style="@style/common_swipeLoadDataLayout"-->
+        <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="@color/blue"-->
+            <!--android:gravity="center"-->
+            <!--android:text="contentView"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:textSize="20sp"/>-->
+
+    <!--</com.ganxin.library.SwipeLoadDataLayout>-->
+
+    <!--<com.ganxin.library.LoadDataLayout-->
+        <!--android:id="@+id/loadDataLayout"-->
+        <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="@color/blue"-->
+            <!--android:gravity="center"-->
+            <!--android:text="contentView"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:textSize="20sp"/>-->
+
+    <!--</com.ganxin.library.LoadDataLayout>-->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

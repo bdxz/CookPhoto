@@ -81,6 +81,7 @@
                         android:textColor="@color/textColorPrimary"
                         android:textSize="20sp" />
 
+
                     <android.support.v7.widget.AppCompatImageButton
                         android:id="@+id/addToParkingImgBtn"
                         android:layout_width="wrap_content"
