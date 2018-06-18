@@ -41,8 +41,8 @@ public class MessageFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_message, container, false);
         List<Message> list = new ArrayList<Message>();
-        Message message3 = new Message(R.drawable.coook, "厨你拍新功能上线了！", "制作你的菜谱，分享到平台，共同体验做菜的乐趣", "2018.6.4");
-        Message message4 = new Message(R.drawable.coook, "加入厨你拍大家庭！", "厨你拍团队招募，只要你有热情，爱做菜，快来加入我们吧", "2018.6.4");
+        Message message3 = new Message(R.drawable.profile, "厨你拍新功能上线了！", "制作你的菜谱，分享到平台，共同体验做菜的乐趣", "2018.6.4");
+        Message message4 = new Message(R.drawable.profile, "加入厨你拍大家庭！", "厨你拍团队招募，只要你有热情，爱做菜，快来加入我们吧", "2018.6.4");
         list.add(message3);
         list.add(message4);
         Message message = setMessageFromDatabase(list);
