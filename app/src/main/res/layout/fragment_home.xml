@@ -23,12 +23,12 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="100dp" >
 
             <LinearLayout
                 android:id="@+id/home1"
                 android:layout_width="0dip"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
                 android:layout_marginBottom="210dip"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -38,7 +38,7 @@
                 <ImageView
                     android:layout_width="50dip"
                     android:layout_height="50dip"
-                    android:src="@mipmap/pictomenu1" />
+                    android:src="@mipmap/texttomenu1" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -52,7 +52,7 @@
             <LinearLayout
                 android:id="@+id/home2"
                 android:layout_width="0dip"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
                 android:layout_marginBottom="210dip"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -61,7 +61,7 @@
                 <ImageView
                     android:layout_width="50dip"
                     android:layout_height="50dip"
-                    android:src="@mipmap/texttomenu1" />
+                    android:src="@mipmap/pictomenu1" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -75,7 +75,7 @@
             <LinearLayout
                 android:id="@+id/home3"
                 android:layout_width="0dip"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
                 android:layout_marginBottom="210dip"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -98,7 +98,7 @@
             <LinearLayout
                 android:id="@+id/home4"
                 android:layout_width="0dip"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
                 android:layout_marginBottom="210dip"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -165,6 +165,5 @@
             </LinearLayout>
 
         </android.support.v7.widget.CardView>
-
     </LinearLayout>
 </ScrollView>
