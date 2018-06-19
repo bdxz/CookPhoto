@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.morphtin.dishes.R;
+import com.example.morphtin.dishes.api.common.service.DownloadService;
 import com.example.morphtin.dishes.bean.User;
 import com.example.morphtin.dishes.ui.base.BaseFragment;
 import com.example.morphtin.dishes.ui.view.EditMineDialog;
@@ -61,6 +62,16 @@ public class MineFragment extends BaseFragment {
         textViewAge = view.findViewById(R.id.profile_age);
         textViewDescription=view.findViewById(R.id.profile_details);
         profileLayout = view.findViewById(R.id.profile_layout);
+        TextView test_btn = view.findViewById(R.id.test_btn);
+
+        test_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent downloadIntent = new Intent(getContext(), DownloadService.class);
+                downloadIntent.putExtra("menu_id",1);
+                getContext().startService(downloadIntent);
+            }
+        });
 
          profileLayout.setOnClickListener(new View.OnClickListener() {
                 @Override

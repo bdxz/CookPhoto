@@ -55,4 +55,10 @@ public class FakeMenuModel implements IMenuModel {
     public void saveMenu(MenuBean menu) {
 
     }
+
+
+    @Override
+    public Flowable<MenuBean> downloadMenu(String menu_id) {
+        return null;
+    }
 }

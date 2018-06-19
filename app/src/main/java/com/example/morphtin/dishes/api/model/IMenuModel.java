@@ -18,4 +18,6 @@ public interface IMenuModel {
     Flowable<MenuBean> getMenu(String menu_id);
 
     void saveMenu(MenuBean menu);
+
+    Flowable<MenuBean> downloadMenu(String menu_id);
 }

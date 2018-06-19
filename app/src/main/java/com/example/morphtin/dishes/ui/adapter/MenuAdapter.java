@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.morphtin.dishes.R;
+import com.example.morphtin.dishes.api.common.service.DownloadService;
 import com.example.morphtin.dishes.bean.MenuBean;
 import com.example.morphtin.dishes.bean.Menu_in_List;
 import com.example.morphtin.dishes.ui.activity.MenuDetailActivity;
@@ -50,6 +51,16 @@ public class MenuAdapter extends AdapterSkeleton<MenuBean,MenuAdapter.ViewHolder
                 Intent intent = new Intent(context, MenuDetailActivity.class);
                 intent.putExtra(MenuDetailActivity.EXTRA_MENU_ID,items.get(position).getMenu_id());
                 context.startActivity(intent);
+            }
+        });
+
+        holder.addToParkingImgBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int position = holder.getAdapterPosition();
+                Intent downloadIntent = new Intent(context, DownloadService.class);
+                downloadIntent.putExtra("menu_id",items.get(position).getMenu_id());
+                context.startService(downloadIntent);
             }
         });
         return holder;

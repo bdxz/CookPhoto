@@ -58,4 +58,9 @@ public class MenuModelImpl implements IMenuModel {
     public void saveMenu(MenuBean menu) {
         mMenuService.add(menu);
     }
+
+    @Override
+    public Flowable<MenuBean> downloadMenu(String menu_id){
+        return mMenuService.download(menu_id);
+    }
 }

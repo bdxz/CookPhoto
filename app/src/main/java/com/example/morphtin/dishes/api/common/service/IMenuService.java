@@ -21,4 +21,8 @@ public interface IMenuService {
 
     @GET("api/menu/get")
     Flowable<MenuBean> get(@Query("menu_id") String menu_id);
+
+    @GET("api/menu/download")
+    Flowable<MenuBean> download(@Query("menu_id") String menu_id);
+
 }

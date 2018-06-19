@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.arialyy.aria.core.Aria;
+import com.arialyy.aria.core.download.DownloadTask;
 import com.example.morphtin.dishes.R;
 import com.example.morphtin.dishes.api.contract.MenusContract;
 import com.example.morphtin.dishes.api.presenter.MenusPresenter;
@@ -27,10 +29,10 @@ public class MenuListActivity extends BaseActivity implements MenusContract.View
     private ArrayList<MenuBean> data = new ArrayList<>();
 
     private MenusContract.Presenter presenter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Aria.download(this).register();
         setContentView(R.layout.activity_menu_list);
 
 
@@ -76,6 +78,11 @@ public class MenuListActivity extends BaseActivity implements MenusContract.View
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
     public void showDetailUI(String menu_id) {
         Intent intent = new Intent(this,MenuDetailActivity.class);
         intent.putExtra(MenuDetailActivity.EXTRA_MENU_ID,menu_id);
@@ -86,4 +93,6 @@ public class MenuListActivity extends BaseActivity implements MenusContract.View
         //TODO 点击某一个菜谱应调用的代码
         presenter.openDetail(menu_id);
     }
+
+
 }

@@ -3,6 +3,7 @@ package com.example.morphtin.dishes.ui.fragment;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -50,9 +51,10 @@ public class MainFragment extends BaseFragment {
     BottomBar mBottomBar;
     @BindView(R.id.center_img)
     ImageView mCenterImage;
-
+    static MainFragment mainFragment ;
     private Socket mSocket;
-
+    private SharedPreferences sp ;
+    SupportFragment supportFragment ;
     SupportFragment[] mFragments = new SupportFragment[5];
 
     private int mSelectPosition, mCurrentPosition = 0;
@@ -64,13 +66,17 @@ public class MainFragment extends BaseFragment {
         }
     };
 
-    public static MainFragment newInstance() {
+    public static MainFragment getInstance() {
+        if(mainFragment == null) {
+            Bundle bundle = new Bundle();
 
-        Bundle bundle = new Bundle();
+            mainFragment = new MainFragment();
+            mainFragment.setArguments(bundle);
+            return mainFragment;
+        }else{
+            return mainFragment;
+        }
 
-        MainFragment fragment = new MainFragment();
-        fragment.setArguments(bundle);
-        return fragment;
     }
 
     @Override
@@ -125,17 +131,25 @@ public class MainFragment extends BaseFragment {
 
     @Override
     protected void initData(boolean isSavedNull) {
+        sp = getContext().getSharedPreferences("user",Context.MODE_PRIVATE);
+        String name = sp.getString("name5","");
+        Log.d(TAG, "initData: "+name);
+        if(name != ""){
+            supportFragment = MineFragment.newInstance();
+        }else{
+            supportFragment = LoginFragment.newInstance();
+        }
         if (isSavedNull) {
             mFragments[0] = HomeFragment.newInstance();
             mFragments[1] = DiscoveryFragment.newInstance();
             mFragments[2] = MessageFragment.newInstance();
-            mFragments[3] = MineFragment.newInstance();
+            mFragments[3] = supportFragment;
             loadMultipleRootFragment(R.id.fl_tab_container, 0, mFragments[0], mFragments[1], mFragments[2], mFragments[3]);
         } else {
             mFragments[0] = findChildFragment(HomeFragment.class);
             mFragments[1] = findChildFragment(DiscoveryFragment.class);
             mFragments[2] = findChildFragment(MessageFragment.class);
-            mFragments[3] = findChildFragment(MineFragment.class);
+            mFragments[3] = findChildFragment(supportFragment.getClass());
         }
         BaseApplication app = (BaseApplication) getActivity().getApplication();
         mSocket = app.getSocket();

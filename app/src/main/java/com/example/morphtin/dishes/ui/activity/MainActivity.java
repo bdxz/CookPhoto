@@ -31,7 +31,7 @@ public class MainActivity extends SupportActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
-            loadRootFragment(R.id.fragment_container, MainFragment.newInstance());
+            loadRootFragment(R.id.fragment_container, MainFragment.getInstance());
         }
 
 
