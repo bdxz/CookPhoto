@@ -74,22 +74,7 @@
                             android:layout_height="match_parent"
                             android:scrollbars="none" />
 
-                        <com.ganxin.library.SwipeLoadDataLayout
-                            android:id="@+id/loadMenuDetailLayout"
 
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@color/colorPrimary"
-                               android:gravity="center"
-                                android:text="contentView"
-                               android:textColor="@color/white"
-                               android:textSize="20sp"/>
-
-                        </com.ganxin.library.SwipeLoadDataLayout>
 
         </RelativeLayout>
     </LinearLayout>
