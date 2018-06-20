@@ -115,14 +115,14 @@ public class DiscoveryFragment extends BaseFragment {
         imageList.add("http://s1.st.meishij.net/r/32/219/3992282/s3992282_152471223734657.jpg");
 
         momentBeanList = new ArrayList<>();
-        for(int i=0;i<10;i++){
+        for(int i=0;i<9;i++){
             MomentBean momentBean = new MomentBean();
             //设置用户
             SimpleUserBean sub = new SimpleUserBean();
             sub.setImageUrl("http://cuimg.zuyushop.com/cuxiaoPic/201511/2015110010091817554.jpg");
             sub.setUsername("王鹏");
             momentBean.setContent(content);
-            momentBean.setImageUrls(imageList);
+            momentBean.setImageUrls(imageList.subList(0,i));
             momentBean.setMomentID(i);
             momentBean.setSimpleUserBean(sub);
 
