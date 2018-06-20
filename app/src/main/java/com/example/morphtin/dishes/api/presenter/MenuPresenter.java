@@ -1,5 +1,7 @@
 package com.example.morphtin.dishes.api.presenter;
 
+import android.util.Log;
+
 import com.example.morphtin.dishes.api.contract.MenuContract;
 import com.example.morphtin.dishes.api.model.IMenuModel;
 import com.example.morphtin.dishes.api.model.impl.MenuModelImpl;
@@ -18,6 +20,7 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 public class MenuPresenter implements MenuContract.Presenter {
+    private static final String TAG = "MenuPresenter";
     private IMenuModel mMenuModel;
     private MenuContract.View mMenuView;
 
@@ -57,6 +60,7 @@ public class MenuPresenter implements MenuContract.Presenter {
 
     @Override
     public void addMenu(MenuBean menu) {
+        Log.d(TAG, "addMenu: "+menu.getTitle());
         mMenuModel.saveMenu(menu);
     }
 }
