@@ -7,6 +7,7 @@ import com.example.morphtin.dishes.api.common.service.IHomeService;
 import com.example.morphtin.dishes.api.common.service.IMenuService;
 import com.example.morphtin.dishes.api.model.IMenuModel;
 import com.example.morphtin.dishes.bean.MenuBean;
+import com.example.morphtin.dishes.bean.http.BaseResponse;
 import com.example.morphtin.dishes.common.Constant;
 import com.example.morphtin.dishes.common.URL;
 
@@ -15,6 +16,8 @@ import org.reactivestreams.Subscription;
 import java.util.List;
 
 import io.reactivex.Flowable;
+import io.reactivex.FlowableSubscriber;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
@@ -56,7 +59,28 @@ public class MenuModelImpl implements IMenuModel {
 
     @Override
     public void saveMenu(MenuBean menu) {
-        mMenuService.add(menu);
+        Log.d(TAG, "saveMenu: "+menu.getTitle());
+        mMenuService.add(menu).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new FlowableSubscriber<BaseResponse>() {
+            @Override
+            public void onSubscribe(Subscription s) {
+                s.request(1);
+            }
+
+            @Override
+            public void onNext(BaseResponse baseResponse) {
+
+            }
+
+            @Override
+            public void onError(Throwable t) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
     }
 
     @Override

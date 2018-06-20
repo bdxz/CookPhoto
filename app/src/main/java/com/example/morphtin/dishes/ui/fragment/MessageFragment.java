@@ -2,12 +2,15 @@ package com.example.morphtin.dishes.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import com.example.morphtin.dishes.R;
+import com.example.morphtin.dishes.api.contract.MessageContract;
+import com.example.morphtin.dishes.api.presenter.MessagePresenter;
 import com.example.morphtin.dishes.ui.activity.MainActivity;
 import com.example.morphtin.dishes.ui.activity.MessageActivity;
 import com.example.morphtin.dishes.ui.base.BaseFragment;
@@ -21,9 +24,12 @@ import java.util.List;
  * Created by elevation on 18-4-4.
  */
 
-public class MessageFragment extends BaseFragment {
+public class MessageFragment extends BaseFragment implements MessageContract.View{
+    private static final String TAG = "MessageFragment";
     private ListView listView;
     private List<Message> message_List;
+    private MessageAdapter adapter;
+    private MessageContract.Presenter presenter;
 
     public static MessageFragment newInstance() {
         Bundle bundle = new Bundle();
@@ -33,26 +39,27 @@ public class MessageFragment extends BaseFragment {
         return fragment;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
 
+        presenter.loadMessage();
+    }
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_message, container, false);
-        List<Message> list = new ArrayList<Message>();
-        Message message3 = new Message(R.drawable.chushi, "厨你拍新功能上线了！", "制作你的菜谱，分享到平台，共同体验做菜的乐趣", "2018.6.4");
-        Message message4 = new Message(R.drawable.chushi2, "加入厨你拍大家庭！", "厨你拍团队招募，只要你有热情，爱做菜，快来加入我们吧", "2018.6.4");
-        list.add(message3);
-        list.add(message4);
-        Message message = setMessageFromDatabase(list);
-        //在这里测试调用接口
-        message_List = message.getMessage();
+
+        message_List = new ArrayList<>();
+
         //MessageActivity activity = (MessageActivity) getActivity();
-        MessageAdapter array = new MessageAdapter (getActivity(),R.layout.fragment_message_item,message_List);
+        adapter = new MessageAdapter (getActivity(),R.layout.fragment_message_item,message_List);
         listView=(ListView) view.findViewById(R.id.list_view);
-        listView.setAdapter(array);
-        setListViewHeight(listView);
+        listView.setAdapter(adapter);
+
+        presenter = new MessagePresenter(this);
         return view;
     }
 
@@ -86,16 +93,12 @@ public class MessageFragment extends BaseFragment {
     protected void initData(boolean isSavedNull) {
 
     }
-
-    public void addMessage(List<Message> messageList)
-    {
-
+    @Override
+    public void showMessage(List<Message> data) {
+        message_List.clear();
+        message_List.addAll(data);
+        Log.d(TAG, "showMessage: "+data.size());
+        setListViewHeight(listView);
+        adapter.notifyDataSetChanged();
     }
-
-    public  Message setMessageFromDatabase(List<Message> list) {
-        Message message1 = new Message();
-        message1.setMessage(list);
-        return message1;
-    }
-
 }

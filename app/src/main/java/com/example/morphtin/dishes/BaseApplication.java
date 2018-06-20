@@ -7,6 +7,7 @@ import com.example.morphtin.dishes.common.URL;
 
 import java.net.URISyntaxException;
 
+import cn.jpush.android.api.JPushInterface;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 
@@ -15,6 +16,12 @@ import io.socket.client.Socket;
  */
 
 public class BaseApplication extends Application {
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        JPushInterface.init(this);
+    }
+
     private Socket mSocket;
     {
         try {

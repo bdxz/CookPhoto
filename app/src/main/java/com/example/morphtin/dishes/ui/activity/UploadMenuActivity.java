@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -35,7 +36,7 @@ import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UploadMenuActivity extends BaseActivity implements MenuContract.View{
-
+    private static final String TAG = "UploadMenuActivity";
     private static final int RC_CHOOSE_PHOTO = 1;
     private static final int ADD_NEW_MENU_STEP = 7;
 
@@ -128,6 +129,7 @@ public class UploadMenuActivity extends BaseActivity implements MenuContract.Vie
         menuBean.setSteps(menuList);
 
         presenter.addMenu(menuBean);
+        Log.d(TAG, "uploadMenu: ");
     }
 
     public void addAMenuStep(View v){
