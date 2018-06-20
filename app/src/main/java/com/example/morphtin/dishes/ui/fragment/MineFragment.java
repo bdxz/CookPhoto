@@ -1,14 +1,18 @@
 package com.example.morphtin.dishes.ui.fragment;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.morphtin.dishes.R;
 import com.example.morphtin.dishes.api.common.service.DownloadService;
@@ -16,8 +20,10 @@ import com.example.morphtin.dishes.bean.User;
 import com.example.morphtin.dishes.ui.base.BaseFragment;
 import com.example.morphtin.dishes.ui.view.EditMineDialog;
 
+import butterknife.BindView;
 import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
 import de.hdodenhof.circleimageview.CircleImageView;
+import me.yokeyword.fragmentation.SupportFragment;
 
 /**
  * Created by elevation on 18-4-4.
@@ -31,6 +37,7 @@ public class MineFragment extends BaseFragment {
     private TextView textViewAge;
     private TextView textViewDescription;
     private LinearLayout profileLayout;
+    private Button logout_btn;
 
     public static MineFragment newInstance() {
         Bundle bundle = new Bundle();
@@ -63,6 +70,7 @@ public class MineFragment extends BaseFragment {
         textViewDescription=view.findViewById(R.id.profile_details);
         profileLayout = view.findViewById(R.id.profile_layout);
         TextView test_btn = view.findViewById(R.id.test_btn);
+        logout_btn = view.findViewById(R.id.logout);
 
         test_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,6 +99,20 @@ public class MineFragment extends BaseFragment {
                 }
             });
             setProfile("昵称");//最开始初始化的时候需要,我认为应该先
+
+        logout_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences sp = getContext().getSharedPreferences("user", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.remove("name");
+                editor.commit();
+                Toast.makeText(getContext(),"退出登录成功",Toast.LENGTH_SHORT).show();
+                SupportFragment supportFragment = LoginFragment.newInstance();
+                showHideFragment(supportFragment,getTopFragment());
+                MainFragment.getInstance().initData(true);
+            }
+        });
         return view;
     }
 

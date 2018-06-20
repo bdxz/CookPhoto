@@ -132,7 +132,7 @@ public class MainFragment extends BaseFragment {
     @Override
     protected void initData(boolean isSavedNull) {
         sp = getContext().getSharedPreferences("user",Context.MODE_PRIVATE);
-        String name = sp.getString("name5","");
+        String name = sp.getString("name","");
         Log.d(TAG, "initData: "+name);
         if(name != ""){
             supportFragment = MineFragment.newInstance();

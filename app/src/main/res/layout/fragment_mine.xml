@@ -18,5 +18,17 @@
             app:civ_border_width="2dp" />
 
         <include layout="@layout/profile_scroll_content"/>
+
+        <Button
+            android:id="@+id/logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:width="400px"
+            android:text="退出登录"
+            android:shadowColor="@color/holo_red_light"
+            android:gravity="center" />
     </LinearLayout>
+
+
 </ScrollView>

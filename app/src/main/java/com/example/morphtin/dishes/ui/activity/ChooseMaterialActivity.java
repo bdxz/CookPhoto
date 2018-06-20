@@ -112,4 +112,14 @@ public class ChooseMaterialActivity extends BaseActivity implements ChooseContra
         Intent intent = new Intent(this,MaterialListActivity.class);
         startActivity(intent);
     }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void cancelLoading() {
+
+    }
 }

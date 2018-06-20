@@ -1,4 +1,9 @@
 package com.example.morphtin.dishes.ui.view;
 
-public class SearchBar {
+import android.view.Gravity;
+
+import com.mancj.materialsearchbar.MaterialSearchBar;
+
+public class SearchBar  {
+
 }

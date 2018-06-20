@@ -81,7 +81,10 @@ public class ChoosePresenter implements ChooseContract.Presenter {
 
             @Override
             public void onNext(List<MaterialBean> materialBeans) {
+                Log.d(TAG, "onNext: ");
+                mChooseView.showLoading();
                 mMaterialModel.setSelected(materialBeans);
+                mChooseView.cancelLoading();
                 mChooseView.showSelected(materialBeans);
             }
 

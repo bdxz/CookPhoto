@@ -16,6 +16,7 @@ import android.transition.ChangeBounds;
 import android.transition.Transition;
 import android.transition.TransitionManager;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.morphtin.dishes.R;
 import com.example.morphtin.dishes.ui.activity.MainActivity;
@@ -142,12 +144,26 @@ public class LoginFragment extends BaseFragment {
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                boolean flag = true;
                 if (params.weight == 4.25) {
+                    if(email2.getText().toString().split("@") == null){
+                        flag=false;
+                        Snackbar.make(relativeLayout2, "邮箱错误", Snackbar.LENGTH_SHORT).show();
+                        return ;
+                    }else if(pass2.getText().toString().length()<6 || !pass2.getText().toString().equals(confirmPass.getText().toString())){
+                        flag=false;
+                        Snackbar.make(relativeLayout2, "密码错误", Snackbar.LENGTH_SHORT).show();
+                        return ;
+                    }
 
-                    Snackbar.make(relativeLayout, "Sign Up Complete", Snackbar.LENGTH_SHORT).show();
+                    if (flag) {
+                        Snackbar.make(relativeLayout, "Sign Up Complete", Snackbar.LENGTH_SHORT).show();
+                        return;
+                    }
                     return;
                 }
+
+
                 email2.setVisibility(View.VISIBLE);
                 pass2.setVisibility(View.VISIBLE);
                 confirmPass.setVisibility(View.VISIBLE);
@@ -155,6 +171,7 @@ public class LoginFragment extends BaseFragment {
                 final ChangeBounds bounds = new ChangeBounds();
                 bounds.setDuration(1500);
                 bounds.addListener(new Transition.TransitionListener() {
+
                     @Override
                     public void onTransitionStart(Transition transition) {
 
@@ -187,6 +204,7 @@ public class LoginFragment extends BaseFragment {
                         set.playTogether(animator1, animator2, animator3, animator4, animator5, animator6, animator7,
                                 animator8, animator9, animator10, animator11, animator12, animator13, animator14, animator15, animator16, animator17, animator18);
                         set.setDuration(1500).start();
+
 
 
                     }
@@ -227,6 +245,8 @@ public class LoginFragment extends BaseFragment {
                 relativeLayout.setLayoutParams(params);
                 relativeLayout2.setLayoutParams(params2);
 
+
+
             }
         });
 
@@ -234,18 +254,31 @@ public class LoginFragment extends BaseFragment {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                boolean flag = true;
                 if (params2.weight == 4.25) {
-                    SharedPreferences sp = getActivity().getSharedPreferences("user",Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sp.edit();
-                    editor.putString("name5","xiang");
-                    editor.commit();
+                    if(email.getText().toString().split("@") == null){
+                        flag = false;
+                        Snackbar.make(relativeLayout2, "邮箱错误", Snackbar.LENGTH_SHORT).show();
+                        return ;
+                    }else if(pass.getText().toString().length()<6){
+                        flag = false;
+                        Snackbar.make(relativeLayout2, "密码错误", Snackbar.LENGTH_SHORT).show();
+                        return ;
+                    }
+                    if (flag) {
 
-                    Snackbar.make(relativeLayout2, "Login Complete", Snackbar.LENGTH_SHORT).show();
-                    SupportFragment supportFragment = MineFragment.newInstance();
-                    showHideFragment(supportFragment,getTopFragment());
-                    MainFragment.getInstance().initData(true);
-                    return;
+                        SharedPreferences sp = getActivity().getSharedPreferences("user",Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putString("name","xiang");
+                        editor.commit();
+
+                        Snackbar.make(relativeLayout2, "Login Complete", Snackbar.LENGTH_SHORT).show();
+                        SupportFragment supportFragment = MineFragment.newInstance();
+                        showHideFragment(supportFragment,getTopFragment());
+                        MainFragment.getInstance().initData(true);
+                        return;
+                    }
+                        return ;
                 }
 
                 email.setVisibility(View.VISIBLE);
@@ -324,6 +357,10 @@ public class LoginFragment extends BaseFragment {
 
                 relativeLayout.setLayoutParams(params);
                 relativeLayout2.setLayoutParams(params2);
+                Log.d("登录", ""+email.getText());
+
+
+
 
 
             }

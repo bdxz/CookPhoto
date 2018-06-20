@@ -2,10 +2,16 @@ package com.example.morphtin.dishes.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.PopupWindow;
+import android.widget.Toast;
 
 import com.dd.processbutton.iml.ActionProcessButton;
 import com.example.morphtin.dishes.R;
@@ -31,7 +37,7 @@ public class ChoosePhotoActivity extends BaseActivity implements ChooseContract.
     private PhotoAdapter adapter;
     private ArrayList<String> photoPaths;
     private ChooseContract.Presenter presenter;
-
+    final PopupWindow popupWindow = new PopupWindow();
     @BindView(R.id.photo_list)
     RecyclerView photoList;
     @BindView(R.id.upload_photo)
@@ -58,11 +64,28 @@ public class ChoosePhotoActivity extends BaseActivity implements ChooseContract.
     }
 
     @Override
+    public void showLoading() {
+
+        popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow.setFocusable(true);
+        View load_view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.loading,null);
+        popupWindow.setContentView(load_view);
+        popupWindow.showAtLocation(getWindow().getDecorView(), Gravity.CENTER,0,0);
+    }
+
+    @Override
+    public void cancelLoading() {
+        popupWindow.dismiss();
+    }
+
+    @Override
     protected void initEvents() {
         mProcessButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 presenter.selectByPhoto(photoPaths);
+                Toast.makeText(getApplicationContext(), "正在加载", Toast.LENGTH_SHORT).show();
             }
         });
     }

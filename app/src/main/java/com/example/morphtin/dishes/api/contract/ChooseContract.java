@@ -14,6 +14,10 @@ public interface ChooseContract {
         void showMaterials(List<MaterialBean> data);
 
         void showSelected(List<MaterialBean> data);
+
+        void showLoading();
+
+        void cancelLoading();
     }
     interface Presenter{
         void loadAllMaterials();

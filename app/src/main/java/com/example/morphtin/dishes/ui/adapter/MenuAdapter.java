@@ -6,10 +6,12 @@ import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.morphtin.dishes.R;
 import com.example.morphtin.dishes.api.common.service.DownloadService;
@@ -49,6 +51,7 @@ public class MenuAdapter extends AdapterSkeleton<MenuBean,MenuAdapter.ViewHolder
             public void onClick(View view) {
                 int position = holder.getAdapterPosition();
                 Intent intent = new Intent(context, MenuDetailActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra(MenuDetailActivity.EXTRA_MENU_ID,items.get(position).getMenu_id());
                 context.startActivity(intent);
             }
@@ -59,8 +62,13 @@ public class MenuAdapter extends AdapterSkeleton<MenuBean,MenuAdapter.ViewHolder
             public void onClick(View view) {
                 int position = holder.getAdapterPosition();
                 Intent downloadIntent = new Intent(context, DownloadService.class);
+                Log.d("菜谱", "onClick: "+items.get(position).getMenu_id()+items.get(position).getImageUrl());
                 downloadIntent.putExtra("menu_id",items.get(position).getMenu_id());
+                downloadIntent.putExtra("url",items.get(position).getImageUrl());
+                downloadIntent.putExtra("name",items.get(position).getTitle());
                 context.startService(downloadIntent);
+
+                Toast.makeText(getContext(),"开始下载图片",Toast.LENGTH_SHORT).show();
             }
         });
         return holder;
@@ -84,7 +92,7 @@ public class MenuAdapter extends AdapterSkeleton<MenuBean,MenuAdapter.ViewHolder
             photoACImgV = (AppCompatImageView) itemView.findViewById(R.id.photoACImgV);
             titleTv = (TextView) itemView.findViewById(R.id.titleTv);
             descriptionTv = (TextView) itemView.findViewById(R.id.descriptionTv);
-            //addToParkingImgBtn = (AppCompatImageButton) itemView.findViewById(R.id.addToParkingImgBtn);
+            addToParkingImgBtn = (AppCompatImageButton) itemView.findViewById(R.id.addToParkingImgBtn);
 
         }
     }
