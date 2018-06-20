@@ -59,10 +59,19 @@
         <activity android:name=".ui.activity.AddMenuStepActivity" />
         <activity android:name=".ui.activity.CreateDishActivity"/>
         <activity android:name=".ui.activity.DishDetailActivity"/>
+        <activity android:name=".ui.activity.ImagePreviewActivity"/>
+        <activity
+            android:name="com.lidong.photopicker.PhotoPickerActivity"
+            android:theme="@style/PhotoPickerTheme"
+            android:configChanges="orientation|screenSize"/>
+        <activity android:name="com.lidong.photopicker.PhotoPreviewActivity"
+            android:theme="@style/PhotoPickerTheme"/>
+        <activity android:name=".ui.activity.PublishActivity"/>
         <activity
             android:name=".ui.activity.MenuDetailActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ui.activity.MenuListActivity" android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
+
 
 </manifest>

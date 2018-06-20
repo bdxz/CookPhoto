@@ -22,4 +22,9 @@
     <color name="textColorPrimary">#444444</color>
     <color name="textColorSecondary">#969494</color>
     <color name="dividerColor">#EAEAEA</color>
+
+    <color name="photopicker_background">#181819</color>
+
+    <color name="colorBlue2">#2988CC</color>
+    <color name="colorGray">#6c6c6c</color>
 </resources>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/iv_user_icon"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:src="@mipmap/ic_launcher" />
+    <TextView
+        android:id="@+id/tv_user_name"
+        android:text="梦想启程"
+        android:layout_toRightOf="@+id/iv_user_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/tv_moment_content"
+        android:text="我有一个梦想"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tv_user_name"
+        android:layout_below="@+id/tv_user_name"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"/>
+
+    <TextView
+        android:id="@+id/tv_close_open"
+        android:text="展开"
+        android:textSize="12dp"
+        android:textColor="#1c35a2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_moment_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp"
+        />
+
+    <com.example.morphtin.dishes.ui.view.NineGridTestLayout
+        android:id="@+id/nineTestlayout"
+        android:layout_below="@+id/tv_close_open"
+        app:oneImageWidth="200dp"
+        app:oneImageHeight="340dp"
+        android:layout_alignLeft="@+id/tv_moment_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="30dp"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content">
+    </com.example.morphtin.dishes.ui.view.NineGridTestLayout>
+</RelativeLayout>
