@@ -28,8 +28,8 @@ public class DiscoveryFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_discovery, container, false);
-        final RippleBackground rippleBackground = (RippleBackground) view.findViewById(R.id.processingBack);
-               rippleBackground.startRippleAnimation();
+//        final RippleBackground rippleBackground = (RippleBackground) view.findViewById(R.id.processingBack);
+//               rippleBackground.startRippleAnimation();
         return view;
     }
 

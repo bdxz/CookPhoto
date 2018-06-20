@@ -7,7 +7,7 @@ android {
     buildToolsVersion "26.0.3"
     defaultConfig {
         applicationId "com.example.morphtin.dishes"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -70,6 +70,15 @@ dependencies {
     //下载队列——Aria
     compile 'com.arialyy.aria:aria-core:3.4.2'
     annotationProcessor 'com.arialyy.aria:aria-compiler:3.4.2'
+    // pull down to load more ,pull up to fresh
+    implementation 'com.jcodecraeer:xrecyclerview:1.5.9'
+    // to use SQLite database extremely easy
+    implementation 'org.litepal.android:core:1.6.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    implementation 'com.github.chrisbanes:PhotoView:2.0.0'
 
     //socket-io
     compile ('io.socket:socket.io-client:1.0.0') {

@@ -84,7 +84,7 @@ public class MenuAdapter extends AdapterSkeleton<MenuBean,MenuAdapter.ViewHolder
             photoACImgV = (AppCompatImageView) itemView.findViewById(R.id.photoACImgV);
             titleTv = (TextView) itemView.findViewById(R.id.titleTv);
             descriptionTv = (TextView) itemView.findViewById(R.id.descriptionTv);
-            addToParkingImgBtn = (AppCompatImageButton) itemView.findViewById(R.id.addToParkingImgBtn);
+            //addToParkingImgBtn = (AppCompatImageButton) itemView.findViewById(R.id.addToParkingImgBtn);
 
         }
     }
